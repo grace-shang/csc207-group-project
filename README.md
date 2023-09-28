@@ -8,4 +8,4 @@ Our groups problem domain would fall under the Time Management System domain, th
 
 Description of the Application:
 
-It is the creation of a personal planner that is linked towards studies and the University of Toronto timetable. It will allow people to input their school schedules, list their tasks, list things they want as reminders, and other things on along that line. It allows students to keep all their schooling information on one software  
+It is the creation of a personal planner that is linked towards studies and the University of Toronto timetable. It will allow people to input their school schedules, list their tasks, list things they want as reminders, and other things on along that line. It allows students to keep all their schooling information on one software and ensure they are completing everything they need to. The application is going to let students be the best students they can be. 
