@@ -3,7 +3,7 @@ CSC207 Week 3 Project
 
 Description of the Problem Domain: 
 
-Our groups problem domain would fall under the Time Management System/ Scheduling domain, though it would be more than that. The problem domain would also be a personal helper that works to better and make a person's life more manageable not only with helping them manage their schedules, but to also help them plan their tasks and reminders to help them in their daily lives. 
+The problem domain that we have chosen for this project is the Time Management System/ Scheduling domain. We would like to develop a highly functional and easily accessible personal helper that betters an individual's life by creating a manageable workflow within their schedules, but also to help them plan their tasks and reminders throughout their daily lives. As such the problem domain would expand towards accessability for all individuals creating an application that everyone can enjoy.
 
 
 Description of the Application:
