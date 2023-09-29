@@ -14,7 +14,7 @@ It is the creation of a personal planner that is linked towards studies and the 
 
 API's We Can Use: 
 
-Todo List API where we can add, delete, write, and read items on the Todo list. We can try to connect this to our software in order to optimize the personal helper asepct of our application and add it to the timetbale if possible. 
+Todo List API where we can add, delete, write, and read items on the Todo list. We can try to connect this to our software in order to optimize the personal helper asepct of our application and add it to the timetable if possible. This API would also allow us to keep track of the users on our software and how to manage all the users along with adding them, deleting the user profile from the app, and more along those lines as well. 
 
 https://developer.todoist.com/guides/#developing-with-todoist
 
