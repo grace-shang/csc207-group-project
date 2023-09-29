@@ -24,6 +24,14 @@ Google Calendar API could be something we use to create the calendar and handle 
 https://developers.google.com/calendar?ref=apilist.fun
 
 
+Screenshot Using A Tool to Try the API:
+<img width="1430" alt="Screenshot 2023-09-29 at 4 13 04 PM" src="https://github.com/grace-shang/week3-project/assets/128920671/c1d5b70b-2add-49a0-a5c5-ee5a10e8923c">
+
+With this image, on the left it showcases all the functions/helpers of the TODO list API that will help us create our program. It has a helper that will help us manage the user profiles with the following functions: creates users, login users, logs them out of the software, updates a user profile, uploads an image, gets a user image, deletes the image and deletes the user. It also will also implement our applications TODO feature as the API has a function to add a task, get all the tasks, get task by id, get task by completion, get task by pagnation, update task by id, and delete task by id. On the top right side of the screenshot I am see what it would look like to represent a user. It shows the body of the register user and at the bottom right side of the screen there is the code of the API.
+
+I set up the TODO list API in Postman and uploaded all the functions following their procedure. Everything is now open and where I am going to work with the API. 
+
+
 
 
 
