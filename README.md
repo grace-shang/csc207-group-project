@@ -12,3 +12,21 @@ It is the creation of a personal planner that is linked towards studies and the 
 
 
 
+API's We Can Use: 
+
+Todo List API where we can add, delete, write, and read items on the Todo list. We can try to connect this to our software in order to optimize the personal helper asepct of our application and add it to the timetbale if possible. 
+
+https://developer.todoist.com/guides/#developing-with-todoist
+
+
+Google Calendar API could be something we use to create the calendar and handle reminders along with it. It reads and updates calendars where we can try to connect it to our application so our users can view and create new events to input into their calendar. 
+
+https://developers.google.com/calendar?ref=apilist.fun
+
+
+
+
+
+
+
+
