@@ -1,7 +1,7 @@
 # week3-project
 CSC207 Week 3 Project
 
-**Description of the Problem Domain: **
+**Description of the Problem Domain:**
 
 The problem domain that we have chosen for this project is the Time Management System/ Scheduling domain. We would like to develop a highly functional and easily accessible all-in-one personal helper that betters an individual's life by creating a manageable workflow with their schedules. Some potential functionalities we are considering include planning tasks and tracking their progress, setting reminders, creating/editing schedules, and marking important dates. The problem domain expands towards accessability for all individuals, creating an application that everyone can enjoy.
 
@@ -11,7 +11,7 @@ The problem domain that we have chosen for this project is the Time Management S
 We want to create a personal planner that is linked with studies and geared towards the University of Toronto's timetable. It will allow people to input their school schedules, list their tasks and which courses they belong to, note things they want as reminders, plan their future courses, and other things on along that line. It allows students to keep all their schooling information on one software and ensure they are completing everything they need to.
 
 
-**API's We Can Use: **
+**API's We Can Use:**
 
 1. Todoist API enables us to add, delete, write, and read items on the Todo list. We can try to connect this to our software in order to optimize the personal helper asepct of our application and add it to the timetable if possible. This API would also allow us to keep track of the users on our software and help us manage all the users' actions, such as adding their accounts, deleting the user profile from the application, updating their student information (graduating year, program, etc.), and other similar use cases. 
 
