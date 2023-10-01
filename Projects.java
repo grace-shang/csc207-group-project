@@ -1,8 +1,8 @@
 package entity;
 
 public class Projects {
-    private String name;
-    private boolean favourite;
+    private static String name;
+    private static boolean favourite;
 
     public Projects(String name, boolean favourite) {
         this.name = name;
@@ -35,11 +35,11 @@ public class Projects {
         }
     }
 
-    public String getName() {
+    public static String getName() {
         return name;
     }
 
-    public boolean getFavourite() {
+    public static boolean getFavourite() {
         return favourite;
     }
 
