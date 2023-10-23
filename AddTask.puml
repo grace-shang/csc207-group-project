@@ -51,6 +51,7 @@ callToApi()
 createInTheApi()
 addInTheApi()
 deleteInTheApi()
+updateInTheApi()
 }
 
 
