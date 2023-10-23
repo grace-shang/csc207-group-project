@@ -1,0 +1,63 @@
+@startuml
+!pragma layout smetana
+'https://plantuml.com/sequence-diagram
+
+Abstract Class Task {
+String taskName
+Local DateTime dueDate
+Boolean priority
+boolean completed
+
+getName(): Str
+getDueDate(): DateTime
+getPriority(): Boolean
+}
+
+Class CourseTask{
+Courses course
+String taskType
+Boolean overdue
+
+getCourse(): CourseTask
+getTaskType(): String
+getOverdue(): Boolean
+}
+
+Class PersonalTask{
+String event
+String location
+
+getEvent(): String
+getLocation(): String
+
+}
+
+Class Courses{
+String courseCode
+int startTime
+int endTime
+List daysOfClass
+Boolean requiredForMajor
+
+getCourseCode(): String
+getStartTime(): int
+getEndTime(): int
+getDaysOfClass(): List
+getRequiredForMajor(): Boolean
+}
+
+Class CallToApi{
+callToApi()
+createInTheApi()
+addInTheApi()
+deleteInTheApi()
+}
+
+
+
+Task <-- CourseTask
+Task <-- PersonalTask
+Courses <-.- CourseTask
+CallToApi <-.- CourseTask
+CallToApi <-.- PersonalTask
+@enduml
