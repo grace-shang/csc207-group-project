@@ -1,0 +1,91 @@
+@startuml
+!pragma layout smetana
+'https://plantuml.com/class-diagram
+
+Abstract Class Task {
+String taskName
+Local DateTime dueDate
+Boolean priority
+boolean completed
+
+getName(): Str
+getDueDate(): DateTime
+getPriority(): Boolean
+}
+
+Class CourseTask{
+Courses course
+String taskType
+Boolean overdue
+
+getCourse(): CourseTask
+getTaskType(): String
+getOverdue(): Boolean
+}
+
+Class PersonalTask{
+String event
+String location
+
+getEvent(): String
+getLocation(): String
+
+}
+
+Class Courses{
+String courseCode
+int startTime
+int endTime
+List daysOfClass
+Boolean requiredForMajor
+
+getCourseCode(): String
+getStartTime(): int
+getEndTime(): int
+getDaysOfClass(): List
+getRequiredForMajor(): Boolean
+}
+
+
+
+
+interface CourseAddController{
+courseAddController(CourseAddInputBoundary CourseAddInteractor)
+execute()
+}
+
+interface CourseAddInputBoundary{
+execute()
+}
+
+
+Class CourseAddInteractor{
+courseAddInteractor(CourseAddAccess courseAddAccess, CourseAddOutputBoundary courseAddPresenter)
+execute()
+}
+
+interface CourseAddPresenter{
+courseAddPresenter()
+prepareSuccessView()
+prepareFailView()
+}
+
+interface CourseAddOutputBoundary{
+execute()
+}
+
+interface CourseAddAccess{
+courseAdd()
+}
+
+
+
+Task <-- CourseTask
+Task <-- PersonalTask
+Courses <-.- CourseTask
+CourseAddOutputBoundary <-.- CourseAddPresenter
+CourseAddInputBoundary <-.- CourseAddController
+
+
+
+@enduml
