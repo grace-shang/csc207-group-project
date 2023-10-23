@@ -87,5 +87,8 @@ CourseAddOutputBoundary <-.- CourseAddPresenter
 CourseAddInputBoundary <-.- CourseAddController
 
 
+/// arrows aren't accurate there is an issue with my computer and implements and inherits isn't working.
+
+
 
 @enduml
