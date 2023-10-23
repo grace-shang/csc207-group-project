@@ -61,4 +61,7 @@ Task <-- PersonalTask
 Courses <-.- CourseTask
 CallToApi <-.- CourseTask
 CallToApi <-.- PersonalTask
+
+/// arrows aren't accurate there is an issue with my computer and implements and inherits isn't working.
+
 @enduml
