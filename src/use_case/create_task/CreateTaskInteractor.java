@@ -1,4 +1,4 @@
-package entity.src.use_case;
+package entity.use_case.create_task;
 
 public class CreateTaskInteractor {
 }
