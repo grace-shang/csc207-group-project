@@ -1,2 +1,2 @@
-package entity.src.interface_adapter;public class DeleteTaskPresenter {
+package entity.interface_adapter.delete_task;public class DeleteTaskPresenter {
 }
