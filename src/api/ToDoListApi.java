@@ -1,4 +1,4 @@
-package entity.src.api;
+package src.api;
 
 public class ToDoListApi {
 }

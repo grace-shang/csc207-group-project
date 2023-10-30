@@ -1,4 +1,4 @@
-package entity.api;
+package src.api;
 public interface Todo {
 
     Projects getProject(String name);

@@ -1,4 +1,4 @@
-package entity.interface_adapter.complete_task;
+package src.interface_adapter.complete_task;
 
 public class CompleteTaskController {
 }

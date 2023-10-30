@@ -1,2 +1,2 @@
-package entity.interface_adapter.delete_task;public class DeleteTaskState {
+package src.interface_adapter.delete_task;public class DeleteTaskState {
 }

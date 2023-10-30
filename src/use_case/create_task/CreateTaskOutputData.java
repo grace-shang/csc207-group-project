@@ -1,4 +1,4 @@
-package entity.use_case.create_task;
+package src.use_case.create_task;
 
 public class CreateTaskOutputData {
 }
