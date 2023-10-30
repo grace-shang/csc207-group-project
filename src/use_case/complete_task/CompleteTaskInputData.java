@@ -1,4 +1,4 @@
-package entity.use_case.complete_task;
+package src.use_case.complete_task;
 
 public class CompleteTaskInputData {
 }

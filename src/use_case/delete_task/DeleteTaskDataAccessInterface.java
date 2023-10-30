@@ -1,4 +1,4 @@
-package entity.use_case.delete_task;
+package src.use_case.delete_task;
 
 public interface DeleteTaskDataAccessInterface {
 }

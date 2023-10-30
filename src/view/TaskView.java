@@ -1,4 +1,4 @@
-package entity.src.view;
+package src.src.view;
 
 public class TaskView {
 }

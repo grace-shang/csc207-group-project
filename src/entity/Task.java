@@ -1,4 +1,4 @@
-package entity.src.entity;
+package src.entity;
 
 abstract class Task {
 

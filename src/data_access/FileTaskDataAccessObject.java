@@ -1,4 +1,4 @@
-package entity.src.data_access;
+package src.data_access;
 
 public class FileTaskDataAccessObject {
 }

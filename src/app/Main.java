@@ -1,14 +1,11 @@
-package app;
+package src.app;
 
 import javax.swing.*;
 import java.awt.*;
 import java.io.IOException;
-import entity.src.entity.CourseTask;
-import entity.src.entity.PersonalTask;
-import entity.src.entity.Course;
-import interface_adapter.TaskViewModel;
-import use_case.login.LoginUserDataAccessInterface;
-import entity.src.view.TaskView;
+import src.entity.CourseTask;
+import src.entity.PersonalTask;
+import src.entity.Course;
 
 import javax.swing.*;
 import java.awt.*;

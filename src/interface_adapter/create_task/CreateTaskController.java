@@ -1,4 +1,4 @@
-package entity.src.interface_adapter;
+package src.interface_adapter.create_task;
 
 public class CreateTaskController {
 }
