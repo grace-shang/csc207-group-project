@@ -1,4 +1,4 @@
-package src.src.view;
+package src.view;
 
 public class TaskView {
 }
