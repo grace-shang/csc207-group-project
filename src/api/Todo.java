@@ -1,7 +1,4 @@
-package api;
-
-import entity.Projects;
-import org.json.JSONException;
+package entity.api;
 public interface Todo {
 
     Projects getProject(String name);

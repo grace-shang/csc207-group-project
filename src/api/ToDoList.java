@@ -1,5 +1,4 @@
-package api;
-import entity.Projects;
+package entity.api;
 import okhttp3.*;
 import org.json.JSONException;
 import org.json.JSONObject;

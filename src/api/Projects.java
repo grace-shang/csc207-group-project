@@ -1,4 +1,4 @@
-package entity;
+package entity.api;
 
 public class Projects {
     private static String name;
