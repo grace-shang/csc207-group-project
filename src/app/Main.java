@@ -1,11 +1,15 @@
-package app;
+package src.app;
 
 import javax.swing.*;
 import java.awt.*;
 import java.io.IOException;
+import src.entity.CourseTask;
+import src.entity.PersonalTask;
+import src.entity.Course;
 
-import src.interface_adapter.TaskViewModel;
-import use_case.login.LoginUserDataAccessInterface;
+import javax.swing.*;
+import java.awt.*;
+import java.io.IOException;
 
 public class Main {
     // The main application window.
