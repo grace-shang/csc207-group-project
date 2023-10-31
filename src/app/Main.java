@@ -6,10 +6,9 @@ import java.io.IOException;
 import src.entity.CourseTask;
 import src.entity.PersonalTask;
 import src.entity.Course;
-
-import javax.swing.*;
-import java.awt.*;
-import java.io.IOException;
+import src.interface_adapter.complete_task.CompleteTaskViewModel;
+import src.interface_adapter.create_task.CreateTaskViewModel;
+import src.interface_adapter.delete_task.DeleteTaskViewModel;
 
 public class Main {
     // The main application window.
@@ -24,39 +23,27 @@ public class Main {
 
     // This keeps track of and manages which view is currently showing.
     ViewManagerModel viewManagerModel = new ViewManagerModel();
-        new ViewManager(views, cardLayout, viewManagerModel);
+    new viewManager(views, cardLayout, viewManagerModel);
 
-    // The data for the views, such as username and password, are in the ViewModels.
-    // This information will be changed by a presenter object that is reporting the
-    // results from the use case. The ViewModels are observable, and will
-    // be observed by the Views.
-    LoginViewModel loginViewModel = new LoginViewModel();
-    LoggedInViewModel loggedInViewModel = new LoggedInViewModel();
-    SignupViewModel signupViewModel = new SignupViewModel();
-    ClearViewModel clearViewModel = new ClearViewModel();
+    // The view models
+    CreateTaskViewModel createTaskViewModel = new CreateTaskViewModel();
+    CompleteTaskViewModel completeTaskViewModel = new CompleteTaskViewModel();
+    DeleteTaskViewModel deleteTaskViewModel = new DeleteTaskViewModel();
 
     FileUserDataAccessObject userDataAccessObject;
-        try {
+        try
+
+    {
         userDataAccessObject = new FileUserDataAccessObject("./users.csv", new CommonUserFactory());
-    } catch (
-    IOException e) {
+    } catch(
+    IOException e)
+
+    {
         throw new RuntimeException(e);
     }
 
     SignupView signupView = SignupUseCaseFactory.create(viewManagerModel, loginViewModel, signupViewModel, userDataAccessObject, userDataAccessObject, clearViewModel);
-        views.add(signupView, signupView.viewName);
-
-    LoginView loginView = LoginUseCaseFactory.create(viewManagerModel, loginViewModel, loggedInViewModel, userDataAccessObject);
-        views.add(loginView, loginView.viewName);
-
-    LoggedInView loggedInView = new LoggedInView(loggedInViewModel);
-        views.add(loggedInView, loggedInView.viewName);
-
-        viewManagerModel.setActiveView(signupView.viewName);
-        viewManagerModel.firePropertyChanged();
-
-        application.pack();
-        application.setVisible(true);
-
-
+        views.add(signupView,signupView.viewName);
 }
+
+
