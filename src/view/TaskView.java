@@ -1,8 +1,8 @@
-package src.view;
+package view;
 
-import interface_adapter.create_task.ClearController;
-import interface_adapter.create_task.ClearState;
-import interface_adapter.create_task.ClearViewModel;
+import interface_adapter.create_task.CreateTaskController;
+import interface_adapter.create_task.CreateTaskState;
+import interface_adapter.create_task.CreateTaskViewModel;
 
 import javax.swing.*;
 import java.awt.*;
