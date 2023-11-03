@@ -3,6 +3,8 @@ package view;
 import interface_adapter.create_task.CreateTaskController;
 import interface_adapter.create_task.CreateTaskState;
 import interface_adapter.create_task.CreateTaskViewModel;
+import interface_adapter.mainpage.TaskViewModel;
+import interface_adapter.ViewModel;
 
 import javax.swing.*;
 import java.awt.*;
@@ -19,21 +21,27 @@ public class TaskView extends JPanel implements ActionListener, PropertyChangeLi
 
     public final String viewName = "Task Page";
 
-    private final JTextArea taskInputField = new JTextArea();
-
     private final CreateTaskController createTaskController;
+    private final TaskViewModel taskViewModel;
+
+    private final JTextArea createInputField = new JTextArea();
+
     private final JButton createTask;
 
 
-    public TaskView(CreateTaskController createTaskController){
+    public TaskView(CreateTaskController createTaskController, TaskViewModel taskViewModel){
         this.createTaskController = createTaskController;
+        this.taskViewModel = taskViewModel;
 
-        JLabel title = new JLabel(TaskView.TITLE_LABEl);
+        taskViewModel.addPropertyChangeListener(this);
+
+        JLabel title = new JLabel(TaskViewModel.TITLE_LABEL);
         title.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-        LabelTextPanel createInfo = new LabelTextPanel(new JLabel(TaskView.CREATE_LABEL), createInputField);
 
-        createTask = newJbutton(TaskView.Create_Button_Label);
+        LabelTextPanel createInfo = new LabelTextPanel(new JLabel(TaskViewModel.CREATE_TASK_LABEL), createInputField);
+
+        createTask = new Jbutton(TaskViewModel.CREATE_BUTTON_LABEL);
         buttons.add(createTask);
 
     }
