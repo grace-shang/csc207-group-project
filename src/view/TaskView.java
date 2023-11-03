@@ -41,7 +41,8 @@ public class TaskView extends JPanel implements ActionListener, PropertyChangeLi
 
         LabelTextPanel createInfo = new LabelTextPanel(new JLabel(TaskViewModel.CREATE_TASK_LABEL), createInputField);
 
-        createTask = new Jbutton(TaskViewModel.CREATE_BUTTON_LABEL);
+        JPanel buttons = new JPanel();
+        createTask = new JButton(TaskViewModel.CREATE_BUTTON_LABEL);
         buttons.add(createTask);
 
     }
