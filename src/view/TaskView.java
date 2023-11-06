@@ -62,7 +62,6 @@ public class TaskView extends JPanel implements ActionListener, PropertyChangeLi
                     }
                 }
         );
-        );
     }
 
     @Override
