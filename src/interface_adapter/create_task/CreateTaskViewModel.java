@@ -1,4 +1,4 @@
-package interface_adapter.create_task;
+package src.interface_adapter.create_task;
 
 public class CreateTaskViewModel {
 }
