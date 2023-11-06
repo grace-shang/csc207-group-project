@@ -2,11 +2,11 @@ package src.entity;
 
 public class PersonalTask extends Task{
 
-    String event;
-    String location;
+    private String event;
+    private String location;
 
-    public PersonalTask(String courseName, boolean complete, String event, String location) {
-        super(courseName, complete);
+    public PersonalTask(String taskName, boolean complete, String event, String location) {
+        super(taskName, complete);
         this.event = event;
         this.location = location;
     }
@@ -14,6 +14,4 @@ public class PersonalTask extends Task{
     public String getEvent() {return event;}
 
     public String getLocation() {return location;}
-
-
 }
