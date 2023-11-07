@@ -1,5 +1,9 @@
-package src.api;
+package api;
+
+
 public interface Todo {
+
+    void addTask(String projectName, String taskName);
 
     Projects getProject(String name);
 
