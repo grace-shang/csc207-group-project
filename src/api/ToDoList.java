@@ -1,4 +1,4 @@
-package src.api;
+package api;
 import okhttp3.*;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -32,6 +32,32 @@ public class ToDoList implements Todo{
     @Override
     public Projects logProject(String name, boolean favourite) throws JSONException {
         return null;
+    }
+
+    @Override
+    public void addTask(String projectName, String taskName) {
+        JSONObject task = new JSONObject();
+        try{
+            task.put("project_name", projectName);
+            task.put("task_name", taskName);
+        }catch (JSONException e){
+            throw new RuntimeException(e);
+        }
+
+        OkHttpClient client = new OkHttpClient().newBuilder().build();
+        RequestBody requestBody = RequestBody.create(MediaType.parse("application/json; charset=utf-8"), task.toString());
+
+        Request request = new Request.Builder()
+                .url("@doist/todoist-api-typescript")
+                .post(requestBody)
+                .build();
+
+        try{
+            Response response = client.newCall(request).execute();
+            System.out.println(response);
+        } catch (IOException e){
+            throw new RuntimeException();
+        }
     }
 
 

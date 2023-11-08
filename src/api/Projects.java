@@ -1,4 +1,4 @@
-package src.api;
+package api;
 
 public class Projects {
     private static String name;
