@@ -5,8 +5,6 @@ import interface_adapter.create_task.CreateTaskViewModel
 import view.ViewManager;
 import use_case.create_task.CreateTaskOutputBoundary;
 import use_case.create_task.CreateTaskOutputData;
-import api.Todo;
-
 
 public class CreateTaskPresenter implements CreateTaskOutputBoundary{
 
@@ -25,7 +23,6 @@ public class CreateTaskPresenter implements CreateTaskOutputBoundary{
     public void prepareSuccessView(CreateTaskOutputBoundary response) {
         CreateTaskState createTaskState = createTaskViewModel.getState();
         createTaskState.getTask();
-
 
 
     }
