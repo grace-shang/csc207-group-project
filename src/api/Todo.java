@@ -1,6 +1,8 @@
 package api;
 
 
+import org.json.JSONException;
+
 public interface Todo {
 
     void addTask(String projectName, String taskName);

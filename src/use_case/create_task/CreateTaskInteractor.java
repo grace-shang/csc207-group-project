@@ -1,14 +1,32 @@
 package use_case.create_task;
 
-public class CreateTaskInteractor {
-    final CreateTaskDataAccessInterface userDataAccessObject;
+import entity.TaskI;
+import entity.TaskFactory;
+import api.Todo;
+
+public class CreateTaskInteractor implements CreateTaskInputBoundary{
+    final CreateTaskDataAccessInterface taskDataAccessObject;
 
     final CreateTaskOutputBoundary userPresenter;
 
-    public CreateTaskInteractor(CreateTaskDataAccessInterface userDataAccessObject,
-                                CreateTaskOutputBoundary userPresenter){
-        this.userDataAccessObject = userDataAccessObject;
+    final TaskFactory taskFactory;
+
+    public CreateTaskInteractor(CreateTaskDataAccessInterface taskDataAccessObject,
+                                CreateTaskOutputBoundary userPresenter,
+                                TaskFactory taskFactory){
+        this.taskDataAccessObject = taskDataAccessObject;
         this.userPresenter = userPresenter;
+        this.taskFactory = taskFactory;
+    }
+
+    public void execute(CreateTaskInputData createTaskInputData){
+        TaskI taskI = taskFactory.create(createTaskInputData.getCreateTask());
+        taskDataAccessObject.save(taskI);
+
+        taskDataAccessObject.addTask(taskI);
+
+
+        CreateTaskOutputData createTaskOutputData = new CreateTaskOutputData(taskI.getName());
     }
 
 

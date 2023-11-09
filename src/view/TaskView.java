@@ -27,6 +27,7 @@ public class TaskView extends JPanel implements ActionListener, PropertyChangeLi
 
     private final JTextArea createInputField = new JTextArea();
 
+    private final JTextArea createTaskProjectInputField = new JTextArea();
     private final JButton createTask;
 
 
@@ -42,6 +43,8 @@ public class TaskView extends JPanel implements ActionListener, PropertyChangeLi
 
         LabelTextPanel createInfo = new LabelTextPanel(
                 new JLabel(CreateTaskViewModel.CREATE_TASK_LABEL), createInputField);
+        LabelTextPanel createProjectInfo = new LabelTextPanel(new JLabel(CreateTaskViewModel.CREATE_TASK_PROJECT_LABEL),
+                createTaskProjectInputField);
 
         JPanel buttons = new JPanel();
         createTask = new JButton(CreateTaskViewModel.CREATE_BUTTON_LABEL);
@@ -56,9 +59,13 @@ public class TaskView extends JPanel implements ActionListener, PropertyChangeLi
                             CreateTaskState currentState = CreateTaskViewModel.getState();
 
                             CreateTaskController.execute(
-                                    currentState.getTask()
+                                    currentState.getTask(),
+                                    String.valueOf(currentState.getProject())
                             );
                         }
+                        CreateTaskState currentState = CreateTaskViewModel.getState();
+                        JLabel final_task = new JLabel(currentState.getTask());
+
                     }
                 }
         );
