@@ -1,4 +1,4 @@
-package src.app;
+package app;
 
 import javax.swing.*;
 import java.awt.*;
@@ -7,13 +7,13 @@ import src.entity.CourseTask;
 import src.entity.PersonalTask;
 import src.entity.Course;
 import src.interface_adapter.complete_task.CompleteTaskViewModel;
-import src.interface_adapter.create_task.CreateTaskViewModel;
+import interface_adapter.create_task.CreateTaskViewModel;
 import src.interface_adapter.delete_task.DeleteTaskViewModel;
 
 public class Main {
     // The main application window.
     JFrame application = new JFrame("Login Example");
-        application.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+    application.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
     CardLayout cardLayout = new CardLayout();
 
