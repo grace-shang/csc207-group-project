@@ -12,8 +12,8 @@ public class CreateTaskController {
 
     }
 
-    public void execute(String task){
-        CreateTaskInputData createTaskInputData = new CreateTaskInputData(task);
+    public void execute(String task, String projectName){
+        CreateTaskInputData createTaskInputData = new CreateTaskInputData(task, projectName);
 
         userCreateTaskUseCaseInteractor.execute(createTaskInputData);
     }

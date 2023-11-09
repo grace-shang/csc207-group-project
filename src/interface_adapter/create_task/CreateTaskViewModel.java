@@ -14,6 +14,8 @@ public class CreateTaskViewModel extends ViewModel {
 
     public static final String CREATE_TASK_LABEL = "Write New Task";
 
+    public static final String CREATE_TASK_PROJECT_LABEL = "Write Project Name";
+
 
     private CreateTaskState state = new CreateTaskState();
 
