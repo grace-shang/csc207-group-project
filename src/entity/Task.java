@@ -1,6 +1,6 @@
 package entity;
 
-abstract class Task {
+abstract class Task implements TaskI{
 
     String taskName;
     boolean complete;
