@@ -1,4 +1,4 @@
-package src.use_case.complete_task;
+package use_case.complete_task;
 
 public interface CompleteTaskDataAccessInterface {
 }
