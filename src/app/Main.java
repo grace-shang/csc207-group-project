@@ -46,7 +46,7 @@ public class Main {
 //            throw new RuntimeException(e);
 //        }
 
-        TaskView taskView = SignupUseCaseFactory.create(viewManagerModel, loginViewModel, signupViewModel, userDataAccessObject, userDataAccessObject, clearViewModel);
+        TaskView taskView = TaskUseCaseFactory.create(viewManagerModel, loginViewModel, signupViewModel, userDataAccessObject, userDataAccessObject, clearViewModel);
         views.add(taskView, taskView.viewName);
 
         viewManagerModel.setActiveView(taskView.viewName);
