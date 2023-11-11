@@ -5,18 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="6207bd6a-41bf-4c6c-af49-9387b06240de" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/entity/AllTaskFactory.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/jarRepositories.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/pom.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/uiDesigner.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/api/ToDoList.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/api/ToDoList.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/api/Todo.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/api/Todo.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/entity/AllTaskFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/entity/AllTaskFactory.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -114,6 +106,8 @@
       <workItem from="1699746057416" duration="15000" />
       <workItem from="1699746076071" duration="47000" />
       <workItem from="1699746141680" duration="29000" />
+      <workItem from="1699746177991" duration="286000" />
+      <workItem from="1699746872552" duration="14000" />
     </task>
     <servers />
   </component>
