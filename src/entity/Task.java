@@ -3,22 +3,14 @@ package entity;
 class Task implements TaskI{
 
     String taskName;
-
-    String projectName;
     boolean complete;
 
-    public Task(String taskName, boolean complete, String projectName) {
+    public Task(String taskName, boolean complete) {
         this.taskName = taskName;
         this.complete = complete;
-        this.projectName = projectName;
     }
 
     public String getName() {return taskName;}
-
-    @Override
-    public String getProjectName() {
-        return projectName;
-    }
 
     public boolean getComplete() {return complete;}
 
