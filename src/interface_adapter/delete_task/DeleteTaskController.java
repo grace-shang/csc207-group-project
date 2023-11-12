@@ -1,2 +1,2 @@
-package src.interface_adapter.delete_task;public class DeleteTaskController {
+package interface_adapter.delete_task;public class DeleteTaskController {
 }
