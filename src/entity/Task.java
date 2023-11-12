@@ -5,9 +5,9 @@ class Task implements TaskI{
     String taskName;
     boolean complete;
 
-    public Task(String taskName, boolean complete) {
+    public Task(String taskName) {
         this.taskName = taskName;
-        this.complete = complete;
+        this.complete = false;
     }
 
     public String getName() {return taskName;}
