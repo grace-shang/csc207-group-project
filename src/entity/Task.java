@@ -5,9 +5,16 @@ class Task implements TaskI{
     String taskName;
     boolean complete;
 
-    public Task(String taskName, boolean complete) {
+    // Default constructor. Default value of complete is false.
+    public Task(String taskName) {
         this.taskName = taskName;
-        this.complete = complete;
+        this.complete = false;
+    }
+
+    // Overloaded constructor with the optional parameter of isCompleted.
+    public Task(String taskName, boolean isCompleted) {
+        this.taskName = taskName;
+        this.complete = isCompleted;
     }
 
     public String getName() {return taskName;}

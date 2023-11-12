@@ -33,7 +33,7 @@ public class TaskUseCaseFactory {
     private TaskUseCaseFactory() {}
 
     public static TaskView create(
-            ViewManagerModel viewManagerModel, DeleteTaskViewModel deleteTaskViewModel, CreateTaskViewModel createTaskViewModel, CompleteTaskViewModel completeTaskViewModel, DeleteTaskDataAccessInterface taskDataAccessObjectDelete, CreateTaskDataAccessInterface taskDataAccessObjectCreate, CompleteTaskDataAccessInterface taskDataAccessObjectComplete) {
+            ViewManagerModel viewManagerModel, DeleteTaskViewModel deleteTaskViewModel, CreateTaskViewModel createTaskViewModel, CompleteTaskViewModel completeTaskViewModel) {
 
         try {
             CreateTaskController createTaskController = createTaskUseCase(viewManagerModel, signupViewModel, loginViewModel, userDataAccessObject);
@@ -72,12 +72,11 @@ public class TaskUseCaseFactory {
 
     private static CompleteTaskController createCompleteUseCase(ViewManagerModel viewManagerModel, ClearViewModel clearViewModel, ClearUserDataAccessInterface userDataAccessObject) throws IOException {
         // Notice how we pass this method's parameters to the Presenter.
-        ClearOutputBoundary clearOutputBoundary = new ClearPresenter(clearViewModel, viewManagerModel);
+        CompleteTaskOutputBoundary completeOutputBoundary = new CompleteTaskPresenter();
 
-        ClearInteractor userClearInteractor = new ClearInteractor(
-                userDataAccessObject, clearOutputBoundary);
+        CompleteTaskInteractor completeInteractor = new CompleteTaskInteractor();
 
-        return new ClearController(userClearInteractor);
+        return new CompleteTaskController();
     }
 
 }

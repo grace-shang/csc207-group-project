@@ -2,8 +2,9 @@ package app;
 
 import data_access.FileTaskDataAccessObject;
 import interface_adapter.complete_task.CompleteTaskController;
-import src.interface_adapter.complete_task.CompleteTaskViewModel;
+import interface_adapter.complete_task.CompleteTaskViewModel;
 import interface_adapter.create_task.CreateTaskViewModel;
+import interface_adapter.delete_task.DeleteTaskViewModel;
 import use_case.create_task.CreateTaskDataAccessInterface;
 import view.TaskView;
 import view.ViewManager;
@@ -38,6 +39,7 @@ public class Main {
         // be observed by the Views.
         CreateTaskViewModel createTaskViewModel = new CreateTaskViewModel();
         CompleteTaskViewModel completeTaskViewModel = new CompleteTaskViewModel();
+        DeleteTaskViewModel deleteTaskViewModel = new DeleteTaskViewModel();
 
 //        FileTaskDataAccessObject taskDataAccessObject;
 //        try {
@@ -46,7 +48,7 @@ public class Main {
 //            throw new RuntimeException(e);
 //        }
 
-        TaskView taskView = TaskUseCaseFactory.create(viewManagerModel, loginViewModel, signupViewModel, userDataAccessObject, userDataAccessObject, clearViewModel);
+        TaskView taskView = TaskUseCaseFactory.create(viewManagerModel, deleteTaskViewModel, createTaskViewModel, completeTaskViewModel);
         views.add(taskView, taskView.viewName);
 
         viewManagerModel.setActiveView(taskView.viewName);
