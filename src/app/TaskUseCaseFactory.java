@@ -72,12 +72,11 @@ public class TaskUseCaseFactory {
 
     private static CompleteTaskController createCompleteUseCase(ViewManagerModel viewManagerModel, ClearViewModel clearViewModel, ClearUserDataAccessInterface userDataAccessObject) throws IOException {
         // Notice how we pass this method's parameters to the Presenter.
-        ClearOutputBoundary clearOutputBoundary = new ClearPresenter(clearViewModel, viewManagerModel);
+        CompleteTaskOutputBoundary completeOutputBoundary = new CompleteTaskPresenter();
 
-        ClearInteractor userClearInteractor = new ClearInteractor(
-                userDataAccessObject, clearOutputBoundary);
+        CompleteTaskInteractor completeInteractor = new CompleteTaskInteractor();
 
-        return new ClearController(userClearInteractor);
+        return new CompleteTaskController();
     }
 
 }
