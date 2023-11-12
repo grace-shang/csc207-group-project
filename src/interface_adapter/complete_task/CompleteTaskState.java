@@ -1,4 +1,4 @@
-package src.interface_adapter.complete_task;
+package interface_adapter.complete_task;
 
 public class CompleteTaskState {
 }
