@@ -33,7 +33,7 @@ public class TaskUseCaseFactory {
     private TaskUseCaseFactory() {}
 
     public static TaskView create(
-            ViewManagerModel viewManagerModel, DeleteTaskViewModel deleteTaskViewModel, CreateTaskViewModel createTaskViewModel, CompleteTaskViewModel completeTaskViewModel, DeleteTaskDataAccessInterface taskDataAccessObjectDelete, CreateTaskDataAccessInterface taskDataAccessObjectCreate, CompleteTaskDataAccessInterface taskDataAccessObjectComplete) {
+            ViewManagerModel viewManagerModel, DeleteTaskViewModel deleteTaskViewModel, CreateTaskViewModel createTaskViewModel, CompleteTaskViewModel completeTaskViewModel) {
 
         try {
             CreateTaskController createTaskController = createTaskUseCase(viewManagerModel, signupViewModel, loginViewModel, userDataAccessObject);
