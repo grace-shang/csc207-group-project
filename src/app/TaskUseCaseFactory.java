@@ -20,7 +20,7 @@ import use_case.create_task.CreateTaskDataAccessInterface;
 import use_case.delete_task.DeleteTaskInteractor;
 import use_case.delete_task.DeleteTaskOutputBoundary;
 import use_case.delete_task.DeleteTaskDataAccessInterface;
-import entity.CommonTaskFactory;
+import entity.AllTaskFactory;
 import entity.TaskFactory;
 import view.TaskView;
 import interface_adapter.ViewManagerModel;
