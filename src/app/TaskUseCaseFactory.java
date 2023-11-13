@@ -9,6 +9,7 @@ import interface_adapter.create_task.CreateTaskViewModel;
 import interface_adapter.delete_task.DeleteTaskController;
 import interface_adapter.delete_task.DeleteTaskPresenter;
 import interface_adapter.delete_task.DeleteTaskViewModel;
+import use_case.complete_task.CompleteTaskInputBoundary;
 import use_case.complete_task.CompleteTaskInteractor;
 import use_case.complete_task.CompleteTaskOutputBoundary;
 import use_case.complete_task.CompleteTaskDataAccessInterface;
@@ -70,13 +71,14 @@ public class TaskUseCaseFactory {
         return new ClearController(userClearInteractor);
     }
 
-    private static CompleteTaskController createCompleteUseCase(ViewManagerModel viewManagerModel, ClearViewModel clearViewModel, ClearUserDataAccessInterface userDataAccessObject) throws IOException {
+    private static CompleteTaskController createCompleteUseCase(ViewManagerModel viewManagerModel, CompleteTaskViewModel completeTaskViewModel,
+                                                                CompleteTaskDataAccessInterface completeTaskDataObject) throws IOException {
         // Notice how we pass this method's parameters to the Presenter.
-        CompleteTaskOutputBoundary completeOutputBoundary = new CompleteTaskPresenter();
+        CompleteTaskOutputBoundary completeOutputBoundary = new CompleteTaskPresenter(viewManagerModel, completeTaskViewModel);
 
-        CompleteTaskInteractor completeInteractor = new CompleteTaskInteractor();
+        CompleteTaskInputBoundary completeInteractor = new CompleteTaskInteractor(completeTaskDataObject, completeOutputBoundary);
 
-        return new CompleteTaskController();
+        return new CompleteTaskController(completeInteractor);
     }
 
 }
