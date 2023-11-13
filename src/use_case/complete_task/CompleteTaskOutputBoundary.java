@@ -1,7 +1,7 @@
 package use_case.complete_task;
 
-import use_case.create_task.CreateTaskOutputBoundary;
+import use_case.complete_task.CompleteTaskOutputData;
 
 public interface CompleteTaskOutputBoundary {
-    void prepareSuccessView(CreateTaskOutputBoundary task);
+    void prepareSuccessView(CompleteTaskOutputData completed);
 }
