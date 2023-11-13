@@ -1,2 +1,5 @@
-package entity;public class AllTaskFactory {
+package entity;
+
+
+public class AllTaskFactory {
 }
