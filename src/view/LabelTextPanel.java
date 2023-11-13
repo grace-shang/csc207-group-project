@@ -8,4 +8,5 @@ public class LabelTextPanel extends JPanel{
         this.add(textField);
     }
 }
-}
+
+

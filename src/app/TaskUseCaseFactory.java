@@ -24,6 +24,7 @@ import entity.CommonTaskFactory;
 import entity.TaskFactory;
 import view.TaskView;
 import interface_adapter.ViewManagerModel;
+import view.ViewManager;
 
 import javax.swing.*;
 import java.io.IOException;
@@ -48,17 +49,16 @@ public class TaskUseCaseFactory {
         return null;
     }
 
-    private static CreateTaskController createTaskUseCase(ViewManagerModel viewManagerModel, SignupViewModel signupViewModel, LoginViewModel loginViewModel, SignupUserDataAccessInterface userDataAccessObject) throws IOException {
+    private static CreateTaskController createTaskUseCase(ViewManager viewManagerModel, CreateTaskViewModel createTaskViewModel, CreateTaskDataAccessInterface userDataAccessObject) throws IOException {
 
-        // Notice how we pass this method's parameters to the Presenter.
-        SignupOutputBoundary signupOutputBoundary = new SignupPresenter(viewManagerModel, signupViewModel, loginViewModel);
+        CreateTaskOutputBoundary createTaskOutputBoundary = new CreateTaskPresenter(createTaskViewModel, viewManagerModel);
 
         UserFactory userFactory = new CommonUserFactory();
 
-        SignupInputBoundary userSignupInteractor = new SignupInteractor(
+        CreateTaskInputBoundary userCreateTaskInteractor = new CreateTaskInteractor(
                 userDataAccessObject, signupOutputBoundary, userFactory);
 
-        return new SignupController(userSignupInteractor);
+        return new CreateTaskController(CreateTaskInteractor);
     }
 
     private static DeleteTaskController createDeleteUseCase(ViewManagerModel viewManagerModel, ClearViewModel clearViewModel, ClearUserDataAccessInterface userDataAccessObject) throws IOException {
