@@ -36,11 +36,12 @@ public class TaskUseCaseFactory {
     private TaskUseCaseFactory() {}
 
     public static TaskView create(
-            ViewManagerModel viewManagerModel, DeleteTaskViewModel deleteTaskViewModel, CreateTaskViewModel createTaskViewModel, CompleteTaskViewModel completeTaskViewModel) {
+            ViewManagerModel viewManagerModel, DeleteTaskViewModel deleteTaskViewModel, CreateTaskViewModel createTaskViewModel, CreateTaskDataAccessInterface createTaskDataAccessInterface,
+            CompleteTaskViewModel completeTaskViewModel) {
 
         try {
-            CreateTaskController createTaskController = createTaskUseCase(viewManagerModel, signupViewModel, loginViewModel, userDataAccessObject);
-            CompleteTaskController completeTaskController =  createCompleteUseCase(viewManagerModel, clearViewModel, userDataAccessObjectClear);
+            CreateTaskController createTaskController = createTaskUseCase(viewManagerModel, createTaskViewModel, createTaskDataAccessInterface);
+            CompleteTaskController completeTaskController =  createCompleteUseCase(viewManagerModel);
             ///DeleteTaskController deleteTaskController =  createDeleteUseCase(viewManagerModel, clearViewModel, userDataAccessObjectClear);
             return new TaskView(createTaskController, createTaskViewModel, completeTaskController, completeTaskViewModel);
         } catch (IOException e) {
