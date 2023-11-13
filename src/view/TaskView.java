@@ -1,5 +1,7 @@
 package view;
 
+import interface_adapter.complete_task.CompleteTaskController;
+import interface_adapter.complete_task.CompleteTaskViewModel;
 import interface_adapter.create_task.CreateTaskController;
 import interface_adapter.create_task.CreateTaskState;
 import interface_adapter.create_task.CreateTaskViewModel;
@@ -25,15 +27,20 @@ public class TaskView extends JPanel implements ActionListener, PropertyChangeLi
     private final CreateTaskController createTaskController;
     private final CreateTaskViewModel createTaskViewModel;
 
+    private final CompleteTaskController completeTaskController;
+    private final CompleteTaskViewModel completeTaskViewModel;
     private final JTextArea createInputField = new JTextArea();
 
     private final JTextArea createTaskProjectInputField = new JTextArea();
     private final JButton createTask;
 
 
-    public TaskView(CreateTaskController createTaskController, CreateTaskViewModel createTaskViewModel){
+    public TaskView(CreateTaskController createTaskController, CreateTaskViewModel createTaskViewModel,
+                    CompleteTaskController completeTaskController, CompleteTaskViewModel completeTaskViewModel){
         this.createTaskController = createTaskController;
         this.createTaskViewModel = createTaskViewModel;
+        this.completeTaskController = completeTaskController;
+        this.completeTaskViewModel = completeTaskViewModel;
 
         createTaskViewModel.addPropertyChangeListener(this);
 
