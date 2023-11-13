@@ -1,5 +1,6 @@
 package app;
 
+import entity.AllTaskFactory;
 import interface_adapter.complete_task.CompleteTaskController;
 import interface_adapter.complete_task.CompleteTaskPresenter;
 import interface_adapter.complete_task.CompleteTaskViewModel;
@@ -53,12 +54,12 @@ public class TaskUseCaseFactory {
 
         CreateTaskOutputBoundary createTaskOutputBoundary = new CreateTaskPresenter(createTaskViewModel, viewManagerModel);
 
-        UserFactory userFactory = new CommonUserFactory();
+        TaskFactory userFactory = new AllTaskFactory();
 
         CreateTaskInputBoundary userCreateTaskInteractor = new CreateTaskInteractor(
-                userDataAccessObject, signupOutputBoundary, userFactory);
+                userDataAccessObject, createTaskOutputBoundary, userFactory);
 
-        return new CreateTaskController(CreateTaskInteractor);
+        return new CreateTaskController(userCreateTaskInteractor);
     }
 
     private static DeleteTaskController createDeleteUseCase(ViewManagerModel viewManagerModel, ClearViewModel clearViewModel, ClearUserDataAccessInterface userDataAccessObject) throws IOException {
