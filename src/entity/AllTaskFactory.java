@@ -1,11 +1,11 @@
 package entity;
 
+<<<<<<< HEAD
 import java.time.LocalDateTime;
 
-public class AllTaskFactory implements TaskFactory{
+public class AllTaskFactory implements TaskFactory {
     @Override
     public Task create(String taskName) {
         return new Task(taskName);
     }
-
 }

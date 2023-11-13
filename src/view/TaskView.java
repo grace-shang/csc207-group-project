@@ -56,14 +56,14 @@ public class TaskView extends JPanel implements ActionListener, PropertyChangeLi
                 new ActionListener() {
                     public void actionPerformed(ActionEvent evt) {
                         if (evt.getSource().equals(createTask)) {
-                            CreateTaskState currentState = CreateTaskViewModel.getState();
+                            CreateTaskState currentState = createTaskViewModel.getState();
 
-                            CreateTaskController.execute(
+                            createTaskController.execute(
                                     currentState.getTask(),
                                     String.valueOf(currentState.getProject())
                             );
                         }
-                        CreateTaskState currentState = CreateTaskViewModel.getState();
+                        CreateTaskState currentState = createTaskViewModel.getState();
                         JLabel final_task = new JLabel(currentState.getTask());
 
                     }

@@ -2,7 +2,6 @@ package use_case.create_task;
 
 import entity.TaskI;
 import entity.TaskFactory;
-import api.Todo;
 
 public class CreateTaskInteractor implements CreateTaskInputBoundary{
     final CreateTaskDataAccessInterface taskDataAccessObject;
