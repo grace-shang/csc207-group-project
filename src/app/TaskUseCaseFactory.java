@@ -41,7 +41,7 @@ public class TaskUseCaseFactory {
 
         try {
             CreateTaskController createTaskController = createTaskUseCase(viewManagerModel, createTaskViewModel, createTaskDataAccessInterface);
-            CompleteTaskController completeTaskController =  createCompleteUseCase(viewManagerModel);
+//            CompleteTaskController completeTaskController =  createCompleteUseCase(viewManagerModel);
             ///DeleteTaskController deleteTaskController =  createDeleteUseCase(viewManagerModel, clearViewModel, userDataAccessObjectClear);
             return new TaskView(createTaskController, createTaskViewModel, completeTaskController, completeTaskViewModel);
         } catch (IOException e) {

@@ -14,6 +14,8 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+import static java.lang.Boolean.parseBoolean;
+
 public class FileTaskDataAccessObject implements CreateTaskDataAccessInterface, CompleteTaskDataAccessInterface{
     private final File csvFile;
 
@@ -46,8 +48,8 @@ public class FileTaskDataAccessObject implements CreateTaskDataAccessInterface, 
                     String[] col = row.split(",");
                     String nameTask = String.valueOf(col[headers.get("task_name")]);
                     String completionTask = String.valueOf(col[headers.get("completion")]);
-                    TaskI task = taskFactory.create(nameTask, completionTask);
-                    accounts.put(username, user);
+                    TaskI task = taskFactory.create(nameTask, parseBoolean(completionTask));
+                    tasks.put(nameTask, task);
                 }
             }
         }
