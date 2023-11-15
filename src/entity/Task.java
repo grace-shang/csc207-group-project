@@ -8,9 +8,9 @@ class Task implements TaskI{
 
 
     // Default constructor. Default value of complete is false.
-    public Task(String taskName, String projectName, boolean completion) {
+    public Task(String taskName, String projectName) {
         this.taskName = taskName;
-        this.complete = completion;
+        this.complete = false;
 
     }
 

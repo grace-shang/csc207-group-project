@@ -11,13 +11,11 @@ public class CompleteTaskController {
 
     public CompleteTaskController(CompleteTaskInputBoundary completeTaskUseCaseInteractor){
         this.completeTaskUseCaseInteractor = completeTaskUseCaseInteractor;
-
     }
 
     public void execute(String task) throws IOException {
         CompleteTaskInputData completeTaskInputData = new CompleteTaskInputData(task);
         completeTaskUseCaseInteractor.execute(completeTaskInputData);
     }
-
 
 }
