@@ -5,10 +5,13 @@ class Task implements TaskI{
     String taskName;
     boolean complete;
 
+
+
     // Default constructor. Default value of complete is false.
-    public Task(String taskName, String projectName) {
+    public Task(String taskName, String projectName, boolean completion) {
         this.taskName = taskName;
-        this.complete = false;
+        this.complete = completion;
+
     }
 
     // Overloaded constructor with the optional parameter of isCompleted.
