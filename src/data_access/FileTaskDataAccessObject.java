@@ -26,13 +26,12 @@ public class FileTaskDataAccessObject implements CreateTaskDataAccessInterface, 
     private TaskFactory taskFactory;
     private Todo todo;
 
-    public FileTaskDataAccessObject(Todo todo, String file, TaskFactory taskFactory) throws IOException{
+    public FileTaskDataAccessObject(String file, TaskFactory taskFactory) throws IOException{
         this.taskFactory = taskFactory;
 
         csvFile = new File(file);
         headers.put("task_name", 0);
         headers.put("completion", 1);
-        this.todo = todo;
 
         if (csvFile.length() == 0) {
             save();
