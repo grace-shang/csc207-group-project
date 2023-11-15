@@ -1,10 +1,5 @@
 package interface_adapter.create_task;
 
-import view.ViewManager;
-import interface_adapter.ViewModel;
-
-import javax.swing.text.View;
-
 public class CreateTaskState{
 
     private String task = "";
@@ -14,8 +9,6 @@ public class CreateTaskState{
     private String project = "";
 
     private String projectError = null;
-
-    private CreateTaskState state = new CreateTaskState();
 
     public CreateTaskState(CreateTaskState copy){
         task = copy.task;
