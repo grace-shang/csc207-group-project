@@ -1,11 +1,13 @@
 package app;
 
+import api.Todo;
 import data_access.FileTaskDataAccessObject;
-import interface_adapter.complete_task.CompleteTaskController;
+import entity.AllTaskFactory;
 import interface_adapter.complete_task.CompleteTaskViewModel;
 import interface_adapter.create_task.CreateTaskViewModel;
 import interface_adapter.delete_task.DeleteTaskViewModel;
 import use_case.create_task.CreateTaskDataAccessInterface;
+import use_case.complete_task.CompleteTaskDataAccessInterface;
 import view.TaskView;
 import view.ViewManager;
 import interface_adapter.ViewManagerModel;
@@ -41,14 +43,14 @@ public class Main {
         CompleteTaskViewModel completeTaskViewModel = new CompleteTaskViewModel();
         DeleteTaskViewModel deleteTaskViewModel = new DeleteTaskViewModel();
 
-//        FileTaskDataAccessObject taskDataAccessObject;
-//        try {
-//            taskDataAccessObject = new FileTaskDataAccessObject("./users.csv", new CommonUserFactory());
-//        } catch (IOException e) {
-//            throw new RuntimeException(e);
-//        }
+        FileTaskDataAccessObject taskDataAccessObject;
+        try {
+            taskDataAccessObject = new FileTaskDataAccessObject("tasks.csv", new AllTaskFactory());
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
 
-        TaskView taskView = TaskUseCaseFactory.create(viewManagerModel, deleteTaskViewModel, createTaskViewModel, completeTaskViewModel);
+        TaskView taskView = TaskUseCaseFactory.create(viewManagerModel, deleteTaskViewModel, createTaskViewModel, taskDataAccessObject, completeTaskViewModel, taskDataAccessObject);
         views.add(taskView, taskView.viewName);
 
         viewManagerModel.setActiveView(taskView.viewName);
