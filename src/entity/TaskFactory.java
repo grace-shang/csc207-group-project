@@ -1,5 +1,5 @@
 package entity;
 
 public interface TaskFactory {
-    Task create(String taskName);
+    Task create(String taskName, boolean completion);
 }
