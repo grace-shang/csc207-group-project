@@ -29,9 +29,9 @@ public class TaskView extends JPanel implements ActionListener, PropertyChangeLi
 
     private final CompleteTaskController completeTaskController;
     private final CompleteTaskViewModel completeTaskViewModel;
-    private final JTextArea createInputField = new JTextArea();
+    private final JTextField createInputField = new JTextField(30);
 
-    private final JTextArea createTaskProjectInputField = new JTextArea();
+    private final JTextField createTaskProjectInputField = new JTextField(30);
     private final JButton createTask;
 
 
