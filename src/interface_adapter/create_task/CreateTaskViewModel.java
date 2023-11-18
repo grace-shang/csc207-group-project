@@ -10,7 +10,7 @@ public class CreateTaskViewModel extends ViewModel {
 
     public static final String CREATE_BUTTON_LABEL = "Create Task";
 
-    public static final String TITLE_LABEL = "Task View";
+    public static final String TITLE_LABEL = "Tasks";
 
     public static final String CREATE_TASK_LABEL = "Write New Task";
 

@@ -10,6 +10,7 @@ import interface_adapter.ViewModel;
 import view.LabelTextPanel;
 
 import javax.swing.*;
+import javax.swing.border.LineBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -56,6 +57,20 @@ public class TaskView extends JPanel implements ActionListener, PropertyChangeLi
         JPanel buttons = new JPanel();
         createTask = new JButton(CreateTaskViewModel.CREATE_BUTTON_LABEL);
         buttons.add(createTask);
+
+
+        // Create panel to display tasks
+        JPanel taskPanel = new JPanel();
+        taskPanel.setLayout(new GridBagLayout());
+        taskPanel.setBorder(LineBorder.createBlackLineBorder());
+
+        //Create scroller as needed vertically and horizontally
+        JScrollPane scroller = new JScrollPane(taskPanel, ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+        scroller.setPreferredSize(new Dimension(600,600));
+
+        //add panel and scroller to frame
+        this.add(taskPanel);
+        this.add(scroller);
 
 
         createTask.addActionListener(
