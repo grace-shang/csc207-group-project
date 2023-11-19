@@ -5,8 +5,6 @@ class Task implements TaskI{
     String taskName;
     boolean complete;
 
-
-
     // Default constructor. Default value of complete is false.
     public Task(String taskName) {
         this.taskName = taskName;
