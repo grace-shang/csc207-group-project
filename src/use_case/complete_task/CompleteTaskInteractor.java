@@ -17,7 +17,7 @@ public class CompleteTaskInteractor implements CompleteTaskInputBoundary{
 
     @Override
     public void execute(CompleteTaskInputData completeTaskInputData) {
-        CompleteTaskOutputData completeTaskOutputData = new CompleteTaskOutputData(false, completeDataAccessObject.getTask());
+        CompleteTaskOutputData completeTaskOutputData = new CompleteTaskOutputData(false);
         String completedTask = completeTaskInputData.getTaskName();
         // Finish execute method
         completeTaskPresenter.prepareSuccessView(completeTaskOutputData);

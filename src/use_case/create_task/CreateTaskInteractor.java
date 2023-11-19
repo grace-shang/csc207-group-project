@@ -24,7 +24,6 @@ public class CreateTaskInteractor implements CreateTaskInputBoundary{
 
         taskDataAccessObject.addTask(taskI);
 
-
         CreateTaskOutputData createTaskOutputData = new CreateTaskOutputData(taskI.getName());
     }
 
