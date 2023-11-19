@@ -2,9 +2,9 @@ package entity;
 
 public class PersonalTask extends Task{
 
-    private String event;
-    private String location;
-    private String projectName;
+    private final String event;
+    private final String location;
+    private final String projectName;
 
     public PersonalTask(String taskName, boolean complete, String event, String location) {
         super(taskName, complete);
