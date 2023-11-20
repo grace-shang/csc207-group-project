@@ -1,5 +1,6 @@
 package app;
 
+import api.ToDoList;
 import api.Todo;
 import data_access.FileTaskDataAccessObject;
 import entity.AllTaskFactory;
@@ -44,8 +45,10 @@ public class Main {
         DeleteTaskViewModel deleteTaskViewModel = new DeleteTaskViewModel();
 
         FileTaskDataAccessObject taskDataAccessObject;
+        Todo todo = new ToDoList();
+
         try {
-            taskDataAccessObject = new FileTaskDataAccessObject("tasks.csv", new AllTaskFactory());
+            taskDataAccessObject = new FileTaskDataAccessObject("tasks.csv", new AllTaskFactory(), todo);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
