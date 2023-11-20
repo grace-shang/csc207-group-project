@@ -1,2 +1,4 @@
-package use_case;public class DisplayTaskInteractor {
+package use_case.display_task;
+
+public class DisplayTaskInteractor {
 }
