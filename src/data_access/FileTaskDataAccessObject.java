@@ -73,7 +73,7 @@ public class FileTaskDataAccessObject implements CreateTaskDataAccessInterface, 
             writer.newLine();
 
             for (TaskI task : tasks.values()) {
-                String line = String.format("%s,%s,%s",
+                String line = String.format("%s,%s",
                         task.getName(), task.getComplete());
                 writer.write(line);
                 writer.newLine();
