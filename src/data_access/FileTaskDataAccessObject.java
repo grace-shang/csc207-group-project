@@ -24,10 +24,11 @@ public class FileTaskDataAccessObject implements CreateTaskDataAccessInterface, 
     private final Map<String, TaskI> tasks = new HashMap<>();
 
     private TaskFactory taskFactory;
-    private Todo todo;
+    private final Todo todo;
 
-    public FileTaskDataAccessObject(String file, TaskFactory taskFactory) throws IOException{
+    public FileTaskDataAccessObject(String file, TaskFactory taskFactory, Todo todo) throws IOException{
         this.taskFactory = taskFactory;
+        this.todo = todo;
 
         csvFile = new File(file);
         headers.put("task_name", 0);
@@ -52,8 +53,6 @@ public class FileTaskDataAccessObject implements CreateTaskDataAccessInterface, 
                 }
             }
         }
-
-
     }
 
     /**
@@ -96,6 +95,7 @@ public class FileTaskDataAccessObject implements CreateTaskDataAccessInterface, 
 
     @Override
     public void complete(TaskI task) throws IOException {
-
+        task.setComplete(true);
     }
+
 }
