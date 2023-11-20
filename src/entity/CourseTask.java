@@ -2,8 +2,8 @@ package entity;
 
 public class CourseTask extends Task{
 
-    private Course course;
-    private String projectName;
+    private final Course course;
+    private final String projectName;
 
     // Default constructor
     public CourseTask(String taskName, Course course) {

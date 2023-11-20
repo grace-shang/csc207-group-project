@@ -1,5 +1,10 @@
 package use_case.complete_task;
 
+import data_access.FileTaskDataAccessObject;
+import entity.TaskI;
+
+import java.io.IOException;
+
 public class CompleteTaskInteractor implements CompleteTaskInputBoundary{
     final CompleteTaskDataAccessInterface completeDataAccessObject;
     final CompleteTaskOutputBoundary completeTaskPresenter;
@@ -12,6 +17,9 @@ public class CompleteTaskInteractor implements CompleteTaskInputBoundary{
 
     @Override
     public void execute(CompleteTaskInputData completeTaskInputData) {
-        // Still need to write the execute method
+        CompleteTaskOutputData completeTaskOutputData = new CompleteTaskOutputData(false);
+        String completedTask = completeTaskInputData.getTaskName();
+        // Finish execute method
+        completeTaskPresenter.prepareSuccessView(completeTaskOutputData);
     }
 }
