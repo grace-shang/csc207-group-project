@@ -1,7 +1,6 @@
 package interface_adapter.create_task;
 
 public class CreateTaskState{
-
     private String task = "";
 
     private String taskError = null;

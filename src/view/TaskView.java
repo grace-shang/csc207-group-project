@@ -73,6 +73,7 @@ public class TaskView extends JPanel implements ActionListener, PropertyChangeLi
         this.add(scroller);
 
 
+
         createTask.addActionListener(
                 // This creates an anonymous subclass of ActionListener and instantiates it.
                 new ActionListener() {
@@ -80,14 +81,8 @@ public class TaskView extends JPanel implements ActionListener, PropertyChangeLi
                         if (evt.getSource().equals(createTask)) {
                             CreateTaskState currentState = createTaskViewModel.getState();
 
-                            createTaskController.execute(
-                                    currentState.getTask(),
-                                    String.valueOf(currentState.getProject())
-                            );
+                            createTaskController.execute(currentState.getTask());
                         }
-                        CreateTaskState currentState = createTaskViewModel.getState();
-                        JLabel final_task = new JLabel(currentState.getTask());
-
                     }
                 }
         );
