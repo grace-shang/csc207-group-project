@@ -14,6 +14,9 @@ import java.io.FileReader;
 import java.io.IOException;
 import api.Todo;
 import api.ToDoList;
+import view.TaskView;
+
+import static org.junit.Assert.assertNotNull;
 
 public class CreateTaskViewTest {
     static String message = "";
@@ -21,7 +24,7 @@ public class CreateTaskViewTest {
     /**
      * ensures there are at least 2 tasks in the CSV file for testing purposes
      */
-    public void addTwoUsers() {
+    public void addTwoTasks() {
         TaskFactory tf = new AllTaskFactory();
         FileTaskDataAccessObject ftdao;
         Todo todo = new ToDoList();
@@ -55,9 +58,9 @@ public class CreateTaskViewTest {
 
         JPanel jp2 = (JPanel) jp.getComponent(0);
 
-        SignupView sv = (SignupView) jp2.getComponent(0);
+        TaskView tv = (TaskView) jp2.getComponent(0);
 
-        JPanel buttons = (JPanel) sv.getComponent(4);
+        JPanel buttons = (JPanel) tv.getComponent(4);
 
         return (JButton) buttons.getComponent(2); // this should be the clear button
     }
@@ -82,7 +85,7 @@ public class CreateTaskViewTest {
     @org.junit.Test
     public void testClearUsersDeletedUsersFromFile() {
 
-        addTwoUsers();
+        addTwoTasks();
         Main.main(null);
         JButton button = getButton();
 
@@ -120,8 +123,7 @@ public class CreateTaskViewTest {
     @org.junit.Test
     public void testClearUsersPopUpShown() {
 
-        addTwoUsers();
-        popUpDiscovered = false;
+        addTwoTasks();
 
         Main.main(null);
         JFrame app = null;
@@ -147,7 +149,7 @@ public class CreateTaskViewTest {
     @org.junit.Test
     public void testClearUsersReturnedUsersDeleted() throws InterruptedException {
 
-        addTwoUsers();
+        addTwoTasks();
         message = "";
 
         Main.main(null);
