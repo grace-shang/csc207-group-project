@@ -6,6 +6,7 @@ import app.Main;
 import data_access.FileTaskDataAccessObject;
 import entity.AllTaskFactory;
 import entity.TaskFactory;
+import view.TaskView;
 
 import javax.swing.*;
 import java.awt.*;
@@ -15,13 +16,15 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 
+import static org.junit.Assert.assertNotNull;
+
 public class CompleteTaskViewTest {
     static String message = "";
 
     /**
      * ensures there are at least 2 tasks in the CSV file for testing purposes
      */
-    public void addTwoUsers() {
+    public void addTwoTasks() {
         TaskFactory tf = new AllTaskFactory();
         FileTaskDataAccessObject ftdao;
         Todo todo = new ToDoList();
@@ -35,7 +38,6 @@ public class CompleteTaskViewTest {
         ftdao.save(tf.create("task2", false));
     }
 
-    // END OF FIXED TEST CODE
     public JButton getButton() {
         JFrame app = null;
         Window[] windows = Window.getWindows();
@@ -45,7 +47,7 @@ public class CompleteTaskViewTest {
             }
         }
 
-        assertNotNull(app); // found the window?
+        assertNotNull(app); // Sees if the window was found
 
         Component root = app.getComponent(0);
 
@@ -55,17 +57,13 @@ public class CompleteTaskViewTest {
 
         JPanel jp2 = (JPanel) jp.getComponent(0);
 
-        SignupView sv = (SignupView) jp2.getComponent(0);
+        TaskView tv = (TaskView) jp2.getComponent(0);
 
         JPanel buttons = (JPanel) sv.getComponent(4);
 
         return (JButton) buttons.getComponent(2); // this should be the clear button
     }
 
-    /**
-     *
-     * Test that the Clear button is present and where it is expected to be
-     */
     @org.junit.Test
     public void testClearButtonPresent() {
         Main.main(null);
@@ -73,42 +71,27 @@ public class CompleteTaskViewTest {
         assert(button.getText().equals("Clear"));
     }
 
-    /**
-     *
-     * Test that pressing the Clear button deletes all users. This test first
-     * adds two users to the CSV file, then starts the program, then clicks the Clear button,
-     * and then checks that the file's length has decreased.
-     */
     @org.junit.Test
     public void testClearUsersDeletedUsersFromFile() {
 
-        addTwoUsers();
+        addTwoTasks();
         Main.main(null);
         JButton button = getButton();
 
-        // since clicking the button should end up displaying a JDialog to the user to report the
-        // result, we set a timer, which will execute code necessary to complete the testing.
         createCloseTimer().start();
 
         button.doClick();
 
-        // will continue execution here after the JDialog is closed
+        // checks that the amount of users left is still 2 (i.e. complete task hasn't deleted any)
 
-        // users.csv format
-        //username, password,timestamp (in format returned by a call like LocalDateTime.now())
-        //example
-        //user1,pass1,2023-10-12T14:46:26.733518
-
-        //check the users.csv file to ensure the users are gone
         try {
             int lines = countLines();
             System.out.println("lines left = " + lines);
-            assert(lines <= 1);
+            assert(lines == 2);
 
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-
 
     }
 
@@ -120,8 +103,7 @@ public class CompleteTaskViewTest {
     @org.junit.Test
     public void testClearUsersPopUpShown() {
 
-        addTwoUsers();
-        popUpDiscovered = false;
+        addTwoTasks();
 
         Main.main(null);
         JFrame app = null;
@@ -147,7 +129,7 @@ public class CompleteTaskViewTest {
     @org.junit.Test
     public void testClearUsersReturnedUsersDeleted() throws InterruptedException {
 
-        addTwoUsers();
+        addTwoTasks();
         message = "";
 
         Main.main(null);
