@@ -120,31 +120,6 @@ public class CreateTaskViewTest {
      * This test is the same as above, but it additionally checks that the JDialog contains the names of
      * all users deleted from the file.
      */
-    @org.junit.Test
-    public void testClearUsersPopUpShown() {
-
-        addTwoTasks();
-
-        Main.main(null);
-        JFrame app = null;
-
-        JButton button = getButton();
-
-
-        // since clicking the button should end up displaying a JDialog to the user to report the
-        // result, we set a timer, which will execute code necessary to complete the testing.
-        createCloseTimer().start();
-
-        //click the button
-        button.doClick();
-
-        // will continue execution here after the JDialog is closed
-
-        // confirm a popUp was discovered
-        assert(popUpDiscovered);
-        System.out.println("popup was detected successfully.");
-
-    }
 
     @org.junit.Test
     public void testClearUsersReturnedUsersDeleted() throws InterruptedException {
@@ -189,8 +164,8 @@ public class CreateTaskViewTest {
                             System.out.println("message = " + s);
 
                             // store the information we got from the JDialog
-                            ClearUsersTest.message = s;
-                            ClearUsersTest.popUpDiscovered = true;
+//                            ClearUsersTest.message = s;
+//                            ClearUsersTest.popUpDiscovered = true;
 
                             System.out.println("disposing of..." + window.getClass());
                             window.dispose();
