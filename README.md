@@ -1,5 +1,5 @@
-# week3-project
-CSC207 Week 3 Project
+# Group Project
+CSC207 Group Project
 
 **Description of the Problem Domain:**
 
