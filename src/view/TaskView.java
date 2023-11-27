@@ -62,7 +62,14 @@ public class TaskView extends JPanel implements ActionListener, PropertyChangeLi
         // Create panel to display tasks
         JPanel taskPanel = new JPanel();
         taskPanel.setLayout(new GridBagLayout());
+        GridBagConstraints constraints = new GridBagConstraints();
+        constraints.gridx = GridBagConstraints.RELATIVE;
+        constraints.gridy = GridBagConstraints.RELATIVE;
+        constraints.fill = GridBagConstraints.HORIZONTAL;
+        constraints.anchor = GridBagConstraints.NORTHWEST;
+        constraints.weightx = 2.0;
         taskPanel.setBorder(LineBorder.createBlackLineBorder());
+
 
         //Create scroller as needed vertically and horizontally
         JScrollPane scroller = new JScrollPane(taskPanel, ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
@@ -82,7 +89,8 @@ public class TaskView extends JPanel implements ActionListener, PropertyChangeLi
                             CreateTaskState currentState = createTaskViewModel.getState();
 
                             createTaskController.execute(currentState.getTask());
-                            JLabel newTask = new JLabel(currentState.getTask());
+                            JTextField newTask = new JTextField(currentState.getTask());
+                            newTask.setEditable(false);
 
 
                             taskPanel.add(newTask);
