@@ -82,6 +82,9 @@ public class TaskView extends JPanel implements ActionListener, PropertyChangeLi
                             CreateTaskState currentState = createTaskViewModel.getState();
 
                             createTaskController.execute(currentState.getTask());
+                            JLabel newTask = new JLabel(currentState.getTask());
+                            taskPanel.add(newTask);
+
                         }
                     }
                 }
@@ -123,6 +126,5 @@ public class TaskView extends JPanel implements ActionListener, PropertyChangeLi
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
-
     }
 }
