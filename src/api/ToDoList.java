@@ -3,18 +3,22 @@ package api;
 import okhttp3.*;
 import org.json.JSONException;
 import org.json.JSONObject;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
 
 import java.io.IOException;
 
 public class ToDoList implements Todo{
-
     @Override
+
     public Projects getProject(String name) {
-        OkHttpClient client = new OkHttpClient().newBuilder()
-                .build();
+        OkHttpClient client = new OkHttpClient().newBuilder().build();
         Request request = new Request.Builder()
-                .url(String.format("@doist/todoist-api-typescript", name))
-                .build();
+                .url(String.format("@doist/todoist-api-typescript", name)).build();
+
         try {
             Response response = client.newCall(request).execute();
             System.out.println(response);
@@ -40,9 +44,10 @@ public class ToDoList implements Todo{
     public void addTask(String projectName, String taskName) {
         JSONObject task = new JSONObject();
         try{
-            task.put("project_name", projectName);
-            task.put("task_name", taskName);
-        }catch (JSONException e){
+            task.put("content", "A new task for test");
+        }
+
+        catch (JSONException e){
             throw new RuntimeException(e);
         }
 
@@ -50,7 +55,7 @@ public class ToDoList implements Todo{
         RequestBody requestBody = RequestBody.create(MediaType.parse("application/json; charset=utf-8"), task.toString());
 
         Request request = new Request.Builder()
-                .url("@doist/todoist-api-typescript")
+                .url("https://api.todoist.com/rest/v2/tasks")
                 .post(requestBody)
                 .build();
 
@@ -61,6 +66,4 @@ public class ToDoList implements Todo{
             throw new RuntimeException();
         }
     }
-
-
 }
