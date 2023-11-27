@@ -18,10 +18,10 @@ import use_case.create_task.CreateTaskInputBoundary;
 import use_case.create_task.CreateTaskInteractor;
 import use_case.create_task.CreateTaskOutputBoundary;
 import use_case.create_task.CreateTaskDataAccessInterface;
-///import use_case.delete_task.DeleteTaskInteractor;
-///import use_case.delete_task.DeleteTaskOutputBoundary;
-///import use_case.delete_task.DeleteTaskDataAccessInterface;
-/// import entity.CommonTaskFactory;
+//import use_case.delete_task.DeleteTaskInteractor;
+//import use_case.delete_task.DeleteTaskOutputBoundary;
+//import use_case.delete_task.DeleteTaskDataAccessInterface;
+import entity.AllTaskFactory;
 import entity.TaskFactory;
 import view.TaskView;
 import interface_adapter.ViewManagerModel;
@@ -37,12 +37,12 @@ public class TaskUseCaseFactory {
 
     public static TaskView create(
             ViewManagerModel viewManagerModel, DeleteTaskViewModel deleteTaskViewModel, CreateTaskViewModel createTaskViewModel, CreateTaskDataAccessInterface createTaskDataAccessInterface,
-            CompleteTaskViewModel completeTaskViewModel) {
+            CompleteTaskViewModel completeTaskViewModel, CompleteTaskDataAccessInterface completeTaskDataAccessInterface) {
 
         try {
             CreateTaskController createTaskController = createTaskUseCase(viewManagerModel, createTaskViewModel, createTaskDataAccessInterface);
-            CompleteTaskController completeTaskController =  createCompleteUseCase(viewManagerModel);
-            ///DeleteTaskController deleteTaskController =  createDeleteUseCase(viewManagerModel, clearViewModel, userDataAccessObjectClear);
+            CompleteTaskController completeTaskController =  createCompleteUseCase(viewManagerModel, completeTaskViewModel, completeTaskDataAccessInterface);
+//            DeleteTaskController deleteTaskController =  createDeleteUseCase(viewManagerModel, clearViewModel, userDataAccessObjectClear);
             return new TaskView(createTaskController, createTaskViewModel, completeTaskController, completeTaskViewModel);
         } catch (IOException e) {
             JOptionPane.showMessageDialog(null, "Could not open task data file.");

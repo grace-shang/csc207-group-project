@@ -1,14 +1,15 @@
 package entity;
 
-class Task implements TaskI{
+public class Task implements TaskI{
 
     String taskName;
     boolean complete;
 
     // Default constructor. Default value of complete is false.
-    public Task(String taskName, String projectName) {
+    public Task(String taskName) {
         this.taskName = taskName;
         this.complete = false;
+
     }
 
     // Overloaded constructor with the optional parameter of isCompleted.

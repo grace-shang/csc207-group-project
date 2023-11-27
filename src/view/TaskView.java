@@ -10,6 +10,7 @@ import interface_adapter.ViewModel;
 import view.LabelTextPanel;
 
 import javax.swing.*;
+import javax.swing.border.LineBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -29,9 +30,9 @@ public class TaskView extends JPanel implements ActionListener, PropertyChangeLi
 
     private final CompleteTaskController completeTaskController;
     private final CompleteTaskViewModel completeTaskViewModel;
-    private final JTextArea createInputField = new JTextArea();
+    private final JTextField createInputField = new JTextField(30);
 
-    private final JTextArea createTaskProjectInputField = new JTextArea();
+    private final JTextField createTaskProjectInputField = new JTextField(30);
     private final JButton createTask;
 
 
@@ -58,6 +59,20 @@ public class TaskView extends JPanel implements ActionListener, PropertyChangeLi
         buttons.add(createTask);
 
 
+        // Create panel to display tasks
+        JPanel taskPanel = new JPanel();
+        taskPanel.setLayout(new GridBagLayout());
+        taskPanel.setBorder(LineBorder.createBlackLineBorder());
+
+        //Create scroller as needed vertically and horizontally
+        JScrollPane scroller = new JScrollPane(taskPanel, ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+        scroller.setPreferredSize(new Dimension(600,600));
+
+        //add panel and scroller to frame
+        this.add(taskPanel);
+        this.add(scroller);
+
+
         createTask.addActionListener(
                 // This creates an anonymous subclass of ActionListener and instantiates it.
                 new ActionListener() {
@@ -76,6 +91,34 @@ public class TaskView extends JPanel implements ActionListener, PropertyChangeLi
                     }
                 }
         );
+
+        createInputField.addKeyListener(
+                new KeyListener() {
+                    @Override
+                    public void keyTyped(KeyEvent e) {
+                        CreateTaskState currentState = createTaskViewModel.getState();
+                        String text = createInputField.getText() + e.getKeyChar();
+                        currentState.setTask(text);
+                        createTaskViewModel.setState(currentState);
+                    }
+
+                    @Override
+                    public void keyPressed(KeyEvent e) {
+
+                    }
+
+                    @Override
+                    public void keyReleased(KeyEvent e) {
+
+                    }
+                }
+        );
+
+        this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+
+        this.add(title);
+        this.add(createInfo);
+        this.add(buttons);
     }
 
     @Override
