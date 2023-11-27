@@ -15,7 +15,7 @@ public class DisplayTaskController {
     }
 
     public void execute() {
-        DisplayTaskOutputData displayTaskOutputData = new DisplayTaskOutputData(displayTaskDataAccessObject.getAllTasks().keySet(), false, String.join(",", userDataAccessObject.getAllUsers().keySet()));
+        DisplayTaskOutputData displayTaskOutputData = new DisplayTaskOutputData(displayTaskDataAccessObject.getAllTasks().keySet(), String.join(",", displayTaskDataAccessObject.getAllTasks().keySet()), false);
         displayTaskDataAccessObject.display(displayTaskDataAccessObject.getAllTasks());
         displayTaskPresenter.prepareSuccessView(displayTaskOutputData);
 

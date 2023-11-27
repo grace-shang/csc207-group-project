@@ -8,8 +8,8 @@ public class DisplayTaskState {
     private String taskNames = null;
 
     public DisplayTaskState(DisplayTaskState copy) {
-        tasks = copy.tasks;
-        taskNames = copy.taskNames;
+        this.tasks = copy.tasks;
+        this.taskNames = copy.taskNames;
     }
 
     public DisplayTaskState() {
@@ -23,7 +23,7 @@ public class DisplayTaskState {
         return taskNames;
     }
 
-    public static void setTaskNames(String taskNames) {
+    public void setTaskNames(String taskNames) {
         this.taskNames = taskNames;
     }
 
