@@ -21,7 +21,7 @@ public class CreateTaskPresenter implements CreateTaskOutputBoundary{
 
 
     @Override
-    public void prepareSuccessView(CreateTaskOutputBoundary response) {
+    public void prepareSuccessView(CreateTaskOutputData response) {
         CreateTaskState createTaskState = createTaskViewModel.getState();
         createTaskState.getTask();
 
