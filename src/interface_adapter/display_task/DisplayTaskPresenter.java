@@ -7,7 +7,7 @@ import use_case.display_task.DisplayTaskOutputData;
 public class DisplayTaskPresenter implements DisplayTaskOutputBoundary {
 
     private final DisplayTaskViewModel displayTaskViewModel;
-    private ViewManagerModel viewManagerModel;
+    private final ViewManagerModel viewManagerModel;
 
     public DisplayTaskPresenter(DisplayTaskViewModel displayTaskViewModel, ViewManagerModel viewManagerModel) {
         this.displayTaskViewModel = displayTaskViewModel;
@@ -23,7 +23,7 @@ public class DisplayTaskPresenter implements DisplayTaskOutputBoundary {
         this.displayTaskViewModel.setState(displayTaskState);
         displayTaskViewModel.firePropertyChanged();
 
-        viewManagerModel.setActiveView(DisplayTaskViewModel.getViewName());
+        viewManagerModel.setActiveView(displayTaskViewModel.getViewName());
         viewManagerModel.firePropertyChanged();
     }
 
