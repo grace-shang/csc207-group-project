@@ -4,7 +4,7 @@ public class CreateTaskInputData {
 
     final private String createTask;
 
-    public CreateTaskInputData(String createTask, String projectName){
+    public CreateTaskInputData(String createTask){
         this.createTask = createTask;
     }
 

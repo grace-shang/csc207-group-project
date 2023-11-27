@@ -20,6 +20,7 @@ public class CreateTaskViewModel extends ViewModel {
     private CreateTaskState state = new CreateTaskState();
 
     public CreateTaskViewModel(){super("task view");}
+    public CreateTaskState getState(){return state;}
 
     public void setState(CreateTaskState state){this.state = state;}
 
@@ -31,6 +32,4 @@ public class CreateTaskViewModel extends ViewModel {
     @Override
     public void addPropertyChangeListener(PropertyChangeListener listener) { support.addPropertyChangeListener(listener);
     }
-
-    public CreateTaskState getState(){return state;}
 }
