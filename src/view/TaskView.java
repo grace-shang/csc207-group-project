@@ -61,6 +61,7 @@ public class TaskView extends JPanel implements ActionListener, PropertyChangeLi
         createTask = new JButton(CreateTaskViewModel.CREATE_BUTTON_LABEL);
         buttons.add(createTask);
         completeTask = new JCheckBox();
+        buttons.add(completeTask);
 
 
         // Create panel to display tasks
@@ -128,7 +129,6 @@ public class TaskView extends JPanel implements ActionListener, PropertyChangeLi
         this.add(title);
         this.add(createInfo);
         this.add(buttons);
-
     }
 
     @Override
