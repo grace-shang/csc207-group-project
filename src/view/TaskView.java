@@ -34,6 +34,7 @@ public class TaskView extends JPanel implements ActionListener, PropertyChangeLi
 
     private final JTextField createTaskProjectInputField = new JTextField(30);
     private final JButton createTask;
+    private final JCheckBox completeTask;
 
 
     public TaskView(CreateTaskController createTaskController, CreateTaskViewModel createTaskViewModel,
@@ -44,6 +45,7 @@ public class TaskView extends JPanel implements ActionListener, PropertyChangeLi
         this.completeTaskViewModel = completeTaskViewModel;
 
         createTaskViewModel.addPropertyChangeListener(this);
+        completeTaskViewModel.addPropertyChangeListener(this);
 
         JLabel title = new JLabel(CreateTaskViewModel.TITLE_LABEL);
         title.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -54,9 +56,11 @@ public class TaskView extends JPanel implements ActionListener, PropertyChangeLi
         LabelTextPanel createProjectInfo = new LabelTextPanel(new JLabel(CreateTaskViewModel.CREATE_TASK_PROJECT_LABEL),
                 createTaskProjectInputField);
 
+        // Buttons
         JPanel buttons = new JPanel();
         createTask = new JButton(CreateTaskViewModel.CREATE_BUTTON_LABEL);
         buttons.add(createTask);
+        completeTask = new JCheckBox();
 
 
         // Create panel to display tasks
@@ -70,7 +74,6 @@ public class TaskView extends JPanel implements ActionListener, PropertyChangeLi
         constraints.weightx = 2.0;
         taskPanel.setBorder(LineBorder.createBlackLineBorder());
 
-
         //Create scroller as needed vertically and horizontally
         JScrollPane scroller = new JScrollPane(taskPanel, ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
         scroller.setPreferredSize(new Dimension(600,600));
@@ -78,8 +81,6 @@ public class TaskView extends JPanel implements ActionListener, PropertyChangeLi
         //add panel and scroller to frame
         this.add(taskPanel);
         this.add(scroller);
-
-
 
         createTask.addActionListener(
                 // This creates an anonymous subclass of ActionListener and instantiates it.
@@ -92,11 +93,9 @@ public class TaskView extends JPanel implements ActionListener, PropertyChangeLi
                             JTextField newTask = new JTextField(currentState.getTask());
                             newTask.setEditable(false);
 
-
                             taskPanel.add(newTask);
                             taskPanel.revalidate();
                             taskPanel.repaint();
-
                         }
                     }
                 }
@@ -129,6 +128,7 @@ public class TaskView extends JPanel implements ActionListener, PropertyChangeLi
         this.add(title);
         this.add(createInfo);
         this.add(buttons);
+
     }
 
     @Override
@@ -139,4 +139,5 @@ public class TaskView extends JPanel implements ActionListener, PropertyChangeLi
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
     }
+
 }
