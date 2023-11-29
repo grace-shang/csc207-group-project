@@ -36,6 +36,8 @@ public class TaskView extends JPanel implements ActionListener, PropertyChangeLi
     private final JButton createTask;
     private final JCheckBox completeTask;
 
+    private JFrame frame;
+
 
     public TaskView(CreateTaskController createTaskController, CreateTaskViewModel createTaskViewModel,
                     CompleteTaskController completeTaskController, CompleteTaskViewModel completeTaskViewModel){
@@ -63,16 +65,13 @@ public class TaskView extends JPanel implements ActionListener, PropertyChangeLi
         completeTask = new JCheckBox();
         buttons.add(completeTask);
 
+        frame = new JFrame("Task Tracker");
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setLayout(new BorderLayout());
 
         // Create panel to display tasks
         JPanel taskPanel = new JPanel();
-        taskPanel.setLayout(new GridBagLayout());
-        GridBagConstraints constraints = new GridBagConstraints();
-        constraints.gridx = GridBagConstraints.RELATIVE;
-        constraints.gridy = GridBagConstraints.RELATIVE;
-        constraints.fill = GridBagConstraints.HORIZONTAL;
-        constraints.anchor = GridBagConstraints.NORTHWEST;
-        constraints.weightx = 2.0;
+        taskPanel.setLayout(new BoxLayout(taskPanel, BoxLayout.Y_AXIS));
         taskPanel.setBorder(LineBorder.createBlackLineBorder());
 
         //Create scroller as needed vertically and horizontally
@@ -91,9 +90,10 @@ public class TaskView extends JPanel implements ActionListener, PropertyChangeLi
                             CreateTaskState currentState = createTaskViewModel.getState();
 
                             createTaskController.execute(currentState.getTask());
-                            JTextField newTask = new JTextField(currentState.getTask());
-                            newTask.setEditable(false);
-
+                            JPanel newTask = new JPanel();
+                            newTask.setLayout(new FlowLayout(FlowLayout.LEFT));
+                            JLabel newTaskText = new JLabel(currentState.getTask());
+                            newTask.add(newTaskText);
                             taskPanel.add(newTask);
                             taskPanel.revalidate();
                             taskPanel.repaint();
