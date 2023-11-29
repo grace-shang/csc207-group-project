@@ -34,6 +34,7 @@ public class TaskView extends JPanel implements ActionListener, PropertyChangeLi
 
     private final JTextField createTaskProjectInputField = new JTextField(30);
     private final JButton createTask;
+    private final JCheckBox completeTask;
 
 
     public TaskView(CreateTaskController createTaskController, CreateTaskViewModel createTaskViewModel,
@@ -44,6 +45,7 @@ public class TaskView extends JPanel implements ActionListener, PropertyChangeLi
         this.completeTaskViewModel = completeTaskViewModel;
 
         createTaskViewModel.addPropertyChangeListener(this);
+        completeTaskViewModel.addPropertyChangeListener(this);
 
         JLabel title = new JLabel(CreateTaskViewModel.TITLE_LABEL);
         title.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -54,14 +56,23 @@ public class TaskView extends JPanel implements ActionListener, PropertyChangeLi
         LabelTextPanel createProjectInfo = new LabelTextPanel(new JLabel(CreateTaskViewModel.CREATE_TASK_PROJECT_LABEL),
                 createTaskProjectInputField);
 
+        // Buttons
         JPanel buttons = new JPanel();
         createTask = new JButton(CreateTaskViewModel.CREATE_BUTTON_LABEL);
         buttons.add(createTask);
+        completeTask = new JCheckBox();
+        buttons.add(completeTask);
 
 
         // Create panel to display tasks
         JPanel taskPanel = new JPanel();
         taskPanel.setLayout(new GridBagLayout());
+        GridBagConstraints constraints = new GridBagConstraints();
+        constraints.gridx = GridBagConstraints.RELATIVE;
+        constraints.gridy = GridBagConstraints.RELATIVE;
+        constraints.fill = GridBagConstraints.HORIZONTAL;
+        constraints.anchor = GridBagConstraints.NORTHWEST;
+        constraints.weightx = 2.0;
         taskPanel.setBorder(LineBorder.createBlackLineBorder());
 
         //Create scroller as needed vertically and horizontally
@@ -72,8 +83,6 @@ public class TaskView extends JPanel implements ActionListener, PropertyChangeLi
         this.add(taskPanel);
         this.add(scroller);
 
-
-
         createTask.addActionListener(
                 // This creates an anonymous subclass of ActionListener and instantiates it.
                 new ActionListener() {
@@ -82,6 +91,12 @@ public class TaskView extends JPanel implements ActionListener, PropertyChangeLi
                             CreateTaskState currentState = createTaskViewModel.getState();
 
                             createTaskController.execute(currentState.getTask());
+                            JTextField newTask = new JTextField(currentState.getTask());
+                            newTask.setEditable(false);
+
+                            taskPanel.add(newTask);
+                            taskPanel.revalidate();
+                            taskPanel.repaint();
                         }
                     }
                 }
@@ -123,6 +138,6 @@ public class TaskView extends JPanel implements ActionListener, PropertyChangeLi
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
-
     }
+
 }
