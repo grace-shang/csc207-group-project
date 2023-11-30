@@ -10,6 +10,7 @@ public class CreateTaskInteractor implements CreateTaskInputBoundary{
 
     final TaskFactory taskFactory;
 
+
     public CreateTaskInteractor(CreateTaskDataAccessInterface taskDataAccessObject,
                                 CreateTaskOutputBoundary userPresenter,
                                 TaskFactory taskFactory){
@@ -25,6 +26,7 @@ public class CreateTaskInteractor implements CreateTaskInputBoundary{
         taskDataAccessObject.addTask(taskI);
 
         CreateTaskOutputData createTaskOutputData = new CreateTaskOutputData(taskI.getName());
+        userPresenter.prepareSuccessView(createTaskOutputData);
     }
 
 

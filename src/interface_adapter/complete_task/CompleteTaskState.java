@@ -1,10 +1,11 @@
 package interface_adapter.complete_task;
 
+import entity.AllTaskFactory;
 import entity.TaskI;
 import interface_adapter.create_task.CreateTaskState;
 
 public class CompleteTaskState {
-    private String task;
+    private final String task;
 
     public CompleteTaskState(CreateTaskState copy) {
         task = copy.getTask();
@@ -13,4 +14,10 @@ public class CompleteTaskState {
     public String getTaskName() {
         return task;
     }
+
+    public void setTaskCompletion(TaskI task){
+        task.setComplete(true);
+    }
+
+
 }
