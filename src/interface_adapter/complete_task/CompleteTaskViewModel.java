@@ -28,4 +28,12 @@ public class CompleteTaskViewModel extends ViewModel {
     public void addPropertyChangeListener(PropertyChangeListener listener) {
         support.addPropertyChangeListener(listener);
     }
+
+    public CompleteTaskState getState() {
+        return state;
+    }
+
+    public void setState(CompleteTaskState completeTaskState){
+        this.state = completeTaskState;
+    }
 }
