@@ -8,6 +8,7 @@ import interface_adapter.create_task.CreateTaskState;
 import interface_adapter.create_task.CreateTaskViewModel;
 
 import interface_adapter.display_task.DisplayTaskController;
+import interface_adapter.display_task.DisplayTaskState;
 import interface_adapter.display_task.DisplayTaskViewModel;
 
 import javax.swing.*;
@@ -138,6 +139,7 @@ public class TaskView extends JPanel implements ActionListener, PropertyChangeLi
 
         TaskView.this.displayTaskController.execute(); //Display all the existing tasks in the CSV
 
+
     }
 
     @Override
@@ -147,6 +149,12 @@ public class TaskView extends JPanel implements ActionListener, PropertyChangeLi
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
+        if (evt.getPropertyName().equals("display")) {
+            DisplayTaskState state = (DisplayTaskState) evt.getNewValue();
+//            for (String task : gfg.keySet()) {
+//
+//            }
+        }
     }
 
 }
