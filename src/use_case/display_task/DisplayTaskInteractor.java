@@ -16,9 +16,9 @@ public class DisplayTaskInteractor {
     }
 
     public void execute() {
-        DisplayTaskOutputData displayTaskOutputData = new DisplayTaskOutputData(displayTaskDataAccessObject.getAllTasks().keySet(), false, String.join(",", userDataAccessObject.getAllUsers().keySet()));
-        displayTaskDataAccessObject.display(displayTaskDataAccessObject.getAllTasks());
-        displayTaskPresenter.prepareSuccessView(displayTaskOutputData);
+        DisplayTaskOutputData displayTaskOutputData = new DisplayTaskOutputData(displayDataAccessObject.getAllTasks().keySet(), String.join(",", displayDataAccessObject.getAllTasks().keySet()), false);
+        displayDataAccessObject.display(displayDataAccessObject.getAllTasks());
+        taskPresenter.prepareSuccessView(displayTaskOutputData);
 
     }
 
