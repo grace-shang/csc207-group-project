@@ -39,6 +39,7 @@ public class CreateTaskViewTest {
     }
 
     // END OF FIXED TEST CODE
+
     public JButton getButton() {
         JFrame app = null;
         Window[] windows = Window.getWindows();
@@ -47,6 +48,7 @@ public class CreateTaskViewTest {
                 app = (JFrame) window;
             }
         }
+
 
         assertNotNull(app); // found the window?
 
@@ -60,20 +62,20 @@ public class CreateTaskViewTest {
 
         TaskView tv = (TaskView) jp2.getComponent(0);
 
-        JPanel buttons = (JPanel) tv.getComponent(4);
+        JPanel buttons = (JPanel) tv.getComponent(2);
 
-        return (JButton) buttons.getComponent(2); // this should be the clear button
+        return (JButton) buttons.getComponent(1); // this should be the clear button
     }
 
     /**
      *
-     * Test that the Clear button is present and where it is expected to be
+     * Test that the Create button is present and where it is expected to be
      */
     @org.junit.Test
-    public void testClearButtonPresent() {
+    public void testCreateButtonPresent() {
         Main.main(null);
-        JButton button = getButton();
-        assert(button.getText().equals("Clear"));
+        JButton createTaskButton = getButton();
+        assert(createTaskButton.getText().equals("Create Task"));
     }
 
     /**
@@ -83,7 +85,7 @@ public class CreateTaskViewTest {
      * and then checks that the file's length has decreased.
      */
     @org.junit.Test
-    public void testClearUsersDeletedUsersFromFile() {
+    public void testCreateAddTasksToFile() {
 
         addTwoTasks();
         Main.main(null);
@@ -106,7 +108,7 @@ public class CreateTaskViewTest {
         try {
             int lines = countLines();
             System.out.println("lines left = " + lines);
-            assert(lines <= 1);
+            assert(lines == 2);
 
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -122,7 +124,7 @@ public class CreateTaskViewTest {
      */
 
     @org.junit.Test
-    public void testClearUsersReturnedUsersDeleted() throws InterruptedException {
+    public void testCreateTaskAddsTaskToMainPage() throws InterruptedException {
 
         addTwoTasks();
         message = "";
@@ -182,7 +184,7 @@ public class CreateTaskViewTest {
     }
 
     private static int countLines() throws IOException {
-        BufferedReader reader = new BufferedReader(new FileReader("users.csv"));
+        BufferedReader reader = new BufferedReader(new FileReader("tasks.csv"));
         int lineCount = 0;
         while (reader.readLine() != null) {
             lineCount++;
