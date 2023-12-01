@@ -95,6 +95,7 @@ public class TaskView extends JPanel implements ActionListener, PropertyChangeLi
                             JLabel newTaskText = new JLabel(currentState.getTask());
                             newTask.add(newTaskText);
                             newTask.add(completeTask);
+                            createInputField.setText("");
 
                             taskPanel.add(newTask);
                             taskPanel.revalidate();
