@@ -19,7 +19,7 @@ public class DisplayTaskPresenter implements DisplayTaskOutputBoundary {
 
         DisplayTaskState displayTaskState = displayTaskViewModel.getState();
         displayTaskState.setTasks(response.getAllTasks());
-        displayTaskState.setTaskNames(response.getTaskNames());
+//        displayTaskState.setTaskNames(response.getTaskNames());
         this.displayTaskViewModel.setState(displayTaskState);
         displayTaskViewModel.firePropertyChanged();
 
