@@ -7,9 +7,10 @@ import interface_adapter.complete_task.CompleteTaskViewModel;
 import interface_adapter.create_task.CreateTaskController;
 import interface_adapter.create_task.CreateTaskPresenter;
 import interface_adapter.create_task.CreateTaskViewModel;
-import interface_adapter.delete_task.DeleteTaskController;
-import interface_adapter.delete_task.DeleteTaskPresenter;
 import interface_adapter.delete_task.DeleteTaskViewModel;
+import interface_adapter.display_task.DisplayTaskController;
+import interface_adapter.display_task.DisplayTaskPresenter;
+import interface_adapter.display_task.DisplayTaskViewModel;
 import use_case.complete_task.CompleteTaskInputBoundary;
 import use_case.complete_task.CompleteTaskInteractor;
 import use_case.complete_task.CompleteTaskOutputBoundary;
@@ -21,11 +22,12 @@ import use_case.create_task.CreateTaskDataAccessInterface;
 //import use_case.delete_task.DeleteTaskInteractor;
 //import use_case.delete_task.DeleteTaskOutputBoundary;
 //import use_case.delete_task.DeleteTaskDataAccessInterface;
-import entity.AllTaskFactory;
 import entity.TaskFactory;
+import use_case.display_task.DisplayTaskDataAccessInterface;
+import use_case.display_task.DisplayTaskInteractor;
+import use_case.display_task.DisplayTaskOutputBoundary;
 import view.TaskView;
 import interface_adapter.ViewManagerModel;
-import view.ViewManager;
 
 import javax.swing.*;
 import java.io.IOException;
@@ -37,13 +39,14 @@ public class TaskUseCaseFactory {
 
     public static TaskView create(
             ViewManagerModel viewManagerModel, DeleteTaskViewModel deleteTaskViewModel, CreateTaskViewModel createTaskViewModel, CreateTaskDataAccessInterface createTaskDataAccessInterface,
-            CompleteTaskViewModel completeTaskViewModel, CompleteTaskDataAccessInterface completeTaskDataAccessInterface) {
+            CompleteTaskViewModel completeTaskViewModel, CompleteTaskDataAccessInterface completeTaskDataAccessInterface, DisplayTaskViewModel displayTaskViewModel, DisplayTaskDataAccessInterface displayTaskDataAccessInterface) {
 
         try {
             CreateTaskController createTaskController = createTaskUseCase(viewManagerModel, createTaskViewModel, createTaskDataAccessInterface);
             CompleteTaskController completeTaskController =  createCompleteUseCase(viewManagerModel, completeTaskViewModel, completeTaskDataAccessInterface);
+            DisplayTaskController displayTaskController = createDisplayUseCase(viewManagerModel, displayTaskViewModel, displayTaskDataAccessInterface);
 //            DeleteTaskController deleteTaskController =  createDeleteUseCase(viewManagerModel, clearViewModel, userDataAccessObjectClear);
-            return new TaskView(createTaskController, createTaskViewModel, completeTaskController, completeTaskViewModel);
+            return new TaskView(createTaskController, createTaskViewModel, completeTaskController, completeTaskViewModel, displayTaskViewModel, displayTaskController);
         } catch (IOException e) {
             JOptionPane.showMessageDialog(null, "Could not open task data file.");
         }
@@ -81,6 +84,15 @@ public class TaskUseCaseFactory {
         CompleteTaskInputBoundary completeInteractor = new CompleteTaskInteractor(completeTaskDataObject, completeOutputBoundary);
 
         return new CompleteTaskController(completeInteractor);
+    }
+
+    private static DisplayTaskController createDisplayUseCase(ViewManagerModel viewManagerModel, DisplayTaskViewModel displayTaskViewModel, DisplayTaskDataAccessInterface displayTaskDataAccessInterface) {
+        DisplayTaskOutputBoundary displayOutputBoundary = new DisplayTaskPresenter(displayTaskViewModel, viewManagerModel);
+
+        DisplayTaskInteractor displayInteractor = new DisplayTaskInteractor(
+                displayTaskDataAccessInterface, displayOutputBoundary);
+
+        return new DisplayTaskController(displayInteractor);
     }
 
 }

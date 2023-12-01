@@ -7,8 +7,8 @@ import interface_adapter.create_task.CreateTaskController;
 import interface_adapter.create_task.CreateTaskState;
 import interface_adapter.create_task.CreateTaskViewModel;
 
-import interface_adapter.ViewModel;
-import view.LabelTextPanel;
+import interface_adapter.display_task.DisplayTaskController;
+import interface_adapter.display_task.DisplayTaskViewModel;
 
 import javax.swing.*;
 import javax.swing.border.LineBorder;
@@ -19,7 +19,6 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.util.List;
 
 
 public class TaskView extends JPanel implements ActionListener, PropertyChangeListener{
@@ -31,6 +30,10 @@ public class TaskView extends JPanel implements ActionListener, PropertyChangeLi
 
     private final CompleteTaskController completeTaskController;
     private final CompleteTaskViewModel completeTaskViewModel;
+
+    private final DisplayTaskViewModel displayTaskViewModel;
+    private final DisplayTaskController displayTaskController;
+
     private final JTextField createInputField = new JTextField(30);
 
     private final JTextField createTaskProjectInputField = new JTextField(30);
@@ -40,11 +43,13 @@ public class TaskView extends JPanel implements ActionListener, PropertyChangeLi
 
 
     public TaskView(CreateTaskController createTaskController, CreateTaskViewModel createTaskViewModel,
-                    CompleteTaskController completeTaskController, CompleteTaskViewModel completeTaskViewModel){
+                    CompleteTaskController completeTaskController, CompleteTaskViewModel completeTaskViewModel, DisplayTaskViewModel displayTaskViewModel, DisplayTaskController displayTaskController){
         this.createTaskController = createTaskController;
         this.createTaskViewModel = createTaskViewModel;
         this.completeTaskController = completeTaskController;
         this.completeTaskViewModel = completeTaskViewModel;
+        this.displayTaskViewModel = displayTaskViewModel;
+        this.displayTaskController = displayTaskController;
 
         createTaskViewModel.addPropertyChangeListener(this);
         completeTaskViewModel.addPropertyChangeListener(this);
