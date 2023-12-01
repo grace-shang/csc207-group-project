@@ -7,6 +7,7 @@ import entity.TaskI;
 import use_case.complete_task.CompleteTaskDataAccessInterface;
 import use_case.create_task.CreateTaskDataAccessInterface;
 import use_case.delete_task.*;
+import use_case.display_task.DisplayTaskDataAccessInterface;
 
 import java.io.*;
 import java.time.LocalDateTime;
@@ -16,7 +17,7 @@ import java.util.Map;
 
 import static java.lang.Boolean.parseBoolean;
 
-public class FileTaskDataAccessObject implements CreateTaskDataAccessInterface, CompleteTaskDataAccessInterface{
+public class FileTaskDataAccessObject implements CreateTaskDataAccessInterface, CompleteTaskDataAccessInterface, DisplayTaskDataAccessInterface {
     private final File csvFile;
 
     private final Map<String, Integer> headers = new LinkedHashMap<>();
@@ -62,6 +63,11 @@ public class FileTaskDataAccessObject implements CreateTaskDataAccessInterface, 
     public void save(TaskI task) {
         tasks.put(task.getName(), task);
         this.save();
+    }
+
+    @Override
+    public Map<String, TaskI> getAllTasks() {
+        return tasks;
     }
 
     public void save() {

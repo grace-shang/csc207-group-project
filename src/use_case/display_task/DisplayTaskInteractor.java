@@ -16,11 +16,12 @@ public class DisplayTaskInteractor {
     }
 
     public void execute() {
-        DisplayTaskOutputData displayTaskOutputData = new DisplayTaskOutputData(displayDataAccessObject.getAllTasks().keySet(), String.join(",", displayDataAccessObject.getAllTasks().keySet()), false);
-        displayDataAccessObject.display(displayDataAccessObject.getAllTasks());
-        displayDataAccessObject.save();
-        taskPresenter.prepareSuccessView(displayTaskOutputData);
 
+//        for displayDataAccessObject.getAllTasks().entrySet()
+
+
+//        DisplayTaskOutputData displayTaskOutputData = new DisplayTaskOutputData(displayDataAccessObject.getAllTasks().keySet(), displayDataAccessObject.getAllTasks().entrySet(), false);
+//        taskPresenter.prepareSuccessView(displayTaskOutputData);
     }
 
 }
