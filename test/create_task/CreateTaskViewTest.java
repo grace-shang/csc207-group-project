@@ -39,8 +39,21 @@ public class CreateTaskViewTest {
     }
 
     public JButton getButton(){
-        JButton placeholder = new JButton();
-        return placeholder;
+        Frame app = null;
+        Window[] windows = Window.getWindows();
+        for (Window window : windows) {
+            if (window instanceof JFrame) {
+                app = (JFrame) window;
+            }
+        }
+        assertNotNull(app); //check if a window was opened
+        Component root = app.getComponent(0);
+        Component cp = ((JRootPane) root).getContentPane();
+        JPanel jp = (JPanel) cp;
+        JPanel taskViewPanel = (JPanel) jp.getComponent(0);
+        TaskView taskView = (TaskView) taskViewPanel.getComponent(0);
+        JPanel buttonsPanel = (JPanel) taskView.getComponent(2);
+        return (JButton) buttonsPanel.getComponent(0);
     }
 
 
