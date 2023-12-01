@@ -82,10 +82,6 @@ public class TaskView extends JPanel implements ActionListener, PropertyChangeLi
         JScrollPane scroller = new JScrollPane(taskPanel, ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
         scroller.setPreferredSize(new Dimension(600,600));
 
-        //add panel and scroller to frame
-        this.add(taskPanel);
-        this.add(scroller);
-
         createTask.addActionListener(
                 // This creates an anonymous subclass of ActionListener and instantiates it.
                 new ActionListener() {
@@ -136,6 +132,12 @@ public class TaskView extends JPanel implements ActionListener, PropertyChangeLi
         this.add(title);
         this.add(createInfo);
         this.add(buttons);
+        //add panel and scroller to frame
+        this.add(taskPanel);
+        this.add(scroller);
+
+        TaskView.this.displayTaskController.execute(); //Display all the existing tasks in the CSV
+
     }
 
     @Override
