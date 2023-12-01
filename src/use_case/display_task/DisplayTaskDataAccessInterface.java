@@ -8,6 +8,4 @@ public interface DisplayTaskDataAccessInterface {
 
     Map<String, TaskI> getAllTasks();
 
-
-
 }
