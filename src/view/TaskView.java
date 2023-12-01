@@ -35,7 +35,6 @@ public class TaskView extends JPanel implements ActionListener, PropertyChangeLi
 
     private final JTextField createTaskProjectInputField = new JTextField(30);
     private final JButton createTask;
-    private final JCheckBox completeTask;
 
     private JFrame frame;
 
@@ -63,7 +62,7 @@ public class TaskView extends JPanel implements ActionListener, PropertyChangeLi
         JPanel buttons = new JPanel();
         createTask = new JButton(CreateTaskViewModel.CREATE_BUTTON_LABEL);
         buttons.add(createTask);
-        completeTask = new JCheckBox();
+        // completeTask = new JCheckBox();
 
         frame = new JFrame("Task Tracker");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -94,24 +93,12 @@ public class TaskView extends JPanel implements ActionListener, PropertyChangeLi
                             newTask.setLayout(new FlowLayout(FlowLayout.LEFT));
                             JLabel newTaskText = new JLabel(currentState.getTask());
                             newTask.add(newTaskText);
-                            newTask.add(completeTask);
+                            newTask.add(new JCheckBox());
                             createInputField.setText("");
 
                             taskPanel.add(newTask);
                             taskPanel.revalidate();
                             taskPanel.repaint();
-                        }
-                    }
-                }
-        );
-
-        completeTask.addActionListener(
-                // This creates an anonymous subclass of ActionListener and instantiates it.
-                new ActionListener() {
-                    public void actionPerformed(ActionEvent evt) {
-                        if (evt.getSource().equals(completeTask)) {
-                            CompleteTaskState completionState = completeTaskViewModel.getState();
-                           // completionState.setTaskCompletion(currentState.getTask());
                         }
                     }
                 }
