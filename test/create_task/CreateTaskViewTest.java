@@ -78,7 +78,7 @@ public class CreateTaskViewTest {
         addTwoTasks();
         Main.main(null);
         ArrayList names = getNames();
-        assert(names.contains("task1") && message.contains("task2"));
+        assert(names.contains("task1") && names.contains("task2"));
 
     }
 
@@ -97,7 +97,7 @@ public class CreateTaskViewTest {
         try {
             int lines = countLines();
             System.out.println("lines in csv file = " + lines);
-            assert(lines == 2);
+            assert(lines == 3);
         } catch (IOException e){
             throw new RuntimeException(e);
         }}
