@@ -77,8 +77,10 @@ public class CreateTaskViewTest {
     public void testCreateSavesTaskIntoFile() throws IOException {
         addTwoTasks();
         Main.main(null);
-        ArrayList names = getNames();
-        assert(names.contains("task1") && names.contains("task2"));
+        ArrayList<String> names = getNames();
+        System.out.println("Names In File: " + names);
+        assertTrue("Task1 is not found in the file", names.contains("task1"));
+        assertTrue("Task2 is not found in the file", names.contains("task2"));
 
     }
 
@@ -107,14 +109,16 @@ public class CreateTaskViewTest {
         ArrayList<String> listOfNames = new ArrayList<>();
         try (BufferedReader reader = new BufferedReader(new FileReader("tasks.csv"))) {
             String line;
+            // Skip the header line
+            reader.readLine();
             while ((line = reader.readLine()) != null) {
-                String[] values = line.split(" ");
-                if (values.length > 0) {
+                String[] values = line.split(",");
+                if (values.length >= 1) {
+                    // Trim to remove any leading/trailing whitespaces
                     listOfNames.add(values[0].trim());
                 }
             }
             return listOfNames;
-
         }
     }
     private static int countLines() throws IOException {
