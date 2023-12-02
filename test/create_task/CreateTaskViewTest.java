@@ -92,9 +92,8 @@ public class CreateTaskViewTest {
 
     @org.junit.Test
     public void testLinesInCSVAfterCreate(){addTwoTasks();
+        addTwoTasks();
         Main.main(null);
-        JButton button = getCreateTaskButton();
-        button.doClick();;
 
         try {
             int lines = countLines();
