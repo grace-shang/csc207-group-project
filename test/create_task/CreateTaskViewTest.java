@@ -3,6 +3,7 @@ package create_task;
 import app.Main;
 import data_access.FileTaskDataAccessObject;
 import entity.AllTaskFactory;
+import entity.Task;
 import entity.TaskFactory;
 
 import javax.swing.*;
@@ -16,12 +17,8 @@ import java.util.ArrayList;
 
 import api.Todo;
 import api.ToDoList;
-import interface_adapter.complete_task.CompleteTaskController;
-import interface_adapter.complete_task.CompleteTaskViewModel;
-import interface_adapter.create_task.CreateTaskController;
-import interface_adapter.create_task.CreateTaskViewModel;
-import interface_adapter.display_task.DisplayTaskController;
-import interface_adapter.display_task.DisplayTaskViewModel;
+import create_task.TestUtils;
+import org.junit.Test;
 import view.TaskView;
 
 import static org.junit.Assert.*;
@@ -44,6 +41,34 @@ public class CreateTaskViewTest {
         }
         ftdao.save(tf.create("task1", false));
         ftdao.save(tf.create("task2", false));
+    }
+
+
+    public static JButton getCreateTaskButton(Container container) {
+        return getChildNamed(container, "Create Task Button", JButton.class);
+    }
+
+    public static JTextField getCreateTaskInputField(Container container) {
+        return getChildNamed(container, "Text Box", JTextField.class);
+    }
+
+    private static <T extends Component> T getChildNamed(Container container, String name, Class<T> clazz) {
+        Component[] components = container.getComponents();
+
+        for (Component component : components) {
+            if (component instanceof Container) {
+                T result = getChildNamed((Container) component, name, clazz);
+                if (result != null) {
+                    return result;
+                }
+            }
+
+            if (component.getName() != null && component.getName().equals(name) && clazz.isInstance(component)) {
+                return clazz.cast(component);
+            }
+        }
+
+        return null;
     }
 
     public static JButton getCreateTaskButton() {
