@@ -5,11 +5,12 @@ import java.util.Set;
 public class DisplayTaskState {
 
     private Set<String> tasks = null;
-    private String taskNames = null;
+
+    private Set<Boolean> completions = null;
 
     public DisplayTaskState(DisplayTaskState copy) {
         this.tasks = copy.tasks;
-        this.taskNames = copy.taskNames;
+        this.completions = copy.completions;
     }
 
     public DisplayTaskState() {
@@ -19,12 +20,12 @@ public class DisplayTaskState {
 
     public void setTasks(Set<String> tasks) {this.tasks = tasks;}
 
-    public String getTaskNames() {
-        return taskNames;
+    public Set<Boolean> getCompletions() {
+        return completions;
     }
 
-    public void setTaskNames(String taskNames) {
-        this.taskNames = taskNames;
+    public void setCompletions(Set<Boolean> completions) {
+        this.completions = completions;
     }
 
 }

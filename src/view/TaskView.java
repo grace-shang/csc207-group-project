@@ -7,8 +7,9 @@ import interface_adapter.create_task.CreateTaskController;
 import interface_adapter.create_task.CreateTaskState;
 import interface_adapter.create_task.CreateTaskViewModel;
 
-import interface_adapter.ViewModel;
-import view.LabelTextPanel;
+import interface_adapter.display_task.DisplayTaskController;
+import interface_adapter.display_task.DisplayTaskState;
+import interface_adapter.display_task.DisplayTaskViewModel;
 
 import javax.swing.*;
 import javax.swing.border.LineBorder;
@@ -19,7 +20,6 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.util.List;
 
 
 public class TaskView extends JPanel implements ActionListener, PropertyChangeListener{
@@ -31,6 +31,10 @@ public class TaskView extends JPanel implements ActionListener, PropertyChangeLi
 
     private final CompleteTaskController completeTaskController;
     private final CompleteTaskViewModel completeTaskViewModel;
+
+    private final DisplayTaskViewModel displayTaskViewModel;
+    private final DisplayTaskController displayTaskController;
+
     private final JTextField createInputField = new JTextField(30);
 
     private final JTextField createTaskProjectInputField = new JTextField(30);
@@ -40,11 +44,13 @@ public class TaskView extends JPanel implements ActionListener, PropertyChangeLi
 
 
     public TaskView(CreateTaskController createTaskController, CreateTaskViewModel createTaskViewModel,
-                    CompleteTaskController completeTaskController, CompleteTaskViewModel completeTaskViewModel){
+                    CompleteTaskController completeTaskController, CompleteTaskViewModel completeTaskViewModel, DisplayTaskViewModel displayTaskViewModel, DisplayTaskController displayTaskController){
         this.createTaskController = createTaskController;
         this.createTaskViewModel = createTaskViewModel;
         this.completeTaskController = completeTaskController;
         this.completeTaskViewModel = completeTaskViewModel;
+        this.displayTaskViewModel = displayTaskViewModel;
+        this.displayTaskController = displayTaskController;
 
         createTaskViewModel.addPropertyChangeListener(this);
         completeTaskViewModel.addPropertyChangeListener(this);
@@ -76,10 +82,6 @@ public class TaskView extends JPanel implements ActionListener, PropertyChangeLi
         //Create scroller as needed vertically and horizontally
         JScrollPane scroller = new JScrollPane(taskPanel, ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
         scroller.setPreferredSize(new Dimension(600,600));
-
-        //add panel and scroller to frame
-        this.add(taskPanel);
-        this.add(scroller);
 
         createTask.addActionListener(
                 // This creates an anonymous subclass of ActionListener and instantiates it.
@@ -131,6 +133,13 @@ public class TaskView extends JPanel implements ActionListener, PropertyChangeLi
         this.add(title);
         this.add(createInfo);
         this.add(buttons);
+        //add panel and scroller to frame
+        this.add(taskPanel);
+        this.add(scroller);
+
+        TaskView.this.displayTaskController.execute(); //Display all the existing tasks in the CSV
+
+
     }
 
     @Override
@@ -140,6 +149,12 @@ public class TaskView extends JPanel implements ActionListener, PropertyChangeLi
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
+        if (evt.getPropertyName().equals("display")) {
+            DisplayTaskState state = (DisplayTaskState) evt.getNewValue();
+//            for (String task : gfg.keySet()) {
+//
+//            }
+        }
     }
 
 }

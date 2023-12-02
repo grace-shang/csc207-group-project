@@ -1,24 +1,17 @@
 package interface_adapter.display_task;
+import use_case.display_task.DisplayTaskInteractor;
 
-import use_case.display_task.DisplayTaskDataAccessInterface;
-import use_case.display_task.DisplayTaskOutputBoundary;
-import use_case.display_task.DisplayTaskOutputData;
 
 public class DisplayTaskController {
 
-    final DisplayTaskDataAccessInterface displayTaskDataAccessObject;
-    final DisplayTaskOutputBoundary displayTaskPresenter;
+    final DisplayTaskInteractor displayUseCaseInteractor;
 
-    public DisplayTaskController(DisplayTaskDataAccessInterface displayTaskDataAccessObject, DisplayTaskOutputBoundary displayTaskPresenter) {
-        this.displayTaskDataAccessObject = displayTaskDataAccessObject;
-        this.displayTaskPresenter = displayTaskPresenter;
+    public DisplayTaskController(DisplayTaskInteractor displayUseCaseInteractor) {
+        this.displayUseCaseInteractor = displayUseCaseInteractor;
     }
 
     public void execute() {
-        DisplayTaskOutputData displayTaskOutputData = new DisplayTaskOutputData(displayTaskDataAccessObject.getAllTasks().keySet(), String.join(",", displayTaskDataAccessObject.getAllTasks().keySet()), false);
-        displayTaskDataAccessObject.display(displayTaskDataAccessObject.getAllTasks());
-        displayTaskPresenter.prepareSuccessView(displayTaskOutputData);
-
+        displayUseCaseInteractor.execute();
     }
 
 }
