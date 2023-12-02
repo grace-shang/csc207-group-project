@@ -7,8 +7,6 @@ import entity.TaskFactory;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
@@ -16,12 +14,7 @@ import java.util.ArrayList;
 
 import api.Todo;
 import api.ToDoList;
-import interface_adapter.complete_task.CompleteTaskController;
-import interface_adapter.complete_task.CompleteTaskViewModel;
-import interface_adapter.create_task.CreateTaskController;
-import interface_adapter.create_task.CreateTaskViewModel;
-import interface_adapter.display_task.DisplayTaskController;
-import interface_adapter.display_task.DisplayTaskViewModel;
+import view.LabelTextPanel;
 import view.TaskView;
 
 import static org.junit.Assert.*;
