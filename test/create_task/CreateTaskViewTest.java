@@ -212,16 +212,18 @@ public class CreateTaskViewTest {
     @Test
     public void testCreateDisplaysNewTask(){
         addTwoTasksWithGui();
-        JFrame app = new JFrame("Test Frame");
-        app.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        Main.main(null);
+        SwingUtilities.invokeLater(() -> {
+            JFrame app = new JFrame("Test Frame");
+            app.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+            Main.main(null);
 
-        TaskView taskView = findTaskView(app);
-        assertNotNull("TaskView not found", taskView);
-        assertEquals("task1", taskView.getTaskText(0));
-        assertEquals("task2", taskView.getTaskText(1));
+            TaskView taskView = findTaskView(app);
+            assertNotNull("TaskView not found", taskView);
+            assertEquals("task1", taskView.getTaskText(0));
+            assertEquals("task2", taskView.getTaskText(1));
 
-        app.dispose();
+            app.dispose();
+        });
         try{
             Thread.sleep(2000);
         } catch (InterruptedException e){

@@ -21,6 +21,7 @@ import java.awt.event.KeyListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
+import java.util.Objects;
 
 
 public class TaskView extends JPanel implements ActionListener, PropertyChangeListener{
@@ -94,7 +95,7 @@ public class TaskView extends JPanel implements ActionListener, PropertyChangeLi
                         if (evt.getSource().equals(createTask)) {
                             CreateTaskState currentState = createTaskViewModel.getState();
 
-                            if (currentState.getTask() != ""){
+                            if (!Objects.equals(currentState.getTask(), "")){
                                 createTaskController.execute(currentState.getTask());
                                 JLabel taskForLabel = new JLabel(currentState.getTask());
                                 taskLabels.add(taskForLabel);
@@ -104,6 +105,7 @@ public class TaskView extends JPanel implements ActionListener, PropertyChangeLi
                                 newTask.add(new JCheckBox());
                                 newTask.add(newTaskText);
                                 createInputField.setText("");
+                                currentState.setTask("");
 
                                 taskPanel.add(newTask);
                                 taskPanel.revalidate();
@@ -173,11 +175,6 @@ public class TaskView extends JPanel implements ActionListener, PropertyChangeLi
         }
         throw new IndexOutOfBoundsException("Invalid task index");
     }
-
-
-
-
-
 
     @Override
     public void actionPerformed(ActionEvent e) {
