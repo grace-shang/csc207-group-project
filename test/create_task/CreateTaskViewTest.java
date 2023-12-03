@@ -14,6 +14,8 @@ import java.util.ArrayList;
 
 import api.Todo;
 import api.ToDoList;
+import interface_adapter.create_task.CreateTaskViewModel;
+import org.junit.Test;
 import view.LabelTextPanel;
 import view.TaskView;
 
@@ -39,32 +41,48 @@ public class CreateTaskViewTest {
         ftdao.save(tf.create("task2", false));
     }
 
-    public static JButton getCreateTaskButton() {
-        JFrame app = null;
-        Window[] windows = Window.getWindows();
-        for (Window window : windows) {
-            if (window instanceof JFrame) {
-                app = (JFrame) window;
+    @Test
+    public void testCreateTaskButtonPresent() {
+        SwingUtilities.invokeLater(() -> {
+            JFrame app = new JFrame("Test Frame");
+            app.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+            Main.main(null);
+
+            // Find the "Create Task" button
+            JButton createTaskButton = findCreateTaskButton(app);
+
+            // Assert that the button is not null
+            assertNotNull("Create Task button not found", createTaskButton);
+
+            // Assert the text on the button
+            assertEquals("Create Task", createTaskButton.getText());
+
+            // Clean up the application frame
+            app.dispose();
+        });
+
+        // Add any necessary waiting time or conditions for Swing components to update
+        try {
+            Thread.sleep(2000); // Adjust waiting time if needed
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private JButton findCreateTaskButton(JFrame frame) {
+        for (Component component : frame.getContentPane().getComponents()) {
+            if (component instanceof JPanel) {
+                JPanel mainPanel = (JPanel) component;
+                for (Component subComponent : mainPanel.getComponents()) {
+                    if (subComponent instanceof TaskView) {
+                        TaskView taskView = (TaskView) subComponent;
+                        return taskView.getCreateTaskButton();
+                    }
+                }
             }
         }
-        assertNotNull(app);
-        Component root = app.getComponent(0);
-        Component cp = ((JRootPane) root).getContentPane();
-        JPanel jp = (JPanel) cp;
-        JPanel taskViewPanel = (JPanel) jp.getComponent(2);
-        TaskView taskView = (TaskView) taskViewPanel.getComponent(0);
-        JPanel buttonsPanel = (JPanel) taskView.getComponent(2);
-        return (JButton) buttonsPanel.getComponent(0);
+        throw new IllegalStateException("Create Task button not found");
     }
-
-
-    @org.junit.Test
-    public void testCompleteButtonPresent(){
-        Main.main(null);
-        JButton button = getCreateTaskButton();
-        assert(button.getText().equals("Create Task"));
-    }
-
 
     @org.junit.Test
     public void testCreateSavesTaskIntoFile() throws IOException {
