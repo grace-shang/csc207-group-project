@@ -22,9 +22,11 @@ public class CreateTaskState{
 
     public void setTask(String task){this.task = task;}
 
-    public String getTaskError() {
-        return taskError;
+    public void setTaskError(String taskError) {
+        this.taskError = taskError;
     }
+
+    public String getTaskError(){return taskError;}
 
     public Object getProject() {return project;}
 
