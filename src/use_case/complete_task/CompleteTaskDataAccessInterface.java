@@ -8,4 +8,8 @@ public interface CompleteTaskDataAccessInterface {
 
     // Complete task method
     void complete(TaskI task) throws IOException;
+
+    boolean existsByName(String taskName);
+
+    TaskI getTask(String taskName);
 }
