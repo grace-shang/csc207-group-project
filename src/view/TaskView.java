@@ -146,6 +146,19 @@ public class TaskView extends JPanel implements ActionListener, PropertyChangeLi
 
     }
 
+    public JButton getCreateTaskButton() {
+        for (Component component : this.getComponents()) {
+            if (component instanceof JPanel) {
+                JPanel buttonsPanel = (JPanel) component;
+                if (buttonsPanel.getComponentCount() > 0 && buttonsPanel.getComponent(0) instanceof JButton) {
+                    return (JButton) buttonsPanel.getComponent(0);
+                }
+            }
+        }
+
+        throw new IllegalStateException("Create Task button not found");
+    }
+
     public void setComponentNames() {
         createTask.setName("Create Task Button");
         createInputField.setName("Text Box");
