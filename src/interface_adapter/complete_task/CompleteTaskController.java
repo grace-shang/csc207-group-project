@@ -9,10 +9,18 @@ public class CompleteTaskController {
 
     final CompleteTaskInputBoundary completeTaskUseCaseInteractor;
 
+    /**
+     * @param completeTaskUseCaseInteractor the input boundary that the controller will pass information through
+     */
     public CompleteTaskController(CompleteTaskInputBoundary completeTaskUseCaseInteractor){
         this.completeTaskUseCaseInteractor = completeTaskUseCaseInteractor;
     }
 
+    /**
+     * Creates new input data for the complete task use case
+     * @param task the String that helps determine the complete task
+     * @throws IOException
+     */
     public void execute(String task) throws IOException {
         CompleteTaskInputData completeTaskInputData = new CompleteTaskInputData(task);
         completeTaskUseCaseInteractor.execute(completeTaskInputData);
