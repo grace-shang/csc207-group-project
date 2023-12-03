@@ -110,4 +110,28 @@ public class FileTaskDataAccessObject implements CreateTaskDataAccessInterface, 
         task.setComplete(true);
     }
 
+    /**
+     * Checks if the task exists in the csv file
+     * @param taskName the name of the task we're searching for
+     * @return whether the task already exists
+     */
+    @Override
+    public boolean existsByName(String taskName) {
+        return tasks.containsKey(taskName);
+    }
+
+    /**
+     * @param taskName the name of the task we're retrieving
+     * @return the task object that is being sent
+     */
+    @Override
+    public TaskI getTask(String taskName) {
+        if (this.existsByName(taskName)) {
+            return tasks.get(taskName);
+        }
+        else{
+            throw new ArrayIndexOutOfBoundsException();
+        }
+    }
+
 }
