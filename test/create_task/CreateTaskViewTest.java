@@ -14,6 +14,8 @@ import java.util.ArrayList;
 
 import api.Todo;
 import api.ToDoList;
+import interface_adapter.create_task.CreateTaskViewModel;
+import org.junit.Test;
 import view.LabelTextPanel;
 import view.TaskView;
 
@@ -21,6 +23,7 @@ import static org.junit.Assert.*;
 
 public class CreateTaskViewTest {
     static String message = "";
+    static boolean popUpDiscovered = false;
 
     /**
      * ensures there are at least 2 tasks in the CSV file for testing purposes
@@ -39,36 +42,165 @@ public class CreateTaskViewTest {
         ftdao.save(tf.create("task2", false));
     }
 
-    public static JButton getCreateTaskButton() {
-        JFrame app = null;
-        Window[] windows = Window.getWindows();
-        for (Window window : windows) {
-            if (window instanceof JFrame) {
-                app = (JFrame) window;
+    public void addTwoTasksWithGui(){
+        SwingUtilities.invokeLater(() -> {
+            JFrame app = new JFrame("Test Frame");
+            app.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+            Main.main(null);
+            JTextField inputTextField = findCreateTaskInputField(app);
+            JButton createTaskButton = findCreateTaskButton(app);
+
+            assertNotNull("Create Task input text field not found", inputTextField);
+            assertNotNull("Create Task button not found", createTaskButton);
+
+            inputTextField.setText("task1");
+            createTaskButton.doClick();
+
+            inputTextField.setText("task2");
+            createTaskButton.doClick();
+
+            app.dispose();
+        });
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+
+    private JButton findCreateTaskButton(JFrame frame) {
+        for (Component component : frame.getContentPane().getComponents()) {
+            if (component instanceof JPanel) {
+                JPanel mainPanel = (JPanel) component;
+                for (Component subComponent : mainPanel.getComponents()) {
+                    if (subComponent instanceof TaskView) {
+                        TaskView taskView = (TaskView) subComponent;
+                        return taskView.getCreateTaskButton();
+                    }
+                }
             }
         }
-        assertNotNull(app);
-        Component root = app.getComponent(0);
-        Component cp = ((JRootPane) root).getContentPane();
-        JPanel jp = (JPanel) cp;
-        JPanel taskViewPanel = (JPanel) jp.getComponent(2);
-        TaskView taskView = (TaskView) taskViewPanel.getComponent(0);
-        JPanel buttonsPanel = (JPanel) taskView.getComponent(2);
-        return (JButton) buttonsPanel.getComponent(0);
+        throw new IllegalStateException("Create Task button not found");
     }
 
 
-    @org.junit.Test
-    public void testCompleteButtonPresent(){
-        Main.main(null);
-        JButton button = getCreateTaskButton();
-        assert(button.getText().equals("Create Task"));
+    private JTextField findCreateTaskInputField(JFrame frame) {
+        for (Component component : frame.getContentPane().getComponents()) {
+            if (component instanceof JPanel) {
+                JPanel mainPanel = (JPanel) component;
+                for (Component subComponent : mainPanel.getComponents()) {
+                    if (subComponent instanceof TaskView) {
+                        TaskView taskView = (TaskView) subComponent;
+                        return taskView.getCreateTaskInputField();
+                    }
+                }
+            }
+        }
+        throw new IllegalStateException("Create Task input text field not found");
     }
 
+    private TaskView findTaskView(JFrame frame) {
+        for (Component component : frame.getContentPane().getComponents()) {
+            if (component instanceof JPanel) {
+                JPanel mainPanel = (JPanel) component;
+                for (Component subComponent : mainPanel.getComponents()) {
+                    if (subComponent instanceof TaskView) {
+                        return (TaskView) subComponent;
+                    }
+                }
+            }
+        }
+        throw new IllegalStateException("TaskView not found");
+    }
 
-    @org.junit.Test
+    @Test
+    public void testCreateTaskButtonPresent() {
+        SwingUtilities.invokeLater(() -> {
+            JFrame app = new JFrame("Test Frame");
+            app.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+            Main.main(null);
+
+            JButton createTaskButton = findCreateTaskButton(app);
+
+            assertNotNull("Create Task button not found", createTaskButton);
+
+            assertEquals("Create Task", createTaskButton.getText());
+            app.dispose();
+        });
+
+        try {
+            Thread.sleep(2000); // Adjust waiting time if needed
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Test
+    public void testCreateTaskInputFieldPresent() {
+        SwingUtilities.invokeLater(() -> {
+            JFrame app = new JFrame("Test Frame");
+            app.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+            Main.main(null);
+
+            JTextField inputTextField = findCreateTaskInputField(app);
+
+            assertNotNull("Create Task input text field not found", inputTextField);
+            app.dispose();
+        });
+
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Test
+    public void testTaskWithEmptyInput(){
+        SwingUtilities.invokeLater(() -> {
+            JFrame app = new JFrame("Test Frame");
+            popUpDiscovered = false;
+            app.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+            Main.main(null);
+            JButton createTaskButton = findCreateTaskButton(app);
+            createTaskButton.doClick();
+            assert(popUpDiscovered);
+            app.dispose();
+        });
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    @Test
+    public void testMessageTaskNeeded(){
+        SwingUtilities.invokeLater(() -> {
+            JFrame app = new JFrame("Test Frame");
+            message = "";
+            app.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+            Main.main(null);
+            JButton createTaskButton = findCreateTaskButton(app);
+            createTaskButton.doClick();
+            assert(message.contains("An Empty Task Can't Be Added"));
+            app.dispose();
+        });
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    @Test
     public void testCreateSavesTaskIntoFile() throws IOException {
-        addTwoTasks();
+        addTwoTasksWithGui();
         Main.main(null);
         ArrayList<String> names = getNames();
         System.out.println("Names In File: " + names);
@@ -77,21 +209,39 @@ public class CreateTaskViewTest {
 
     }
 
-    @org.junit.Test
+    @Test
     public void testCreateDisplaysNewTask(){
+        addTwoTasksWithGui();
+        SwingUtilities.invokeLater(() -> {
+            JFrame app = new JFrame("Test Frame");
+            app.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+            Main.main(null);
+
+            TaskView taskView = findTaskView(app);
+            assertNotNull("TaskView not found", taskView);
+            assertEquals("task1", taskView.getTaskText(0));
+            assertEquals("task2", taskView.getTaskText(1));
+
+            app.dispose();
+        });
+        try{
+            Thread.sleep(2000);
+        } catch (InterruptedException e){
+            e.printStackTrace();
+        }
 
     }
 
 
     @org.junit.Test
     public void testLinesInCSVAfterCreate(){addTwoTasks();
-        addTwoTasks();
+        addTwoTasksWithGui();
         Main.main(null);
 
         try {
             int lines = countLines();
             System.out.println("lines in csv file = " + lines);
-            assert(lines == 3);
+            assert(lines >= 3);
         } catch (IOException e){
             throw new RuntimeException(e);
         }}

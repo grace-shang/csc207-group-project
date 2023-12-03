@@ -6,14 +6,10 @@ import entity.TaskFactory;
 import entity.TaskI;
 import use_case.complete_task.CompleteTaskDataAccessInterface;
 import use_case.create_task.CreateTaskDataAccessInterface;
-import use_case.delete_task.*;
 import use_case.display_task.DisplayTaskDataAccessInterface;
 
 import java.io.*;
-import java.time.LocalDateTime;
 import java.util.*;
-
-import static java.lang.Boolean.parseBoolean;
 
 public class FileTaskDataAccessObject implements CreateTaskDataAccessInterface, CompleteTaskDataAccessInterface, DisplayTaskDataAccessInterface {
     private final File csvFile;
@@ -47,7 +43,8 @@ public class FileTaskDataAccessObject implements CreateTaskDataAccessInterface, 
                     String[] col = row.split(",");
                     String nameTask = String.valueOf(col[headers.get("task_name")]);
                     String completionTask = String.valueOf(col[headers.get("completion")]);
-                    TaskI task = taskFactory.create(nameTask, parseBoolean(completionTask));
+                    boolean complete = Boolean.parseBoolean(completionTask);
+                    TaskI task = taskFactory.create(nameTask, complete);
                     tasks.put(nameTask, task);
                 }
             }
@@ -64,11 +61,11 @@ public class FileTaskDataAccessObject implements CreateTaskDataAccessInterface, 
     }
 
     @Override
-    public Map<String, Set<Object>> getAllTasks() {
-        Map<String, Set<Object>> retTask = new HashMap<>();
+    public Map<String, ArrayList<Object>> getAllTasks() {
+        Map<String, ArrayList<Object>> retTask = new LinkedHashMap<>();
 
         for (TaskI task: tasks.values()) {
-            Set<Object> taskInfo = new HashSet<>();
+            ArrayList<Object> taskInfo = new ArrayList<>();
             taskInfo.add(task.getComplete());
             retTask.put(task.getName(), taskInfo);
         }
