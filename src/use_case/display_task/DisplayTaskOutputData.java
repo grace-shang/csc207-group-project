@@ -1,23 +1,24 @@
 package use_case.display_task;
 
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.Collection;
 
 public class DisplayTaskOutputData {
 
-    private final Set<String> tasks;
-    private final Set<Object> taskInfo;
+    private final ArrayList<String> tasks;
+    private final ArrayList<ArrayList<Object>> taskInfo;
 
     private boolean useCaseFailed;
 
-    public DisplayTaskOutputData(Set<String> tasks, Set<Object> taskInfo, boolean useCaseFailed) {
+    public DisplayTaskOutputData(ArrayList<String> tasks, ArrayList<ArrayList<Object>> taskInfo, boolean useCaseFailed) {
         this.tasks = tasks;
         this.taskInfo = taskInfo;
         this.useCaseFailed = useCaseFailed;
     }
 
-    public Set<String> getAllTasks() {return tasks;}
+    public ArrayList<String> getAllTasks() {return tasks;}
 
-    public Set<Object> getTaskInfo() {
+    public ArrayList<ArrayList<Object>> getTaskInfo() {
         return taskInfo;
     }
 

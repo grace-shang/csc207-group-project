@@ -185,15 +185,20 @@ public class TaskView extends JPanel implements ActionListener, PropertyChangeLi
     public void propertyChange(PropertyChangeEvent evt) {
         if (evt.getPropertyName().equals("display")) {
             DisplayTaskState state = (DisplayTaskState) evt.getNewValue();
-            for (String task: state.getTasks()) {
+            for (int i = 0; i < state.getTasks().size(); i++) {
+                //String task: state.getTasks()
                 JPanel newTask = new JPanel();
                 newTask.setLayout(new FlowLayout(FlowLayout.LEFT));
-                JLabel newTaskText = new JLabel(task);
+                JLabel newTaskText = new JLabel(state.getTasks().get(i));
                 JCheckBox check = new JCheckBox();
 
-//                if ((Boolean) state.getTaskInfo() == true) {
-//                    check.setSelected(true);
-//                }
+                boolean complete = Boolean.parseBoolean(state.getTaskInfo().get(i).get(0).toString());
+
+                if (complete) {
+                    check.setSelected(true);
+                }
+                System.out.println(state.getTaskInfo().get(0).get(0));
+//                System.out.println(state.getTaskInfo().get(i).get(0).toString());
 
                 newTask.add(check);
                 newTask.add(newTaskText);

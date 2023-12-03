@@ -1,13 +1,12 @@
 package interface_adapter.display_task;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
 
 public class DisplayTaskState {
 
-    private Set<String> tasks = new HashSet<>();
+    private ArrayList<String> tasks = new ArrayList<>();
 
-    private Set<Object> taskInfo = new HashSet<>();
+    private ArrayList<ArrayList<Object>> taskInfo = new ArrayList<>();
 
     public DisplayTaskState(DisplayTaskState copy) {
         this.tasks = copy.tasks;
@@ -17,15 +16,15 @@ public class DisplayTaskState {
     public DisplayTaskState() {
     }
 
-    public Set<String> getTasks() {return tasks;}
+    public ArrayList<String> getTasks() {return tasks;}
 
-    public void setTasks(Set<String> tasks) {this.tasks = tasks;}
+    public void setTasks(ArrayList<String> tasks) {this.tasks = tasks;}
 
-    public Set<Object> getTaskInfo() {
+    public ArrayList<ArrayList<Object>> getTaskInfo() {
         return taskInfo;
     }
 
-    public void setTaskInfo(Set<Object> taskInfo) {
+    public void setTaskInfo(ArrayList<ArrayList<Object>> taskInfo) {
         this.taskInfo = taskInfo;
     }
 
