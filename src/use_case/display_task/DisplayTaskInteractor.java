@@ -1,5 +1,7 @@
 package use_case.display_task;
 
+import java.util.Collections;
+
 public class DisplayTaskInteractor {
 
     final DisplayTaskDataAccessInterface displayDataAccessObject;
@@ -17,11 +19,8 @@ public class DisplayTaskInteractor {
 
     public void execute() {
 
-//        for displayDataAccessObject.getAllTasks().entrySet()
-
-
-//        DisplayTaskOutputData displayTaskOutputData = new DisplayTaskOutputData(displayDataAccessObject.getAllTasks().keySet(), displayDataAccessObject.getAllTasks().entrySet(), false);
-//        taskPresenter.prepareSuccessView(displayTaskOutputData);
+        DisplayTaskOutputData displayTaskOutputData = new DisplayTaskOutputData(displayDataAccessObject.getAllTasks().keySet(), Collections.singleton(displayDataAccessObject.getAllTasks().values()), false);
+        taskPresenter.prepareSuccessView(displayTaskOutputData);
     }
 
 }

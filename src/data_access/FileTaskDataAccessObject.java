@@ -67,10 +67,10 @@ public class FileTaskDataAccessObject implements CreateTaskDataAccessInterface, 
     public Map<String, Set<Object>> getAllTasks() {
         Map<String, Set<Object>> retTask = new HashMap<>();
 
-        for (String task: tasks.keySet()) {
+        for (TaskI task: tasks.values()) {
             Set<Object> taskInfo = new HashSet<>();
-            taskInfo.add(tasks.get(task).getComplete());
-            retTask.put(task, taskInfo);
+            taskInfo.add(task.getComplete());
+            retTask.put(task.getName(), taskInfo);
         }
 
         return retTask;

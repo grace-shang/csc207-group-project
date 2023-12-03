@@ -39,6 +39,7 @@ public class TaskView extends JPanel implements ActionListener, PropertyChangeLi
 
     private final JTextField createTaskProjectInputField = new JTextField(30);
     private final JButton createTask;
+    private final JPanel taskPanel = new JPanel();
 
     private JFrame frame;
 
@@ -54,6 +55,7 @@ public class TaskView extends JPanel implements ActionListener, PropertyChangeLi
 
         createTaskViewModel.addPropertyChangeListener(this);
         completeTaskViewModel.addPropertyChangeListener(this);
+        displayTaskViewModel.addPropertyChangeListener(this);
 
         JLabel title = new JLabel(CreateTaskViewModel.TITLE_LABEL);
         title.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -75,7 +77,6 @@ public class TaskView extends JPanel implements ActionListener, PropertyChangeLi
         frame.setLayout(new BorderLayout());
 
         // Create panel to display tasks
-        JPanel taskPanel = new JPanel();
         taskPanel.setLayout(new BoxLayout(taskPanel, BoxLayout.Y_AXIS));
         taskPanel.setBorder(LineBorder.createBlackLineBorder());
 
@@ -95,8 +96,8 @@ public class TaskView extends JPanel implements ActionListener, PropertyChangeLi
                             JPanel newTask = new JPanel();
                             newTask.setLayout(new FlowLayout(FlowLayout.LEFT));
                             JLabel newTaskText = new JLabel(currentState.getTask());
-                            newTask.add(newTaskText);
                             newTask.add(new JCheckBox());
+                            newTask.add(newTaskText);
                             createInputField.setText("");
 
                             taskPanel.add(newTask);
@@ -128,6 +129,7 @@ public class TaskView extends JPanel implements ActionListener, PropertyChangeLi
                     }
                 }
         );
+        TaskView.this.displayTaskController.execute(); //Display all the existing tasks in the CSV
 
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
@@ -137,9 +139,6 @@ public class TaskView extends JPanel implements ActionListener, PropertyChangeLi
         //add panel and scroller to frame
         this.add(taskPanel);
         this.add(scroller);
-
-        TaskView.this.displayTaskController.execute(); //Display all the existing tasks in the CSV
-
 
     }
 
@@ -157,9 +156,23 @@ public class TaskView extends JPanel implements ActionListener, PropertyChangeLi
     public void propertyChange(PropertyChangeEvent evt) {
         if (evt.getPropertyName().equals("display")) {
             DisplayTaskState state = (DisplayTaskState) evt.getNewValue();
-//            for (String task : gfg.keySet()) {
-//
-//            }
+            for (String task: state.getTasks()) {
+                JPanel newTask = new JPanel();
+                newTask.setLayout(new FlowLayout(FlowLayout.LEFT));
+                JLabel newTaskText = new JLabel(task);
+                JCheckBox check = new JCheckBox();
+
+//                if ((Boolean) state.getTaskInfo() == true) {
+//                    check.setSelected(true);
+//                }
+
+                newTask.add(check);
+                newTask.add(newTaskText);
+
+                taskPanel.add(newTask);
+                taskPanel.revalidate();
+                taskPanel.repaint();
+            }
         }
     }
 
