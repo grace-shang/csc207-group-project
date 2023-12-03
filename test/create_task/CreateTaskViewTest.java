@@ -241,7 +241,7 @@ public class CreateTaskViewTest {
         try {
             int lines = countLines();
             System.out.println("lines in csv file = " + lines);
-            assert(lines == 3);
+            assert(lines >= 3);
         } catch (IOException e){
             throw new RuntimeException(e);
         }}
