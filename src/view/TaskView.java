@@ -20,6 +20,8 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.util.ArrayList;
+import java.util.Objects;
 
 
 public class TaskView extends JPanel implements ActionListener, PropertyChangeListener{
@@ -40,6 +42,8 @@ public class TaskView extends JPanel implements ActionListener, PropertyChangeLi
     private final JTextField createTaskProjectInputField = new JTextField(30);
     private final JButton createTask;
     private final JPanel taskPanel = new JPanel();
+
+    private ArrayList<JLabel> taskLabels = new ArrayList<>();
 
     private JFrame frame;
 
@@ -84,7 +88,6 @@ public class TaskView extends JPanel implements ActionListener, PropertyChangeLi
         JScrollPane scroller = new JScrollPane(taskPanel, ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
         scroller.setPreferredSize(new Dimension(600,600));
 
-
         createTask.addActionListener(
                 // This creates an anonymous subclass of ActionListener and instantiates it.
                 new ActionListener() {
@@ -92,14 +95,17 @@ public class TaskView extends JPanel implements ActionListener, PropertyChangeLi
                         if (evt.getSource().equals(createTask)) {
                             CreateTaskState currentState = createTaskViewModel.getState();
 
-                            if (currentState.getTask() != ""){
+                            if (!Objects.equals(currentState.getTask(), "")){
                                 createTaskController.execute(currentState.getTask());
+                                JLabel taskForLabel = new JLabel(currentState.getTask());
+                                taskLabels.add(taskForLabel);
                                 JPanel newTask = new JPanel();
                                 newTask.setLayout(new FlowLayout(FlowLayout.LEFT));
                                 JLabel newTaskText = new JLabel(currentState.getTask());
                                 newTask.add(new JCheckBox());
                                 newTask.add(newTaskText);
                                 createInputField.setText("");
+                                currentState.setTask("");
 
                                 taskPanel.add(newTask);
                                 taskPanel.revalidate();
@@ -146,9 +152,28 @@ public class TaskView extends JPanel implements ActionListener, PropertyChangeLi
 
     }
 
-    public void setComponentNames() {
-        createTask.setName("Create Task Button");
-        createInputField.setName("Text Box");
+    public JButton getCreateTaskButton() {
+        for (Component component : this.getComponents()) {
+            if (component instanceof JPanel) {
+                JPanel buttonsPanel = (JPanel) component;
+                if (buttonsPanel.getComponentCount() > 0 && buttonsPanel.getComponent(0) instanceof JButton) {
+                    return (JButton) buttonsPanel.getComponent(0);
+                }
+            }
+        }
+
+        throw new IllegalStateException("Create Task button not found");
+    }
+
+    public JTextField getCreateTaskInputField(){
+        return createInputField;
+    }
+
+    public String getTaskText(int index) {
+        if (index >= 0 && index < taskLabels.size()) {
+            return taskLabels.get(index).getText();
+        }
+        throw new IndexOutOfBoundsException("Invalid task index");
     }
 
     @Override
