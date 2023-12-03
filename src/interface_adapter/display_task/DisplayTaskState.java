@@ -1,16 +1,17 @@
 package interface_adapter.display_task;
 
+import java.util.HashSet;
 import java.util.Set;
 
 public class DisplayTaskState {
 
-    private Set<String> tasks = null;
+    private Set<String> tasks = new HashSet<>();
 
-    private Set<Boolean> completions = null;
+    private Set<Object> taskInfo = new HashSet<>();
 
     public DisplayTaskState(DisplayTaskState copy) {
         this.tasks = copy.tasks;
-        this.completions = copy.completions;
+        this.taskInfo = copy.taskInfo;
     }
 
     public DisplayTaskState() {
@@ -20,12 +21,12 @@ public class DisplayTaskState {
 
     public void setTasks(Set<String> tasks) {this.tasks = tasks;}
 
-    public Set<Boolean> getCompletions() {
-        return completions;
+    public Set<Object> getTaskInfo() {
+        return taskInfo;
     }
 
-    public void setCompletions(Set<Boolean> completions) {
-        this.completions = completions;
+    public void setTaskInfo(Set<Object> taskInfo) {
+        this.taskInfo = taskInfo;
     }
 
 }

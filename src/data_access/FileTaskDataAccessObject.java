@@ -11,9 +11,7 @@ import use_case.display_task.DisplayTaskDataAccessInterface;
 
 import java.io.*;
 import java.time.LocalDateTime;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.Map;
+import java.util.*;
 
 import static java.lang.Boolean.parseBoolean;
 
@@ -66,8 +64,16 @@ public class FileTaskDataAccessObject implements CreateTaskDataAccessInterface, 
     }
 
     @Override
-    public Map<String, TaskI> getAllTasks() {
-        return tasks;
+    public Map<String, Set<Object>> getAllTasks() {
+        Map<String, Set<Object>> retTask = new HashMap<>();
+
+        for (TaskI task: tasks.values()) {
+            Set<Object> taskInfo = new HashSet<>();
+            taskInfo.add(task.getComplete());
+            retTask.put(task.getName(), taskInfo);
+        }
+
+        return retTask;
     }
 
     public void save() {
