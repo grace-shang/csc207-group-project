@@ -36,16 +36,17 @@ public class DisplayTaskInteractorTest {
     }
 
     @Test
-    public void successTest() {
+    public void successTest() throws IOException {
         addTwoTasks();
-        DisplayTaskDataAccessInterface taskRepository = new InMemoryTaskDataAccessObject();
+        TaskFactory taskFactory = new AllTaskFactory();
+        Todo todo = new ToDoList();
+        DisplayTaskDataAccessInterface taskRepository = new FileTaskDataAccessObject("tasks.csv", taskFactory, todo);
 
         // This creates a successPresenter that tests whether the test case is as we expect.
 
         DisplayTaskOutputBoundary successPresenter = new DisplayTaskOutputBoundary() {
             @Override
             public void prepareSuccessView(DisplayTaskOutputData displayTasks) {
-                // 2 things to check: the output data is correct, and the user has been created in the DAO.
                 assertNotNull(displayTasks.getTaskInfo());
                 assertNotNull(displayTasks.getAllTasks());
                 assertEquals("task1", displayTasks.getAllTasks().get(0));
