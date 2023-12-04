@@ -40,6 +40,34 @@ public class ToDoList implements Todo{
         return null;
     }
 
+//    @Override
+//    public void deleteTask(String projectName, String taskName) {
+//        OkHttpClient client = new OkHttpClient().newBuilder()
+//                .build();
+//        MediaType mediaType = MediaType.parse("application/json");
+//        JSONObject requestBody = new JSONObject();
+//        RequestBody body = RequestBody.create(mediaType, requestBody.toString());
+//        Request request = new Request.Builder()
+//                .url("https://api.todoist.com/rest/v2/tasks/2995104339")
+//                .post(body)
+//                .build();
+//
+//        try {
+//            Response response = client.newCall(request).execute();
+//            System.out.println(response);
+//            JSONObject responseBody = new JSONObject(response.body().string());
+//
+//            if (responseBody.getInt("status_code") == 204) {
+//                return;
+//            } else {
+//                throw new RuntimeException(responseBody.getString("Error"));
+//            }
+//        }
+//        catch (IOException | JSONException e) {
+//            throw new RuntimeException(e);
+//        }
+//    }
+
     @Override
     public void completeTask(String projectName, String taskName) {
 
