@@ -20,6 +20,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Objects;
 
@@ -74,7 +75,6 @@ public class TaskView extends JPanel implements ActionListener, PropertyChangeLi
         JPanel buttons = new JPanel();
         createTask = new JButton(CreateTaskViewModel.CREATE_BUTTON_LABEL);
         buttons.add(createTask);
-        // completeTask = new JCheckBox();
 
         frame = new JFrame("Task Tracker");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -104,6 +104,36 @@ public class TaskView extends JPanel implements ActionListener, PropertyChangeLi
                                 JLabel newTaskText = new JLabel(currentState.getTask());
                                 newTask.add(new JCheckBox());
                                 newTask.add(newTaskText);
+                                createInputField.setText("");
+                                currentState.setTask("");
+
+                                taskPanel.add(newTask);
+                                taskPanel.revalidate();
+                                taskPanel.repaint();
+                            } else{
+                                JOptionPane.showMessageDialog(TaskView.this, "An Empty Task Can't Be Added");
+                            }
+                        }
+                    }
+                }
+        );
+
+        createTask.addActionListener(
+                // This creates an anonymous subclass of ActionListener and instantiates it.
+                new ActionListener() {
+                    public void actionPerformed(ActionEvent evt) {
+                        if (evt.getSource().equals(createTask)) {
+                            CreateTaskState currentState = createTaskViewModel.getState();
+
+                            if (!Objects.equals(currentState.getTask(), "")){
+                                createTaskController.execute(currentState.getTask());
+                                JLabel taskForLabel = new JLabel(currentState.getTask());
+                                taskLabels.add(taskForLabel);
+                                JPanel newTask = new JPanel();
+                                newTask.setLayout(new FlowLayout(FlowLayout.LEFT));
+                                // JLabel newTaskText = new JLabel(currentState.getTask());
+                                newTask.add(new JCheckBox(currentState.getTask(), true));
+                                // newTask.add(newTaskText);
                                 createInputField.setText("");
                                 currentState.setTask("");
 
@@ -189,19 +219,38 @@ public class TaskView extends JPanel implements ActionListener, PropertyChangeLi
                 //String task: state.getTasks()
                 JPanel newTask = new JPanel();
                 newTask.setLayout(new FlowLayout(FlowLayout.LEFT));
-                JLabel newTaskText = new JLabel(state.getTasks().get(i));
-                JCheckBox check = new JCheckBox();
+               // JLabel newTaskText = new JLabel(state.getTasks().get(i));
+                boolean complete = (boolean) state.getTaskInfo().get(i).get(0);
+                System.out.println(complete);
+                JCheckBox check = new JCheckBox(state.getTasks().get(i), complete);
+                
+                check.addActionListener(
+                        new ActionListener() {
+                            public void actionPerformed(ActionEvent evt) {
+                                if (evt.getSource().equals(check)) {
+                                    CompleteTaskState completeTaskState = completeTaskViewModel.getState();
 
-                boolean complete = Boolean.parseBoolean(state.getTaskInfo().get(i).get(0).toString());
+                                    try {
+                                        completeTaskController.execute(completeTaskState.getTaskName());
+                                    } catch (IOException e) {
+                                        throw new RuntimeException(e);
+                                    }
+                                }
+                            }
+                        }        
+                        
+                );
+                
+                // boolean complete = Boolean.parseBoolean(state.getTaskInfo().get(i).get(0).toString());
 
-                if (complete) {
-                    check.setSelected(true);
-                }
-                System.out.println(state.getTaskInfo().get(0).get(0));
+                // if (complete) {
+                //    check.setSelected(false);
+                // }
+                // System.out.println(state.getTaskInfo().get(0).get(0));
 //                System.out.println(state.getTaskInfo().get(i).get(0).toString());
 
                 newTask.add(check);
-                newTask.add(newTaskText);
+                // newTask.add(newTaskText);
 
                 taskPanel.add(newTask);
                 taskPanel.revalidate();
