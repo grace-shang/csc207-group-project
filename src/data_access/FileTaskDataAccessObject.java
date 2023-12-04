@@ -102,9 +102,14 @@ public class FileTaskDataAccessObject implements CreateTaskDataAccessInterface, 
     }
 
 
+    /**
+     * @param task the task we're completing
+     * @throws IOException
+     */
     @Override
     public void complete(TaskI task) throws IOException {
         task.setComplete(true);
+        save();
     }
 
     /**
