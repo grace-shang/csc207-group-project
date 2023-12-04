@@ -15,6 +15,7 @@ import java.awt.event.ActionListener;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
 
 import static org.junit.Assert.assertNotNull;
 
@@ -160,6 +161,23 @@ public class CompleteTaskViewTest {
         Timer t = new Timer(1000, close);
         t.setRepeats(false);
         return t;
+    }
+
+    private static ArrayList<String> getNames() throws IOException {
+        ArrayList<String> listOfNames = new ArrayList<>();
+        try (BufferedReader reader = new BufferedReader(new FileReader("tasks.csv"))) {
+            String line;
+            // Skip the header line
+            reader.readLine();
+            while ((line = reader.readLine()) != null) {
+                String[] values = line.split(",");
+                if (values.length >= 1) {
+                    // Trim to remove any leading/trailing whitespaces
+                    listOfNames.add(values[0].trim());
+                }
+            }
+            return listOfNames;
+        }
     }
 
     private static int countLines() throws IOException {
