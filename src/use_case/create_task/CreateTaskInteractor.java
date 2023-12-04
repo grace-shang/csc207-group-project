@@ -6,27 +6,31 @@ import entity.TaskFactory;
 public class CreateTaskInteractor implements CreateTaskInputBoundary{
     final CreateTaskDataAccessInterface taskDataAccessObject;
 
-    final CreateTaskOutputBoundary userPresenter;
+    final CreateTaskOutputBoundary taskPresenter;
 
     final TaskFactory taskFactory;
 
 
     public CreateTaskInteractor(CreateTaskDataAccessInterface taskDataAccessObject,
-                                CreateTaskOutputBoundary userPresenter,
+                                CreateTaskOutputBoundary taskPresenter,
                                 TaskFactory taskFactory){
         this.taskDataAccessObject = taskDataAccessObject;
-        this.userPresenter = userPresenter;
+        this.taskPresenter = taskPresenter;
         this.taskFactory = taskFactory;
     }
 
     public void execute(CreateTaskInputData createTaskInputData){
-        TaskI taskI = taskFactory.create(createTaskInputData.getCreateTask(), false);
-        taskDataAccessObject.save(taskI);
+        if (createTaskInputData.getCreateTask() == ""){
+            taskPresenter.prepareFailView("An Empty Task Can't Be Added");
+        } else{
+            TaskI taskI = taskFactory.create(createTaskInputData.getCreateTask(), false);
+            taskDataAccessObject.save(taskI);
 
-        taskDataAccessObject.addTask(taskI);
+            taskDataAccessObject.addTask(taskI);
 
-        CreateTaskOutputData createTaskOutputData = new CreateTaskOutputData(taskI.getName());
-        userPresenter.prepareSuccessView(createTaskOutputData);
+            CreateTaskOutputData createTaskOutputData = new CreateTaskOutputData(taskI.getName());
+            taskPresenter.prepareSuccessView(createTaskOutputData);
+        }
     }
 
 
