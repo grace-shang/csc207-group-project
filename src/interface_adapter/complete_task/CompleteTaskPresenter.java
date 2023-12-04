@@ -24,6 +24,9 @@ public class CompleteTaskPresenter implements CompleteTaskOutputBoundary {
      */
     @Override
     public void prepareSuccessView(CompleteTaskOutputData completed) {
+        CompleteTaskState completeTaskState = completeTaskViewModel.getState();
 
+        // This part doesn't work yet
+        // completeTaskState.setTaskCompletion(completed.getTask());
     }
 }
