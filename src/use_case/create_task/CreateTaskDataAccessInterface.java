@@ -6,4 +6,6 @@ public interface CreateTaskDataAccessInterface {
     void save(TaskI taskI);
 
     void addTask(TaskI taskI);
+
+    boolean existByName(String identifier);
 }

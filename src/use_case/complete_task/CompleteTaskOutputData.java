@@ -13,4 +13,8 @@ public class CompleteTaskOutputData {
         this.completeTaskFailed = completeTaskFailed;
         this.task = task;
     }
+
+    public String getTask(){
+        return this.task;
+    }
 }

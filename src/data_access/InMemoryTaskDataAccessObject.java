@@ -33,8 +33,14 @@ public class InMemoryTaskDataAccessObject implements CompleteTaskDataAccessInter
     }
 
     @Override
-    public void complete(TaskI task) throws IOException {
+    public boolean existByName(String identifier) {
+        return tasks.containsKey(identifier);
+    }
 
+    @Override
+    public void complete(TaskI task) throws IOException {
+        todo.completeTask("projectName", task.getName());
+        save(task);
     }
 
     /**
