@@ -223,7 +223,15 @@ public class TaskView extends JPanel implements ActionListener, PropertyChangeLi
                 boolean complete = (boolean) state.getTaskInfo().get(i).get(0);
                 System.out.println(complete);
                 JCheckBox check = new JCheckBox(state.getTasks().get(i), complete);
-                
+
+                // Only here for testing
+                CompleteTaskState completeTaskState = completeTaskViewModel.getState();
+                try {
+                    completeTaskController.execute(completeTaskState.getTaskName());
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+
                 check.addActionListener(
                         new ActionListener() {
                             public void actionPerformed(ActionEvent evt) {
