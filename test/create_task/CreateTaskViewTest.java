@@ -2,6 +2,7 @@ package create_task;
 
 import app.Main;
 import data_access.FileTaskDataAccessObject;
+import data_access.InMemoryTaskDataAccessObject;
 import entity.AllTaskFactory;
 import entity.TaskFactory;
 
@@ -16,6 +17,7 @@ import api.Todo;
 import api.ToDoList;
 import interface_adapter.create_task.CreateTaskViewModel;
 import org.junit.Test;
+import use_case.create_task.*;
 import view.LabelTextPanel;
 import view.TaskView;
 
@@ -25,9 +27,33 @@ public class CreateTaskViewTest {
     static String message = "";
     static boolean popUpDiscovered = false;
 
+    private Todo todo;
+
     /**
      * ensures there are at least 2 tasks in the CSV file for testing purposes
      */
+
+    @Test
+    public void successTest() {
+        CreateTaskInputData inputData = new CreateTaskInputData("task1");
+        CreateTaskDataAccessInterface taskRepository = new InMemoryTaskDataAccessObject(todo);
+
+        // This creates a successPresenter that tests whether the test case is as we expect.
+        CreateTaskOutputBoundary successPresenter = new CreateTaskOutputBoundary() {
+            @Override
+            public void prepareSuccessView(CreateTaskOutputData task) {
+                // 2 things to check: the output data is correct, and the user has been created in the DAO.
+                assertEquals("task1", task.getTask());
+                assertTrue(taskRepository.existByName("task1"));
+            }
+        };
+        CreateTaskInputBoundary interactor = new CreateTaskInteractor(taskRepository, successPresenter, new AllTaskFactory());
+        interactor.execute(inputData);
+    }
+
+
+
+
     public void addTwoTasks() {
         TaskFactory tf = new AllTaskFactory();
         FileTaskDataAccessObject ftdao;

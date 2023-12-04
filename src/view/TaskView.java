@@ -125,7 +125,7 @@ public class TaskView extends JPanel implements ActionListener, PropertyChangeLi
                         if (evt.getSource().equals(createTask)) {
                             CreateTaskState currentState = createTaskViewModel.getState();
 
-                            if (!Objects.equals(currentState.getTask(), "")){
+                            if (!Objects.equals(createInputField.getText(), " ")){
                                 createTaskController.execute(currentState.getTask());
                                 JLabel taskForLabel = new JLabel(currentState.getTask());
                                 taskLabels.add(taskForLabel);
@@ -245,10 +245,10 @@ public class TaskView extends JPanel implements ActionListener, PropertyChangeLi
                                     }
                                 }
                             }
-                        }        
-                        
+                        }
+
                 );
-                
+
                 // boolean complete = Boolean.parseBoolean(state.getTaskInfo().get(i).get(0).toString());
 
                 // if (complete) {
