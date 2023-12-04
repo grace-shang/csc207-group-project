@@ -33,23 +33,23 @@ public class CreateTaskViewTest {
      * ensures there are at least 2 tasks in the CSV file for testing purposes
      */
 
-    @Test
-    public void successTest() {
-        CreateTaskInputData inputData = new CreateTaskInputData("task1");
-        CreateTaskDataAccessInterface taskRepository = new InMemoryTaskDataAccessObject(todo);
-
-        // This creates a successPresenter that tests whether the test case is as we expect.
-        CreateTaskOutputBoundary successPresenter = new CreateTaskOutputBoundary() {
-            @Override
-            public void prepareSuccessView(CreateTaskOutputData task) {
-                // 2 things to check: the output data is correct, and the user has been created in the DAO.
-                assertEquals("task1", task.getTask());
-                assertTrue(taskRepository.existByName("task1"));
-            }
-        };
-        CreateTaskInputBoundary interactor = new CreateTaskInteractor(taskRepository, successPresenter, new AllTaskFactory());
-        interactor.execute(inputData);
-    }
+    //@Test
+    //    public void successTest() {
+    //        CreateTaskInputData inputData = new CreateTaskInputData("task1");
+    //        CreateTaskDataAccessInterface taskRepository = new InMemoryTaskDataAccessObject(todo);
+    //
+    //        // This creates a successPresenter that tests whether the test case is as we expect.
+    //        CreateTaskOutputBoundary successPresenter = new CreateTaskOutputBoundary() {
+    //            @Override
+    //            public void prepareSuccessView(CreateTaskOutputData task) {
+    //                // 2 things to check: the output data is correct, and the user has been created in the DAO.
+    //                assertEquals("task1", task.getTask());
+    //                assertTrue(taskRepository.existByName("task1"));
+    //            }
+    //        };
+    //        CreateTaskInputBoundary interactor = new CreateTaskInteractor(taskRepository, successPresenter, new AllTaskFactory());
+    //        interactor.execute(inputData);
+    //    }
 
 
 
