@@ -108,7 +108,7 @@ public class FileTaskDataAccessObject implements CreateTaskDataAccessInterface, 
      */
     @Override
     public void complete(TaskI task) throws IOException {
-        task.setComplete(true);
+        todo.completeTask("projectName", task.getName());
         save();
     }
 
