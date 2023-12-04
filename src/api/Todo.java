@@ -11,6 +11,7 @@ public interface Todo {
 
     Projects logProject(String name, boolean favourite) throws JSONException;
 
+    void completeTask(String projectName, String taskName);
 
 }
 
