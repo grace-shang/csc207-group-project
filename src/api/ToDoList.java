@@ -41,6 +41,25 @@ public class ToDoList implements Todo{
     }
 
     @Override
+    public void completeTask(String projectName, String taskName) {
+
+        OkHttpClient client = new OkHttpClient().newBuilder().build();
+        RequestBody requestBody = RequestBody.create(MediaType.parse("application/json; charset=utf-8"), taskName);
+
+        Request request = new Request.Builder()
+                .url("https://api.todoist.com/rest/v2/tasks/2995104339/close")
+                .post(requestBody)
+                .build();
+
+        try{
+            Response response = client.newCall(request).execute();
+            System.out.println(response);
+        } catch (IOException e){
+            throw new RuntimeException();
+        }
+    }
+
+    @Override
     public void addTask(String projectName, String taskName) {
         JSONObject task = new JSONObject();
         try{
