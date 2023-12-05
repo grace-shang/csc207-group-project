@@ -9,11 +9,21 @@ public class DisplayTaskPresenter implements DisplayTaskOutputBoundary {
     private final DisplayTaskViewModel displayTaskViewModel;
     private final ViewManagerModel viewManagerModel;
 
+    /**
+     * Constructs the presenter for the display use case
+     * @param displayTaskViewModel the view model for the display use case
+     * @param viewManagerModel the view manager model for managing the view models
+     */
     public DisplayTaskPresenter(DisplayTaskViewModel displayTaskViewModel, ViewManagerModel viewManagerModel) {
         this.displayTaskViewModel = displayTaskViewModel;
         this.viewManagerModel = viewManagerModel;
     }
 
+    /**
+     * Changes the state of the display task with the output data and updates the
+     * view manager model with the changes
+     * @param response the output data for the display use case
+     */
     @Override
     public void prepareSuccessView(DisplayTaskOutputData response) {
 
