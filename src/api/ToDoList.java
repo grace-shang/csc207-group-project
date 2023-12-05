@@ -1,6 +1,7 @@
 package api;
 
 import okhttp3.*;
+import okio.BufferedSink;
 import org.json.JSONException;
 import org.json.JSONObject;
 import java.io.BufferedReader;
@@ -69,10 +70,10 @@ public class ToDoList implements Todo{
 //    }
 
     @Override
-    public void completeTask(String projectName, String taskName) {
+    public void completeTask(String projectName, String taskName, Integer taskID) {
         JSONObject task = new JSONObject();
         try{
-            task.put("content", "task id");
+            task.put("id", taskID);
         } catch (JSONException e) {
             throw new RuntimeException(e);
         }
@@ -81,9 +82,9 @@ public class ToDoList implements Todo{
         RequestBody requestBody = RequestBody.create(MediaType.parse("application/json; charset=utf-8"), task.toString());
 
         Request request = new Request.Builder()
-                .url("https://api.todoist.com/rest/v1/tasks/2995104339/close")
+                .url("https://api.todoist.com/rest/v1/tasks/" + task.get("id") + "/close")
                 .post(requestBody)
-                .header("Authorization", "Bearer 0123456789abcdef0123456789")
+                .header("Authorization", "Bearer b1aa35c9378d5217bc2745afc04aa0fcae246844")
                 .build();
 
         try{
@@ -98,7 +99,7 @@ public class ToDoList implements Todo{
     public void addTask(String projectName, String taskName) {
         JSONObject task = new JSONObject();
         try{
-            task.put("content", "A new task for test");
+            task.put("content", "task name");
         }
 
         catch (JSONException e){
@@ -106,16 +107,28 @@ public class ToDoList implements Todo{
         }
 
         OkHttpClient client = new OkHttpClient().newBuilder().build();
-        RequestBody requestBody = RequestBody.create(MediaType.parse("application/json; charset=utf-8"), task.toString());
-
+        String jsonBody = "{\"content\": " + task.get("content") + "}";
+        RequestBody requestBody = RequestBody.create(MediaType.parse("application/json; charset=utf-8"), jsonBody);
         Request request = new Request.Builder()
                 .url("https://api.todoist.com/rest/v2/tasks")
                 .post(requestBody)
+                .header("Content-Type", "application/json")
+                .header("X-Request-Id", java.util.UUID.randomUUID().toString())
+                .header("Authorization", "Bearer b1aa35c9378d5217bc2745afc04aa0fcae246844")
                 .build();
 
         try{
             Response response = client.newCall(request).execute();
             System.out.println(response);
+
+            JSONObject jsonResponse = new JSONObject(response);
+
+            // The issue is it doesn't recognize the key "id" even though it should return one
+            // I think the response doesn't respond like it does on Todoist but I'll look when
+            // I'm back from classes
+            int taskID = jsonResponse.getInt("id");
+
+            System.out.println("Task ID: " + taskID);
         } catch (IOException e){
             throw new RuntimeException();
         }
