@@ -70,13 +70,20 @@ public class ToDoList implements Todo{
 
     @Override
     public void completeTask(String projectName, String taskName) {
+        JSONObject task = new JSONObject();
+        try{
+            task.put("content", "task id");
+        } catch (JSONException e) {
+            throw new RuntimeException(e);
+        }
 
         OkHttpClient client = new OkHttpClient().newBuilder().build();
-        RequestBody requestBody = RequestBody.create(MediaType.parse("application/json; charset=utf-8"), taskName);
+        RequestBody requestBody = RequestBody.create(MediaType.parse("application/json; charset=utf-8"), task.toString());
 
         Request request = new Request.Builder()
-                .url("https://api.todoist.com/rest/v2/tasks/2995104339/close")
+                .url("https://api.todoist.com/rest/v1/tasks/2995104339/close")
                 .post(requestBody)
+                .header("Authorization", "Bearer 0123456789abcdef0123456789")
                 .build();
 
         try{
