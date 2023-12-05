@@ -4,12 +4,14 @@ import api.Todo;
 import entity.TaskI;
 import use_case.complete_task.CompleteTaskDataAccessInterface;
 import use_case.create_task.CreateTaskDataAccessInterface;
+import use_case.display_task.DisplayTaskDataAccessInterface;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-public class InMemoryTaskDataAccessObject implements CompleteTaskDataAccessInterface, CreateTaskDataAccessInterface{
+public class InMemoryTaskDataAccessObject implements CompleteTaskDataAccessInterface, CreateTaskDataAccessInterface, DisplayTaskDataAccessInterface {
 
     private final Map<String, TaskI> tasks = new HashMap<>();
     private Todo todo;
@@ -17,6 +19,7 @@ public class InMemoryTaskDataAccessObject implements CompleteTaskDataAccessInter
     public InMemoryTaskDataAccessObject(Todo todo){
         this.todo = todo;
     }
+    public InMemoryTaskDataAccessObject(){}
 
     /**
      * @param task the data to save
@@ -30,6 +33,11 @@ public class InMemoryTaskDataAccessObject implements CompleteTaskDataAccessInter
 //        String projectName = taskI.getProjectName();
         String taskName = taskI.getName();
         todo.addTask("projectName", taskName);
+    }
+
+    @Override
+    public boolean existByName(String identifier) {
+        return tasks.containsKey(identifier);
     }
 
     @Override
@@ -60,5 +68,16 @@ public class InMemoryTaskDataAccessObject implements CompleteTaskDataAccessInter
         else{
             throw new ArrayIndexOutOfBoundsException();
         }
+    }
+
+    @Override
+    public Map<String, ArrayList<Object>> getAllTasks() {
+        Map<String, ArrayList<Object>> retTask = new HashMap<>();
+        for (String task: tasks.keySet()) {
+            ArrayList<Object> taskInfo = new ArrayList<>();
+            taskInfo.add(tasks.get(task));
+            retTask.put(task, taskInfo);
+        }
+        return retTask;
     }
 }

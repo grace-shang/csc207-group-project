@@ -101,6 +101,11 @@ public class FileTaskDataAccessObject implements CreateTaskDataAccessInterface, 
         todo.addTask("projectName", taskName);
     }
 
+    @Override
+    public boolean existByName(String identifier) {
+        return tasks.containsKey(identifier);
+    }
+
 
     /**
      * @param task the task we're completing
