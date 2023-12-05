@@ -14,10 +14,7 @@ import interface_adapter.display_task.DisplayTaskViewModel;
 import javax.swing.*;
 import javax.swing.border.LineBorder;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
+import java.awt.event.*;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.io.IOException;
@@ -102,7 +99,7 @@ public class TaskView extends JPanel implements ActionListener, PropertyChangeLi
                                 JPanel newTask = new JPanel();
                                 newTask.setLayout(new FlowLayout(FlowLayout.LEFT));
                                 JLabel newTaskText = new JLabel(currentState.getTask());
-                                newTask.add(new JCheckBox());
+                                // newTask.add(new JCheckBox());
                                 newTask.add(newTaskText);
                                 createInputField.setText("");
                                 currentState.setTask("");
@@ -131,9 +128,31 @@ public class TaskView extends JPanel implements ActionListener, PropertyChangeLi
                                 taskLabels.add(taskForLabel);
                                 JPanel newTask = new JPanel();
                                 newTask.setLayout(new FlowLayout(FlowLayout.LEFT));
-                                // JLabel newTaskText = new JLabel(currentState.getTask());
-                                newTask.add(new JCheckBox(currentState.getTask(), true));
-                                // newTask.add(newTaskText);
+
+                                // Implementation for checkbox item listener
+                                JCheckBox check = new JCheckBox(currentState.getTask());
+
+                                check.addItemListener(
+                                        new ItemListener() {
+                                            @Override
+                                            public void itemStateChanged(ItemEvent e) {
+                                                if (check.isSelected()) {
+                                                    CompleteTaskState completeTaskState = completeTaskViewModel.getState();
+                                                    System.out.println("checked");
+
+                                                    try {
+                                                        completeTaskController.execute(completeTaskState.getTaskName());
+                                                    } catch (IOException exception) {
+                                                        throw new RuntimeException(exception);
+                                                    }
+                                                }
+                                            }
+                                        }
+
+                                );
+
+                                newTask.add(check);
+
                                 createInputField.setText("");
                                 currentState.setTask("");
 
@@ -219,47 +238,30 @@ public class TaskView extends JPanel implements ActionListener, PropertyChangeLi
                 //String task: state.getTasks()
                 JPanel newTask = new JPanel();
                 newTask.setLayout(new FlowLayout(FlowLayout.LEFT));
-               // JLabel newTaskText = new JLabel(state.getTasks().get(i));
-                boolean complete = (boolean) state.getTaskInfo().get(i).get(0);
-                System.out.println(complete);
-                JCheckBox check = new JCheckBox(state.getTasks().get(i), complete);
+                // boolean complete = (boolean) state.getTaskInfo().get(i).get(0);
+               // System.out.println(complete);
+                JCheckBox check = new JCheckBox(state.getTasks().get(i));
 
-                // Only here for testing
-                CompleteTaskState completeTaskState = completeTaskViewModel.getState();
-                try {
-                    completeTaskController.execute(completeTaskState.getTaskName());
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                }
-
-                check.addActionListener(
-                        new ActionListener() {
-                            public void actionPerformed(ActionEvent evt) {
-                                if (evt.getSource().equals(check)) {
+                check.addItemListener(
+                        new ItemListener() {
+                            @Override
+                            public void itemStateChanged(ItemEvent e) {
+                                if (check.isSelected()) {
                                     CompleteTaskState completeTaskState = completeTaskViewModel.getState();
+                                    System.out.println("checked");
 
                                     try {
                                         completeTaskController.execute(completeTaskState.getTaskName());
-                                    } catch (IOException e) {
-                                        throw new RuntimeException(e);
+                                    } catch (IOException exception) {
+                                        throw new RuntimeException(exception);
                                     }
                                 }
                             }
                         }        
                         
                 );
-                
-                // boolean complete = Boolean.parseBoolean(state.getTaskInfo().get(i).get(0).toString());
-
-                // if (complete) {
-                //    check.setSelected(false);
-                // }
-                // System.out.println(state.getTaskInfo().get(0).get(0));
-//                System.out.println(state.getTaskInfo().get(i).get(0).toString());
 
                 newTask.add(check);
-                // newTask.add(newTaskText);
-
                 taskPanel.add(newTask);
                 taskPanel.revalidate();
                 taskPanel.repaint();
