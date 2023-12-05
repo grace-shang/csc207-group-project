@@ -1,5 +1,6 @@
 package create_task;
 
+import api.Projects;
 import app.Main;
 import data_access.FileTaskDataAccessObject;
 import data_access.InMemoryTaskDataAccessObject;
@@ -16,6 +17,7 @@ import java.util.ArrayList;
 import api.Todo;
 import api.ToDoList;
 import interface_adapter.create_task.CreateTaskViewModel;
+import org.json.JSONException;
 import org.junit.Test;
 import use_case.create_task.*;
 import view.LabelTextPanel;
@@ -27,7 +29,27 @@ public class CreateTaskViewTest {
     static String message = "";
     static boolean popUpDiscovered = false;
 
-    private Todo todo;
+    private Todo todo = new ToDoList() {
+        @Override
+        public void addTask(String projectName, String taskName) {
+
+        }
+
+        @Override
+        public Projects getProject(String name) {
+            return null;
+        }
+
+        @Override
+        public Projects logProject(String name, boolean favourite) throws JSONException {
+            return null;
+        }
+
+        @Override
+        public void completeTask(String projectName, String taskName) {
+
+        }
+    };
 
     /**
      * ensures there are at least 2 tasks in the CSV file for testing purposes
