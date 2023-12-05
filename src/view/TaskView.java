@@ -91,25 +91,7 @@ public class TaskView extends JPanel implements ActionListener, PropertyChangeLi
                     public void actionPerformed(ActionEvent evt) {
                         if (evt.getSource().equals(createTask)) {
                             CreateTaskState currentState = createTaskViewModel.getState();
-
-                            if (!Objects.equals(currentState.getTask(), "")){
-                                createTaskController.execute(currentState.getTask());
-                                JLabel taskForLabel = new JLabel(currentState.getTask());
-                                taskLabels.add(taskForLabel);
-                                JPanel newTask = new JPanel();
-                                newTask.setLayout(new FlowLayout(FlowLayout.LEFT));
-                                JLabel newTaskText = new JLabel(currentState.getTask());
-                                // newTask.add(new JCheckBox());
-                                newTask.add(newTaskText);
-                                createInputField.setText("");
-                                currentState.setTask("");
-
-                                taskPanel.add(newTask);
-                                taskPanel.revalidate();
-                                taskPanel.repaint();
-                            } else{
-                                JOptionPane.showMessageDialog(TaskView.this, "An Empty Task Can't Be Added");
-                            }
+                            createTaskController.execute(currentState.getTask());
                         }
                     }
                 }
@@ -239,7 +221,7 @@ public class TaskView extends JPanel implements ActionListener, PropertyChangeLi
                 JPanel newTask = new JPanel();
                 newTask.setLayout(new FlowLayout(FlowLayout.LEFT));
                 // boolean complete = (boolean) state.getTaskInfo().get(i).get(0);
-               // System.out.println(complete);
+                // System.out.println(complete);
                 JCheckBox check = new JCheckBox(state.getTasks().get(i));
 
                 check.addItemListener(
@@ -257,11 +239,30 @@ public class TaskView extends JPanel implements ActionListener, PropertyChangeLi
                                     }
                                 }
                             }
-                        }        
-                        
+                        }
+
                 );
 
                 newTask.add(check);
+                taskPanel.add(newTask);
+                taskPanel.revalidate();
+                taskPanel.repaint();
+            }
+        } else if (evt.getPropertyName().equals("create")) {
+            CreateTaskState state = (CreateTaskState) evt.getNewValue();
+            if (state.getTaskError() != null) {
+                JOptionPane.showMessageDialog(TaskView.this, "An Empty Task Can't Be Added");
+            } else {
+                JLabel taskForLabel = new JLabel(state.getTask());
+                taskLabels.add(taskForLabel);
+                JPanel newTask = new JPanel();
+                newTask.setLayout(new FlowLayout(FlowLayout.LEFT));
+                // JLabel newTaskText = new JLabel(currentState.getTask());
+                newTask.add(new JCheckBox(state.getTask(), true));
+                // newTask.add(newTaskText);
+                createInputField.setText("");
+                state.setTask("");
+
                 taskPanel.add(newTask);
                 taskPanel.revalidate();
                 taskPanel.repaint();
