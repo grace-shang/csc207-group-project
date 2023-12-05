@@ -203,7 +203,6 @@ public class TaskView extends JPanel implements ActionListener, PropertyChangeLi
                 newTask.setLayout(new FlowLayout(FlowLayout.LEFT));
                // JLabel newTaskText = new JLabel(state.getTasks().get(i));
                 boolean complete = (boolean) state.getTaskInfo().get(i).get(0);
-                System.out.println(complete);
                 JCheckBox check = new JCheckBox(state.getTasks().get(i), complete);
 
                 // Only here for testing
