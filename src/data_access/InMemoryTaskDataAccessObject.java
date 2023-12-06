@@ -26,6 +26,7 @@ public class InMemoryTaskDataAccessObject implements CompleteTaskDataAccessInter
      */
     public void save(TaskI task) {
         tasks.put(task.getName(), task);
+        save(task);
     }
 
     @Override
@@ -43,6 +44,7 @@ public class InMemoryTaskDataAccessObject implements CompleteTaskDataAccessInter
     public void complete(String task) throws IOException {
         todo.completeTask("projectName", task, getTask(task).getTaskId());
         tasks.get(task).setComplete(true);
+        this.update(task);
     }
 
     /**
@@ -67,6 +69,11 @@ public class InMemoryTaskDataAccessObject implements CompleteTaskDataAccessInter
         else{
             throw new ArrayIndexOutOfBoundsException();
         }
+    }
+
+    @Override
+    public void update(String taskName) {
+        tasks.put(taskName, getTask(taskName));
     }
 
     @Override

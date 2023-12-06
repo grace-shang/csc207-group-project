@@ -2,6 +2,7 @@ package data_access;
 
 
 import api.Todo;
+import entity.Task;
 import entity.TaskFactory;
 import entity.TaskI;
 import use_case.complete_task.CompleteTaskDataAccessInterface;
@@ -99,7 +100,6 @@ public class FileTaskDataAccessObject implements CreateTaskDataAccessInterface, 
 
     @Override
     public long addTask(String taskName){
-//        String projectName = taskI.getProjectName();
         return todo.addTask("projectName", taskName);
     }
 
@@ -116,6 +116,13 @@ public class FileTaskDataAccessObject implements CreateTaskDataAccessInterface, 
     public void complete(String task) throws IOException {
         todo.completeTask("projectName", task, getTask(task).getTaskId());
         tasks.get(task).setComplete(true);
+        this.update(task);
+    }
+
+    @Override
+    public void update(String taskName) {
+        tasks.put(taskName, getTask(taskName));
+        save();
     }
 
     /**
@@ -144,5 +151,4 @@ public class FileTaskDataAccessObject implements CreateTaskDataAccessInterface, 
             throw new ArrayIndexOutOfBoundsException();
         }
     }
-
 }

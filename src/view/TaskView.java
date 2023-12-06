@@ -215,14 +215,13 @@ public class TaskView extends JPanel implements ActionListener, PropertyChangeLi
     public void propertyChange(PropertyChangeEvent evt) {
         if (evt.getPropertyName().equals("display")) {
             DisplayTaskState state = (DisplayTaskState) evt.getNewValue();
+            System.out.println(state.getTaskInfo());
             for (int i = 0; i < state.getTasks().size(); i++) {
-                //String task: state.getTasks()
                 JPanel newTask = new JPanel();
                 newTask.setLayout(new FlowLayout(FlowLayout.LEFT));
-                // boolean complete = (boolean) state.getTaskInfo().get(i).get(0);
-                // System.out.println(complete);
                 String taskName = state.getTasks().get(i);
-                JCheckBox check = new JCheckBox(taskName);
+                boolean taskCompletion = (boolean) state.getTaskInfo().get(i).get(0);
+                JCheckBox check = new JCheckBox(taskName, taskCompletion);
 
                 check.addItemListener(
                         new ItemListener() {
@@ -231,7 +230,6 @@ public class TaskView extends JPanel implements ActionListener, PropertyChangeLi
                                 if (check.isSelected()) {
                                     CompleteTaskState completeTaskState = completeTaskViewModel.getState();
                                     completeTaskState.setTaskCompletion(taskName);
-                                    System.out.println("checked");
 
                                     try {
                                         completeTaskController.execute(completeTaskState.getTaskName());
@@ -249,6 +247,7 @@ public class TaskView extends JPanel implements ActionListener, PropertyChangeLi
                 taskPanel.revalidate();
                 taskPanel.repaint();
             }
+
         } else if (evt.getPropertyName().equals("create")) {
             CreateTaskState state = (CreateTaskState) evt.getNewValue();
             if (state.getTaskError() != null) {
