@@ -132,8 +132,6 @@ public class FileTaskDataAccessObject implements CreateTaskDataAccessInterface, 
      */
     @Override
     public boolean existsByName(String taskName) {
-        System.out.println("Task name: " + taskName);
-        System.out.println(tasks.keySet());
         return tasks.containsKey(taskName);
     }
 
@@ -147,7 +145,6 @@ public class FileTaskDataAccessObject implements CreateTaskDataAccessInterface, 
             return tasks.get(taskName);
         }
         else{
-            System.out.println("getTask failed");
             throw new ArrayIndexOutOfBoundsException();
         }
     }
