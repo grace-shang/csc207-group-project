@@ -221,7 +221,8 @@ public class TaskView extends JPanel implements ActionListener, PropertyChangeLi
                 newTask.setLayout(new FlowLayout(FlowLayout.LEFT));
                 // boolean complete = (boolean) state.getTaskInfo().get(i).get(0);
                 // System.out.println(complete);
-                JCheckBox check = new JCheckBox(state.getTasks().get(i));
+                String taskName = state.getTasks().get(i);
+                JCheckBox check = new JCheckBox(taskName);
 
                 check.addItemListener(
                         new ItemListener() {
@@ -229,6 +230,7 @@ public class TaskView extends JPanel implements ActionListener, PropertyChangeLi
                             public void itemStateChanged(ItemEvent e) {
                                 if (check.isSelected()) {
                                     CompleteTaskState completeTaskState = completeTaskViewModel.getState();
+                                    completeTaskState.setTaskCompletion(taskName);
                                     System.out.println("checked");
 
                                     try {
