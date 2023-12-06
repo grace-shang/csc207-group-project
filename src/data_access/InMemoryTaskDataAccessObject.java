@@ -45,6 +45,7 @@ public class InMemoryTaskDataAccessObject implements CompleteTaskDataAccessInter
         todo.completeTask("projectName", task, getTask(task).getTaskId());
         tasks.get(task).setComplete(true);
         this.update(task);
+        System.out.println("Task completed in dao: " + tasks.get(task).getComplete());
     }
 
     /**

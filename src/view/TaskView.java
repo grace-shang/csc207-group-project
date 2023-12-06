@@ -1,6 +1,8 @@
 package view;
 
+import entity.TaskI;
 import interface_adapter.complete_task.CompleteTaskController;
+import interface_adapter.complete_task.CompleteTaskPresenter;
 import interface_adapter.complete_task.CompleteTaskState;
 import interface_adapter.complete_task.CompleteTaskViewModel;
 import interface_adapter.create_task.CreateTaskController;
@@ -220,6 +222,11 @@ public class TaskView extends JPanel implements ActionListener, PropertyChangeLi
                 JPanel newTask = new JPanel();
                 newTask.setLayout(new FlowLayout(FlowLayout.LEFT));
                 String taskName = state.getTasks().get(i);
+
+                CompleteTaskState completeTaskState = completeTaskViewModel.getState();
+                // Need clarification here
+                // System.out.println("TaskView completion: " + completeTaskController.getTaskCompletion(taskName));
+
                 boolean taskCompletion = (boolean) state.getTaskInfo().get(i).get(0);
                 JCheckBox check = new JCheckBox(taskName, taskCompletion);
 
@@ -228,11 +235,10 @@ public class TaskView extends JPanel implements ActionListener, PropertyChangeLi
                             @Override
                             public void itemStateChanged(ItemEvent e) {
                                 if (check.isSelected()) {
-                                    CompleteTaskState completeTaskState = completeTaskViewModel.getState();
                                     completeTaskState.setTaskCompletion(taskName);
-
                                     try {
                                         completeTaskController.execute(completeTaskState.getTaskName());
+                                        System.out.println(state.getTaskInfo());
                                     } catch (IOException exception) {
                                         throw new RuntimeException(exception);
                                     }

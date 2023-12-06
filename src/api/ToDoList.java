@@ -95,7 +95,6 @@ public class ToDoList implements Todo{
 
         try {
             Response response = client.newCall(request).execute();
-            System.out.println(response.code());
 
         } catch (IOException e){
             e.printStackTrace();
@@ -109,7 +108,6 @@ public class ToDoList implements Todo{
     @Override
     public long addTask(String projectName, String taskName) {
         JSONObject task = new JSONObject();
-        String apiToken = "a232fc0417363afdc0318912dada87868f6889d4";
         try{
             task.put("content", taskName);
         }
@@ -123,7 +121,6 @@ public class ToDoList implements Todo{
         RequestBody requestBody = RequestBody.create(MediaType.parse("application/json"), jsonBody);
         Request request = new Request.Builder()
                 .url("https://api.todoist.com/rest/v2/tasks")
-                .header("Authorization", "Bearer " + apiToken)
                 .post(requestBody)
                 .header("Content-Type", "application/json")
                 .header("X-Request-Id", java.util.UUID.randomUUID().toString())
