@@ -24,14 +24,17 @@ public class CompleteTaskInteractor implements CompleteTaskInputBoundary{
      * @param completeTaskInputData the input data being passed through the interactor
      */
     @Override
-    public void execute(CompleteTaskInputData completeTaskInputData) {
+    public void execute(CompleteTaskInputData completeTaskInputData) throws IOException {
         String completedTask = completeTaskInputData.getTaskName();
 
-        if (completeDataAccessObject.existsByName(completedTask)) {
-            TaskI task = completeDataAccessObject.getTask(completedTask);
-            task.setComplete(true);
-            System.out.println(task.getComplete());
+        TaskI task = completeDataAccessObject.getTask(completedTask);
+        try {
+            completeDataAccessObject.complete(completedTask);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
+        System.out.println("Completion: " + task.getComplete());
+
 
         CompleteTaskOutputData completeTaskOutputData = new CompleteTaskOutputData(completedTask,false);
         completeTaskPresenter.prepareSuccessView(completeTaskOutputData);

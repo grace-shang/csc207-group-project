@@ -15,6 +15,7 @@ public class CompleteTaskInputData {
      * @return task name
      */
     public String getTaskName(){
+        System.out.println("Complete task input data task name: " + taskName);
         return taskName;
     }
 }

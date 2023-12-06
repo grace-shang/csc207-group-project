@@ -108,16 +108,14 @@ public class FileTaskDataAccessObject implements CreateTaskDataAccessInterface, 
         return tasks.containsKey(identifier);
     }
 
-
     /**
      * @param task the task we're completing
      * @throws IOException
      */
     @Override
-    public void complete(TaskI task) throws IOException {
-        long taskId = task.getTaskId();
-        todo.completeTask("projectName", task.getName(), taskId);
-        save();
+    public void complete(String task) throws IOException {
+        todo.completeTask("projectName", task, getTask(task).getTaskId());
+        tasks.get(task).setComplete(true);
     }
 
     /**
@@ -127,6 +125,8 @@ public class FileTaskDataAccessObject implements CreateTaskDataAccessInterface, 
      */
     @Override
     public boolean existsByName(String taskName) {
+        System.out.println("Task name: " + taskName);
+        System.out.println(tasks.keySet());
         return tasks.containsKey(taskName);
     }
 
@@ -140,6 +140,7 @@ public class FileTaskDataAccessObject implements CreateTaskDataAccessInterface, 
             return tasks.get(taskName);
         }
         else{
+            System.out.println("getTask failed");
             throw new ArrayIndexOutOfBoundsException();
         }
     }

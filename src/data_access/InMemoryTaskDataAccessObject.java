@@ -40,10 +40,9 @@ public class InMemoryTaskDataAccessObject implements CompleteTaskDataAccessInter
     }
 
     @Override
-    public void complete(TaskI task) throws IOException {
-        long taskId = task.getTaskId();
-        todo.completeTask("projectName", task.getName(), taskId);
-        save(task);
+    public void complete(String task) throws IOException {
+        todo.completeTask("projectName", task, getTask(task).getTaskId());
+        tasks.get(task).setComplete(true);
     }
 
     /**
