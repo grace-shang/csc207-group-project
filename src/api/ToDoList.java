@@ -8,6 +8,7 @@ import org.json.JSONObject;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.math.BigInteger;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
@@ -70,8 +71,13 @@ public class ToDoList implements Todo{
 //        }
 //    }
 
+    /**
+     * @param projectName the name of the project
+     * @param taskName the name of the task to be completed
+     * @param taskID the ID of the task as assigned by Todoist API
+     */
     @Override
-    public void completeTask(String projectName, String taskName, Integer taskID) {
+    public void completeTask(String projectName, String taskName, long taskID) {
         JSONObject task = new JSONObject();
         try{
             task.put("id", taskID);
@@ -92,10 +98,14 @@ public class ToDoList implements Todo{
             Response response = client.newCall(request).execute();
             System.out.println(response);
         } catch (IOException e){
-            throw new RuntimeException();
+            e.printStackTrace();
         }
     }
 
+    /**
+     * @param projectName the name of the project
+     * @param taskName the name of the task to be added
+     */
     @Override
     public void addTask(String projectName, String taskName) {
         JSONObject task = new JSONObject();
@@ -121,15 +131,17 @@ public class ToDoList implements Todo{
         try{
             Response response = client.newCall(request).execute();
 
-            System.out.println("Response code: " + response.code());
-            System.out.println("Response body: " + response.body().string());
-            System.out.println("Response headers: " + response.headers());
-            // System.out.println(new JSONObject(response.body()).getInt("id"));
-            JSONObject jsonResponse = new JSONObject(response.body().string());
-            System.out.println("task id: " + jsonResponse.getInt("id"));
+            // Convert the response body to a JSON object
+            JSONObject jsonResponse = new JSONObject(response.body().string()) ;
+
+            // Extracts the taskID as a long
+            long taskID = Long.parseLong(jsonResponse.getString("id"));
+
+            // Print the task ID
+            System.out.println("Task ID: " + taskID);
 
         } catch (IOException e){
-            throw new RuntimeException();
+            e.printStackTrace();
         }
     }
 }
