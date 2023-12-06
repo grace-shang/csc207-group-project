@@ -26,4 +26,9 @@ public class CompleteTaskController {
         completeTaskUseCaseInteractor.execute(completeTaskInputData);
     }
 
+//    public boolean getTaskCompletion(String task){
+//        CompleteTaskInputData completeTaskInputData = new CompleteTaskInputData(task);
+//        return completeTaskUseCaseInteractor.getTaskCompletion(completeTaskInputData);
+//    }
+
 }

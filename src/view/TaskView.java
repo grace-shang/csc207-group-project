@@ -1,6 +1,8 @@
 package view;
 
+import entity.TaskI;
 import interface_adapter.complete_task.CompleteTaskController;
+import interface_adapter.complete_task.CompleteTaskPresenter;
 import interface_adapter.complete_task.CompleteTaskState;
 import interface_adapter.complete_task.CompleteTaskViewModel;
 import interface_adapter.create_task.CreateTaskController;
@@ -215,24 +217,28 @@ public class TaskView extends JPanel implements ActionListener, PropertyChangeLi
     public void propertyChange(PropertyChangeEvent evt) {
         if (evt.getPropertyName().equals("display")) {
             DisplayTaskState state = (DisplayTaskState) evt.getNewValue();
+            System.out.println(state.getTaskInfo());
             for (int i = 0; i < state.getTasks().size(); i++) {
-                //String task: state.getTasks()
                 JPanel newTask = new JPanel();
                 newTask.setLayout(new FlowLayout(FlowLayout.LEFT));
-                // boolean complete = (boolean) state.getTaskInfo().get(i).get(0);
-                // System.out.println(complete);
-                JCheckBox check = new JCheckBox(state.getTasks().get(i));
+                String taskName = state.getTasks().get(i);
+
+                CompleteTaskState completeTaskState = completeTaskViewModel.getState();
+                // Need clarification here
+                // System.out.println("TaskView completion: " + completeTaskController.getTaskCompletion(taskName));
+
+                boolean taskCompletion = (boolean) state.getTaskInfo().get(i).get(0);
+                JCheckBox check = new JCheckBox(taskName, taskCompletion);
 
                 check.addItemListener(
                         new ItemListener() {
                             @Override
                             public void itemStateChanged(ItemEvent e) {
                                 if (check.isSelected()) {
-                                    CompleteTaskState completeTaskState = completeTaskViewModel.getState();
-                                    System.out.println("checked");
-
+                                    completeTaskState.setTaskCompletion(taskName);
                                     try {
                                         completeTaskController.execute(completeTaskState.getTaskName());
+                                        System.out.println(state.getTaskInfo());
                                     } catch (IOException exception) {
                                         throw new RuntimeException(exception);
                                     }
@@ -247,6 +253,7 @@ public class TaskView extends JPanel implements ActionListener, PropertyChangeLi
                 taskPanel.revalidate();
                 taskPanel.repaint();
             }
+
         } else if (evt.getPropertyName().equals("create")) {
             CreateTaskState state = (CreateTaskState) evt.getNewValue();
             if (state.getTaskError() != null) {

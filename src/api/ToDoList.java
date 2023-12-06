@@ -1,6 +1,5 @@
 package api;
 
-import com.jayway.jsonpath.JsonPath;
 import okhttp3.*;
 import okio.BufferedSink;
 import org.json.JSONException;
@@ -85,20 +84,18 @@ public class ToDoList implements Todo{
             throw new RuntimeException(e);
         }
 
-        String apiToken = "a232fc0417363afdc0318912dada87868f6889d4";
-
         OkHttpClient client = new OkHttpClient().newBuilder().build();
-        RequestBody requestBody = RequestBody.create(MediaType.parse("application/json; charset=utf-8"), task.toString());
 
         Request request = new Request.Builder()
-                .url("https://api.todoist.com/rest/v1/tasks/" + task.get("id") + "/close")
-                .post(requestBody)
+                .url("https://api.todoist.com/rest/v2/tasks/" + taskID + "/close")
+                .post(RequestBody.create(null, new byte[0]))
+                .header("X-Request-Id", java.util.UUID.randomUUID().toString())
                 .header("Authorization", "Bearer b1aa35c9378d5217bc2745afc04aa0fcae246844")
                 .build();
 
-        try{
+        try {
             Response response = client.newCall(request).execute();
-            System.out.println(response);
+
         } catch (IOException e){
             e.printStackTrace();
         }
@@ -111,7 +108,6 @@ public class ToDoList implements Todo{
     @Override
     public long addTask(String projectName, String taskName) {
         JSONObject task = new JSONObject();
-        String apiToken = "a232fc0417363afdc0318912dada87868f6889d4";
         try{
             task.put("content", taskName);
         }
@@ -125,7 +121,6 @@ public class ToDoList implements Todo{
         RequestBody requestBody = RequestBody.create(MediaType.parse("application/json"), jsonBody);
         Request request = new Request.Builder()
                 .url("https://api.todoist.com/rest/v2/tasks")
-                .header("Authorization", "Bearer " + apiToken)
                 .post(requestBody)
                 .header("Content-Type", "application/json")
                 .header("X-Request-Id", java.util.UUID.randomUUID().toString())
