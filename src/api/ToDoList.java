@@ -109,7 +109,7 @@ public class ToDoList implements Todo{
      * @param taskName the name of the task to be added
      */
     @Override
-    public void addTask(String projectName, String taskName) {
+    public long addTask(String projectName, String taskName) {
         JSONObject task = new JSONObject();
         String apiToken = "a232fc0417363afdc0318912dada87868f6889d4";
         try{
@@ -143,9 +143,11 @@ public class ToDoList implements Todo{
 
             // Print the task ID
             System.out.println("Task ID: " + taskID);
+            return taskID;
 
         } catch (IOException e){
             e.printStackTrace();
+            return -1;
         }
     }
 }

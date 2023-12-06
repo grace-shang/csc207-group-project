@@ -23,10 +23,10 @@ public class CreateTaskInteractor implements CreateTaskInputBoundary{
         if (createTaskInputData.getCreateTask() == ""){
             taskPresenter.prepareFailView("An Empty Task Can't Be Added");
         } else{
-            TaskI taskI = taskFactory.create(createTaskInputData.getCreateTask(), false);
+            long taskId = taskDataAccessObject.addTask(createTaskInputData.getCreateTask());
+            TaskI taskI = taskFactory.create(createTaskInputData.getCreateTask(), false, taskId);
+            taskI.setTaskId(taskId);
             taskDataAccessObject.save(taskI);
-
-            taskDataAccessObject.addTask(taskI);
 
             CreateTaskOutputData createTaskOutputData = new CreateTaskOutputData(taskI.getName());
             taskPresenter.prepareSuccessView(createTaskOutputData);
