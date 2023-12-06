@@ -1,6 +1,5 @@
 package create_task;
 
-import api.Projects;
 import app.Main;
 import data_access.FileTaskDataAccessObject;
 import data_access.InMemoryTaskDataAccessObject;
@@ -32,17 +31,7 @@ public class CreateTaskViewTest {
     private Todo todo = new ToDoList() {
         @Override
         public long addTask(String projectName, String taskName) {
-            return null;
-        }
-
-        @Override
-        public Projects getProject(String name) {
-            return null;
-        }
-
-        @Override
-        public Projects logProject(String name, boolean favourite) throws JSONException {
-            return null;
+            return -1;
         }
 
         @Override
@@ -102,21 +91,6 @@ public class CreateTaskViewTest {
         interactor.execute(inputData);
     }
 
-
-
-    public void addTwoTasks() {
-        TaskFactory tf = new AllTaskFactory();
-        FileTaskDataAccessObject ftdao;
-        Todo todo = new ToDoList();
-
-        try {
-            ftdao = new FileTaskDataAccessObject("./tasks.csv", tf, todo);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-        ftdao.save(tf.create("task1", false));
-        ftdao.save(tf.create("task2", false));
-    }
 
     public void addTwoTasksWithGui(){
         SwingUtilities.invokeLater(() -> {
@@ -310,7 +284,7 @@ public class CreateTaskViewTest {
 
 
     @org.junit.Test
-    public void testLinesInCSVAfterCreate(){addTwoTasks();
+    public void testLinesInCSVAfterCreate(){
         addTwoTasksWithGui();
         Main.main(null);
 
