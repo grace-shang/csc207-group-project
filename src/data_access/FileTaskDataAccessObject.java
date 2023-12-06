@@ -28,6 +28,7 @@ public class FileTaskDataAccessObject implements CreateTaskDataAccessInterface, 
         csvFile = new File(file);
         headers.put("task_name", 0);
         headers.put("completion", 1);
+        headers.put("task_Id", 2);
 
         if (csvFile.length() == 0) {
             save();
@@ -36,16 +37,16 @@ public class FileTaskDataAccessObject implements CreateTaskDataAccessInterface, 
             try (BufferedReader reader = new BufferedReader(new FileReader(csvFile))) {
                 String header = reader.readLine();
 
-                assert header.equals("task_name,completion");
+                assert header.equals("task_name,completion,task_Id");
 
                 String row;
                 while ((row = reader.readLine()) != null) {
                     String[] col = row.split(",");
                     String nameTask = String.valueOf(col[headers.get("task_name")]);
                     String completionTask = String.valueOf(col[headers.get("completion")]);
-                    String taskStringId = String.valueOf(col[headers.get("id")]);
+                    String taskIdstr = String.valueOf(col[headers.get("task_Id")]);
                     boolean complete = Boolean.parseBoolean(completionTask);
-                    long taskId = Long.parseLong(taskStringId);
+                    long taskId = Long.parseLong(taskIdstr);
                     TaskI task = taskFactory.create(nameTask, complete, taskId);
                     tasks.put(nameTask, task);
                 }
@@ -83,8 +84,8 @@ public class FileTaskDataAccessObject implements CreateTaskDataAccessInterface, 
             writer.newLine();
 
             for (TaskI task : tasks.values()) {
-                String line = String.format("%s,%s",
-                        task.getName(), task.getComplete());
+                String line = String.format("%s,%s,%s",
+                        task.getName(), task.getComplete(), task.getTaskId());
                 writer.write(line);
                 writer.newLine();
             }
