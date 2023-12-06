@@ -6,15 +6,15 @@ public class CourseTask extends Task{
     private final String projectName;
 
     // Default constructor
-    public CourseTask(String taskName, Course course) {
-        super(taskName);
+    public CourseTask(String taskName, long taskId, Course course) {
+        super(taskName, taskId);
         this.course = course;
         this.projectName = "Courses";
     }
 
     // Overloaded constructor
-    public CourseTask(String taskName, boolean complete, Course course) {
-        super(taskName, complete);
+    public CourseTask(String taskName, boolean complete, long taskId, Course course) {
+        super(taskName, complete, taskId);
         this.course = course;
         this.projectName = "Courses";
     }
