@@ -120,7 +120,6 @@ public class TaskView extends JPanel implements ActionListener, PropertyChangeLi
                                             public void itemStateChanged(ItemEvent e) {
                                                 if (check.isSelected()) {
                                                     CompleteTaskState completeTaskState = completeTaskViewModel.getState();
-                                                    System.out.println("checked");
 
                                                     try {
                                                         completeTaskController.execute(completeTaskState.getTaskName());
