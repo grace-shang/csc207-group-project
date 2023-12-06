@@ -15,33 +15,33 @@ import java.net.URL;
 import java.io.IOException;
 
 public class ToDoList implements Todo{
-    @Override
-
-    public Projects getProject(String name) {
-        OkHttpClient client = new OkHttpClient().newBuilder().build();
-        Request request = new Request.Builder()
-                .url(String.format("@doist/todoist-api-typescript", name)).build();
-
-        try {
-            Response response = client.newCall(request).execute();
-            System.out.println(response);
-            JSONObject responseBody = new JSONObject(response.body().string());
-
-            JSONObject project = responseBody.getJSONObject("project");
-            return Projects.builder()
-                    .name(Projects.getName())
-                    .favourite(Projects.getFavourite())
-                    .build();
-
-        } catch (IOException | JSONException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    @Override
-    public Projects logProject(String name, boolean favourite) throws JSONException {
-        return null;
-    }
+//    @Override
+//
+//    public Projects getProject(String name) {
+//        OkHttpClient client = new OkHttpClient().newBuilder().build();
+//        Request request = new Request.Builder()
+//                .url(String.format("@doist/todoist-api-typescript", name)).build();
+//
+//        try {
+//            Response response = client.newCall(request).execute();
+//            System.out.println(response);
+//            JSONObject responseBody = new JSONObject(response.body().string());
+//
+//            JSONObject project = responseBody.getJSONObject("project");
+//            return Projects.builder()
+//                    .name(Projects.getName())
+//                    .favourite(Projects.getFavourite())
+//                    .build();
+//
+//        } catch (IOException | JSONException e) {
+//            throw new RuntimeException(e);
+//        }
+//    }
+//
+//    @Override
+//    public Projects logProject(String name, boolean favourite) throws JSONException {
+//        return null;
+//    }
 
 //    @Override
 //    public void deleteTask(String projectName, String taskName) {
@@ -85,6 +85,8 @@ public class ToDoList implements Todo{
             throw new RuntimeException(e);
         }
 
+        String apiToken = "a232fc0417363afdc0318912dada87868f6889d4";
+
         OkHttpClient client = new OkHttpClient().newBuilder().build();
         RequestBody requestBody = RequestBody.create(MediaType.parse("application/json; charset=utf-8"), task.toString());
 
@@ -109,6 +111,7 @@ public class ToDoList implements Todo{
     @Override
     public void addTask(String projectName, String taskName) {
         JSONObject task = new JSONObject();
+        String apiToken = "a232fc0417363afdc0318912dada87868f6889d4";
         try{
             task.put("content", taskName);
         }
@@ -122,6 +125,7 @@ public class ToDoList implements Todo{
         RequestBody requestBody = RequestBody.create(MediaType.parse("application/json"), jsonBody);
         Request request = new Request.Builder()
                 .url("https://api.todoist.com/rest/v2/tasks")
+                .header("Authorization", "Bearer " + apiToken)
                 .post(requestBody)
                 .header("Content-Type", "application/json")
                 .header("X-Request-Id", java.util.UUID.randomUUID().toString())
