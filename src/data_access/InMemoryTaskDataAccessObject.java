@@ -29,10 +29,9 @@ public class InMemoryTaskDataAccessObject implements CompleteTaskDataAccessInter
     }
 
     @Override
-    public void addTask(TaskI taskI){
+    public long addTask(String taskName){
 //        String projectName = taskI.getProjectName();
-        String taskName = taskI.getName();
-        todo.addTask("projectName", taskName);
+        return todo.addTask("projectName", taskName);
     }
 
     @Override
@@ -42,7 +41,8 @@ public class InMemoryTaskDataAccessObject implements CompleteTaskDataAccessInter
 
     @Override
     public void complete(TaskI task) throws IOException {
-        todo.completeTask("projectName", task.getName());
+        long taskId = task.getTaskId();
+        todo.completeTask("projectName", task.getName(), taskId);
         save(task);
     }
 

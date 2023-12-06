@@ -31,8 +31,8 @@ public class CreateTaskViewTest {
 
     private Todo todo = new ToDoList() {
         @Override
-        public void addTask(String projectName, String taskName) {
-
+        public long addTask(String projectName, String taskName) {
+            return null;
         }
 
         @Override
@@ -46,7 +46,7 @@ public class CreateTaskViewTest {
         }
 
         @Override
-        public void completeTask(String projectName, String taskName) {
+        public void completeTask(String projectName, String taskName, long taskId) {
 
         }
     };
