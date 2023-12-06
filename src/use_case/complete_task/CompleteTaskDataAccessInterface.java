@@ -7,7 +7,7 @@ import java.io.IOException;
 public interface CompleteTaskDataAccessInterface {
 
     // Complete task method
-    void complete(TaskI task) throws IOException;
+    void complete(String task) throws IOException;
 
     boolean existsByName(String taskName);
 
