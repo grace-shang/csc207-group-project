@@ -9,4 +9,7 @@ public interface TaskI {
     void setName(String name);
 
     void setComplete(boolean complete);
+
+    void setTaskId(long taskId);
+    long getTaskId();
 }

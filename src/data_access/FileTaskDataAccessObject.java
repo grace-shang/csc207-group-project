@@ -43,8 +43,10 @@ public class FileTaskDataAccessObject implements CreateTaskDataAccessInterface, 
                     String[] col = row.split(",");
                     String nameTask = String.valueOf(col[headers.get("task_name")]);
                     String completionTask = String.valueOf(col[headers.get("completion")]);
+                    String taskStringId = String.valueOf(col[headers.get("id")]);
                     boolean complete = Boolean.parseBoolean(completionTask);
-                    TaskI task = taskFactory.create(nameTask, complete);
+                    long taskId = Long.parseLong(taskStringId);
+                    TaskI task = taskFactory.create(nameTask, complete, taskId);
                     tasks.put(nameTask, task);
                 }
             }
@@ -95,10 +97,9 @@ public class FileTaskDataAccessObject implements CreateTaskDataAccessInterface, 
     }
 
     @Override
-    public void addTask(TaskI taskI){
+    public long addTask(String taskName){
 //        String projectName = taskI.getProjectName();
-        String taskName = taskI.getName();
-        todo.addTask("projectName", taskName);
+        return todo.addTask("projectName", taskName);
     }
 
     @Override
@@ -113,7 +114,8 @@ public class FileTaskDataAccessObject implements CreateTaskDataAccessInterface, 
      */
     @Override
     public void complete(TaskI task) throws IOException {
-        todo.completeTask("projectName", task.getName());
+        long taskId = task.getTaskId();
+        todo.completeTask("projectName", task.getName(), taskId);
         save();
     }
 
