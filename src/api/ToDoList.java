@@ -1,5 +1,6 @@
 package api;
 
+import com.jayway.jsonpath.JsonPath;
 import okhttp3.*;
 import okio.BufferedSink;
 import org.json.JSONException;
@@ -99,7 +100,7 @@ public class ToDoList implements Todo{
     public void addTask(String projectName, String taskName) {
         JSONObject task = new JSONObject();
         try{
-            task.put("content", "task name");
+            task.put("content", taskName);
         }
 
         catch (JSONException e){
@@ -107,8 +108,8 @@ public class ToDoList implements Todo{
         }
 
         OkHttpClient client = new OkHttpClient().newBuilder().build();
-        String jsonBody = "{\"content\": " + task.get("content") + "}";
-        RequestBody requestBody = RequestBody.create(MediaType.parse("application/json; charset=utf-8"), jsonBody);
+        String jsonBody = "{\"content\": \"" + task.get("content") + "\"}";
+        RequestBody requestBody = RequestBody.create(MediaType.parse("application/json"), jsonBody);
         Request request = new Request.Builder()
                 .url("https://api.todoist.com/rest/v2/tasks")
                 .post(requestBody)
@@ -119,16 +120,14 @@ public class ToDoList implements Todo{
 
         try{
             Response response = client.newCall(request).execute();
-            System.out.println(response);
 
-            JSONObject jsonResponse = new JSONObject(response);
+            System.out.println("Response code: " + response.code());
+            System.out.println("Response body: " + response.body().string());
+            System.out.println("Response headers: " + response.headers());
+            // System.out.println(new JSONObject(response.body()).getInt("id"));
+            JSONObject jsonResponse = new JSONObject(response.body().string());
+            System.out.println("task id: " + jsonResponse.getInt("id"));
 
-            // The issue is it doesn't recognize the key "id" even though it should return one
-            // I think the response doesn't respond like it does on Todoist but I'll look when
-            // I'm back from classes
-            int taskID = jsonResponse.getInt("id");
-
-            System.out.println("Task ID: " + taskID);
         } catch (IOException e){
             throw new RuntimeException();
         }
