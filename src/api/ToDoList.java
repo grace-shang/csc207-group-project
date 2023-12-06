@@ -91,7 +91,7 @@ public class ToDoList implements Todo{
     public void addTask(String projectName, String taskName) {
         JSONObject task = new JSONObject();
         try{
-            task.put("content", "A new task for test");
+            task.put("content", "A new task");
         }
 
         catch (JSONException e){
@@ -103,12 +103,17 @@ public class ToDoList implements Todo{
 
         Request request = new Request.Builder()
                 .url("https://api.todoist.com/rest/v2/tasks")
+                .addHeader("Authorization", "Bearer f1045a9a64e19e4563603e606c6232e6f479dfd0")
                 .post(requestBody)
                 .build();
 
         try{
             Response response = client.newCall(request).execute();
             System.out.println(response);
+
+            if (!response.isSuccessful()){
+                throw new RuntimeException("Failed to add task: " + response.code());
+            }
         } catch (IOException e){
             throw new RuntimeException();
         }
