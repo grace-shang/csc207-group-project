@@ -1,24 +1,27 @@
 package view;
 
+import entity.TaskI;
 import interface_adapter.complete_task.CompleteTaskController;
+import interface_adapter.complete_task.CompleteTaskPresenter;
+import interface_adapter.complete_task.CompleteTaskState;
 import interface_adapter.complete_task.CompleteTaskViewModel;
 import interface_adapter.create_task.CreateTaskController;
 import interface_adapter.create_task.CreateTaskState;
 import interface_adapter.create_task.CreateTaskViewModel;
 
-import interface_adapter.ViewModel;
-import view.LabelTextPanel;
+import interface_adapter.display_task.DisplayTaskController;
+import interface_adapter.display_task.DisplayTaskState;
+import interface_adapter.display_task.DisplayTaskViewModel;
 
 import javax.swing.*;
 import javax.swing.border.LineBorder;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
+import java.awt.event.*;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.util.List;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Objects;
 
 
 public class TaskView extends JPanel implements ActionListener, PropertyChangeListener{
@@ -30,20 +33,33 @@ public class TaskView extends JPanel implements ActionListener, PropertyChangeLi
 
     private final CompleteTaskController completeTaskController;
     private final CompleteTaskViewModel completeTaskViewModel;
+
+    private final DisplayTaskViewModel displayTaskViewModel;
+    private final DisplayTaskController displayTaskController;
+
     private final JTextField createInputField = new JTextField(30);
 
     private final JTextField createTaskProjectInputField = new JTextField(30);
     private final JButton createTask;
+    private final JPanel taskPanel = new JPanel();
+
+    private ArrayList<JLabel> taskLabels = new ArrayList<>();
+
+    private JFrame frame;
 
 
     public TaskView(CreateTaskController createTaskController, CreateTaskViewModel createTaskViewModel,
-                    CompleteTaskController completeTaskController, CompleteTaskViewModel completeTaskViewModel){
+                    CompleteTaskController completeTaskController, CompleteTaskViewModel completeTaskViewModel, DisplayTaskViewModel displayTaskViewModel, DisplayTaskController displayTaskController){
         this.createTaskController = createTaskController;
         this.createTaskViewModel = createTaskViewModel;
         this.completeTaskController = completeTaskController;
         this.completeTaskViewModel = completeTaskViewModel;
+        this.displayTaskViewModel = displayTaskViewModel;
+        this.displayTaskController = displayTaskController;
 
         createTaskViewModel.addPropertyChangeListener(this);
+        completeTaskViewModel.addPropertyChangeListener(this);
+        displayTaskViewModel.addPropertyChangeListener(this);
 
         JLabel title = new JLabel(CreateTaskViewModel.TITLE_LABEL);
         title.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -54,24 +70,34 @@ public class TaskView extends JPanel implements ActionListener, PropertyChangeLi
         LabelTextPanel createProjectInfo = new LabelTextPanel(new JLabel(CreateTaskViewModel.CREATE_TASK_PROJECT_LABEL),
                 createTaskProjectInputField);
 
+        // Buttons
         JPanel buttons = new JPanel();
         createTask = new JButton(CreateTaskViewModel.CREATE_BUTTON_LABEL);
         buttons.add(createTask);
 
+        frame = new JFrame("Task Tracker");
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setLayout(new BorderLayout());
 
         // Create panel to display tasks
-        JPanel taskPanel = new JPanel();
-        taskPanel.setLayout(new GridBagLayout());
+        taskPanel.setLayout(new BoxLayout(taskPanel, BoxLayout.Y_AXIS));
         taskPanel.setBorder(LineBorder.createBlackLineBorder());
 
         //Create scroller as needed vertically and horizontally
         JScrollPane scroller = new JScrollPane(taskPanel, ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
         scroller.setPreferredSize(new Dimension(600,600));
 
-        //add panel and scroller to frame
-        this.add(taskPanel);
-        this.add(scroller);
-
+        createTask.addActionListener(
+                // This creates an anonymous subclass of ActionListener and instantiates it.
+                new ActionListener() {
+                    public void actionPerformed(ActionEvent evt) {
+                        if (evt.getSource().equals(createTask)) {
+                            CreateTaskState currentState = createTaskViewModel.getState();
+                            createTaskController.execute(currentState.getTask());
+                        }
+                    }
+                }
+        );
 
         createTask.addActionListener(
                 // This creates an anonymous subclass of ActionListener and instantiates it.
@@ -80,14 +106,46 @@ public class TaskView extends JPanel implements ActionListener, PropertyChangeLi
                         if (evt.getSource().equals(createTask)) {
                             CreateTaskState currentState = createTaskViewModel.getState();
 
-                            createTaskController.execute(
-                                    currentState.getTask(),
-                                    String.valueOf(currentState.getProject())
-                            );
-                        }
-                        CreateTaskState currentState = createTaskViewModel.getState();
-                        JLabel final_task = new JLabel(currentState.getTask());
+                            if (!Objects.equals(currentState.getTask(), "")){
+                                createTaskController.execute(currentState.getTask());
+                                JLabel taskForLabel = new JLabel(currentState.getTask());
+                                taskLabels.add(taskForLabel);
+                                JPanel newTask = new JPanel();
+                                newTask.setLayout(new FlowLayout(FlowLayout.LEFT));
 
+                                // Implementation for checkbox item listener
+                                JCheckBox check = new JCheckBox(currentState.getTask());
+
+                                check.addItemListener(
+                                        new ItemListener() {
+                                            @Override
+                                            public void itemStateChanged(ItemEvent e) {
+                                                if (check.isSelected()) {
+                                                    CompleteTaskState completeTaskState = completeTaskViewModel.getState();
+
+                                                    try {
+                                                        completeTaskController.execute(completeTaskState.getTaskName());
+                                                    } catch (IOException exception) {
+                                                        throw new RuntimeException(exception);
+                                                    }
+                                                }
+                                            }
+                                        }
+
+                                );
+
+                                newTask.add(check);
+
+                                createInputField.setText("");
+                                currentState.setTask("");
+
+                                taskPanel.add(newTask);
+                                taskPanel.revalidate();
+                                taskPanel.repaint();
+                            } else{
+                                JOptionPane.showMessageDialog(TaskView.this, "An Empty Task Can't Be Added");
+                            }
+                        }
                     }
                 }
         );
@@ -113,12 +171,41 @@ public class TaskView extends JPanel implements ActionListener, PropertyChangeLi
                     }
                 }
         );
+        TaskView.this.displayTaskController.execute(); //Display all the existing tasks in the CSV
 
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
         this.add(title);
         this.add(createInfo);
         this.add(buttons);
+        //add panel and scroller to frame
+        this.add(taskPanel);
+        this.add(scroller);
+
+    }
+
+    public JButton getCreateTaskButton() {
+        for (Component component : this.getComponents()) {
+            if (component instanceof JPanel) {
+                JPanel buttonsPanel = (JPanel) component;
+                if (buttonsPanel.getComponentCount() > 0 && buttonsPanel.getComponent(0) instanceof JButton) {
+                    return (JButton) buttonsPanel.getComponent(0);
+                }
+            }
+        }
+
+        throw new IllegalStateException("Create Task button not found");
+    }
+
+    public JTextField getCreateTaskInputField(){
+        return createInputField;
+    }
+
+    public String getTaskText(int index) {
+        if (index >= 0 && index < taskLabels.size()) {
+            return taskLabels.get(index).getText();
+        }
+        throw new IndexOutOfBoundsException("Invalid task index");
     }
 
     @Override
@@ -128,6 +215,65 @@ public class TaskView extends JPanel implements ActionListener, PropertyChangeLi
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
+        if (evt.getPropertyName().equals("display")) {
+            DisplayTaskState state = (DisplayTaskState) evt.getNewValue();
+            System.out.println(state.getTaskInfo());
+            for (int i = 0; i < state.getTasks().size(); i++) {
+                JPanel newTask = new JPanel();
+                newTask.setLayout(new FlowLayout(FlowLayout.LEFT));
+                String taskName = state.getTasks().get(i);
 
+                CompleteTaskState completeTaskState = completeTaskViewModel.getState();
+                // Need clarification here
+                // System.out.println("TaskView completion: " + completeTaskController.getTaskCompletion(taskName));
+
+                boolean taskCompletion = (boolean) state.getTaskInfo().get(i).get(0);
+                JCheckBox check = new JCheckBox(taskName, taskCompletion);
+
+                check.addItemListener(
+                        new ItemListener() {
+                            @Override
+                            public void itemStateChanged(ItemEvent e) {
+                                if (check.isSelected()) {
+                                    completeTaskState.setTaskCompletion(taskName);
+                                    try {
+                                        completeTaskController.execute(completeTaskState.getTaskName());
+                                        System.out.println(state.getTaskInfo());
+                                    } catch (IOException exception) {
+                                        throw new RuntimeException(exception);
+                                    }
+                                }
+                            }
+                        }
+
+                );
+
+                newTask.add(check);
+                taskPanel.add(newTask);
+                taskPanel.revalidate();
+                taskPanel.repaint();
+            }
+
+        } else if (evt.getPropertyName().equals("create")) {
+            CreateTaskState state = (CreateTaskState) evt.getNewValue();
+            if (state.getTaskError() != null) {
+                JOptionPane.showMessageDialog(TaskView.this, "An Empty Task Can't Be Added");
+            } else {
+                JLabel taskForLabel = new JLabel(state.getTask());
+                taskLabels.add(taskForLabel);
+                JPanel newTask = new JPanel();
+                newTask.setLayout(new FlowLayout(FlowLayout.LEFT));
+                // JLabel newTaskText = new JLabel(currentState.getTask());
+                newTask.add(new JCheckBox(state.getTask(), true));
+                // newTask.add(newTaskText);
+                createInputField.setText("");
+                state.setTask("");
+
+                taskPanel.add(newTask);
+                taskPanel.revalidate();
+                taskPanel.repaint();
+            }
+        }
     }
+
 }

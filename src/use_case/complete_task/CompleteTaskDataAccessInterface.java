@@ -5,7 +5,11 @@ import entity.TaskI;
 import java.io.IOException;
 
 public interface CompleteTaskDataAccessInterface {
+    void complete(String task) throws IOException;
 
-    // Complete task method
-    void complete(TaskI task) throws IOException;
+    boolean existsByName(String taskName);
+
+    TaskI getTask(String taskName);
+
+    void update(String taskName);
 }

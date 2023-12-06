@@ -11,6 +11,9 @@ public class DisplayTaskViewModel extends ViewModel {
 
     private DisplayTaskState state = new DisplayTaskState();
 
+    /**
+     *
+     */
     public DisplayTaskViewModel() {super("display");}
 
     public void setState(DisplayTaskState state) {

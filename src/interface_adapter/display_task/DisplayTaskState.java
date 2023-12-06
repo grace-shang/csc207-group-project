@@ -1,30 +1,54 @@
 package interface_adapter.display_task;
 
-import java.util.Set;
+import java.util.ArrayList;
 
 public class DisplayTaskState {
 
-    private Set<String> tasks = null;
-    private String taskNames = null;
+    private ArrayList<String> tasks = new ArrayList<>();
 
+    private ArrayList<ArrayList<Object>> taskInfo = new ArrayList<>();
+
+    /**
+     * Constructs the display task state
+     * @param copy the state of the display use case
+     */
     public DisplayTaskState(DisplayTaskState copy) {
-        tasks = copy.tasks;
-        taskNames = copy.taskNames;
+        this.tasks = copy.tasks;
+        this.taskInfo = copy.taskInfo;
     }
 
+    /**
+     * Constructor for the display task state with no given state
+     */
     public DisplayTaskState() {
     }
 
-    public Set<String> getTasks() {return tasks;}
+    /**
+     * Getter for the list of task names
+     * @return list of task names
+     */
+    public ArrayList<String> getTasks() {return tasks;}
 
-    public void setTasks(Set<String> tasks) {this.tasks = tasks;}
+    /**
+     * Setter for the task names
+     * @param tasks A list of task names
+     */
+    public void setTasks(ArrayList<String> tasks) {this.tasks = tasks;}
 
-    public String getTaskNames() {
-        return taskNames;
+    /**
+     * Getter for the task information
+     * @return a list that contains lists of objects with task information
+     */
+    public ArrayList<ArrayList<Object>> getTaskInfo() {
+        return taskInfo;
     }
 
-    public static void setTaskNames(String taskNames) {
-        this.taskNames = taskNames;
+    /**
+     * Setter for the task information
+     * @param taskInfo a list that contains lists of objects with task information
+     */
+    public void setTaskInfo(ArrayList<ArrayList<Object>> taskInfo) {
+        this.taskInfo = taskInfo;
     }
 
 }

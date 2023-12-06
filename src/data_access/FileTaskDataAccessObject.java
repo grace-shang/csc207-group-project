@@ -2,21 +2,17 @@ package data_access;
 
 
 import api.Todo;
+import entity.Task;
 import entity.TaskFactory;
 import entity.TaskI;
 import use_case.complete_task.CompleteTaskDataAccessInterface;
 import use_case.create_task.CreateTaskDataAccessInterface;
-import use_case.delete_task.*;
+import use_case.display_task.DisplayTaskDataAccessInterface;
 
 import java.io.*;
-import java.time.LocalDateTime;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.Map;
+import java.util.*;
 
-import static java.lang.Boolean.parseBoolean;
-
-public class FileTaskDataAccessObject implements CreateTaskDataAccessInterface, CompleteTaskDataAccessInterface{
+public class FileTaskDataAccessObject implements CreateTaskDataAccessInterface, CompleteTaskDataAccessInterface, DisplayTaskDataAccessInterface {
     private final File csvFile;
 
     private final Map<String, Integer> headers = new LinkedHashMap<>();
@@ -33,6 +29,7 @@ public class FileTaskDataAccessObject implements CreateTaskDataAccessInterface, 
         csvFile = new File(file);
         headers.put("task_name", 0);
         headers.put("completion", 1);
+        headers.put("task_Id", 2);
 
         if (csvFile.length() == 0) {
             save();
@@ -41,14 +38,17 @@ public class FileTaskDataAccessObject implements CreateTaskDataAccessInterface, 
             try (BufferedReader reader = new BufferedReader(new FileReader(csvFile))) {
                 String header = reader.readLine();
 
-                assert header.equals("task_name,completion");
+                assert header.equals("task_name,completion,task_Id");
 
                 String row;
                 while ((row = reader.readLine()) != null) {
                     String[] col = row.split(",");
                     String nameTask = String.valueOf(col[headers.get("task_name")]);
                     String completionTask = String.valueOf(col[headers.get("completion")]);
-                    TaskI task = taskFactory.create(nameTask, parseBoolean(completionTask));
+                    String taskIdstr = String.valueOf(col[headers.get("task_Id")]);
+                    boolean complete = Boolean.parseBoolean(completionTask);
+                    long taskId = Long.parseLong(taskIdstr);
+                    TaskI task = taskFactory.create(nameTask, complete, taskId);
                     tasks.put(nameTask, task);
                 }
             }
@@ -64,6 +64,19 @@ public class FileTaskDataAccessObject implements CreateTaskDataAccessInterface, 
         this.save();
     }
 
+    @Override
+    public Map<String, ArrayList<Object>> getAllTasks() {
+        Map<String, ArrayList<Object>> retTask = new LinkedHashMap<>();
+
+        for (TaskI task: tasks.values()) {
+            ArrayList<Object> taskInfo = new ArrayList<>();
+            taskInfo.add(task.getComplete());
+            retTask.put(task.getName(), taskInfo);
+        }
+
+        return retTask;
+    }
+
     public void save() {
         BufferedWriter writer;
         try {
@@ -72,8 +85,8 @@ public class FileTaskDataAccessObject implements CreateTaskDataAccessInterface, 
             writer.newLine();
 
             for (TaskI task : tasks.values()) {
-                String line = String.format("%s,%s",
-                        task.getName(), task.getComplete());
+                String line = String.format("%s,%s,%s",
+                        task.getName(), task.getComplete(), task.getTaskId());
                 writer.write(line);
                 writer.newLine();
             }
@@ -86,16 +99,53 @@ public class FileTaskDataAccessObject implements CreateTaskDataAccessInterface, 
     }
 
     @Override
-    public void addTask(TaskI taskI){
-//        String projectName = taskI.getProjectName();
-        String taskName = taskI.getName();
-        todo.addTask("projectName", taskName);
+    public long addTask(String taskName){
+        return todo.addTask("projectName", taskName);
     }
-
 
     @Override
-    public void complete(TaskI task) throws IOException {
-        task.setComplete(true);
+    public boolean existByName(String identifier) {
+        return tasks.containsKey(identifier);
     }
 
+    /**
+     * @param task the task we're completing
+     * @throws IOException
+     */
+    @Override
+    public void complete(String task) throws IOException {
+        todo.completeTask("projectName", task, getTask(task).getTaskId());
+        tasks.get(task).setComplete(true);
+        this.update(task);
+    }
+
+    @Override
+    public void update(String taskName) {
+        tasks.put(taskName, getTask(taskName));
+        save();
+    }
+
+    /**
+     * Checks if the task exists in the csv file
+     * @param taskName the name of the task we're searching for
+     * @return whether the task already exists
+     */
+    @Override
+    public boolean existsByName(String taskName) {
+        return tasks.containsKey(taskName);
+    }
+
+    /**
+     * @param taskName the name of the task we're retrieving
+     * @return the task object that is being sent
+     */
+    @Override
+    public TaskI getTask(String taskName) {
+        if (this.existsByName(taskName)) {
+            return tasks.get(taskName);
+        }
+        else{
+            throw new ArrayIndexOutOfBoundsException();
+        }
+    }
 }

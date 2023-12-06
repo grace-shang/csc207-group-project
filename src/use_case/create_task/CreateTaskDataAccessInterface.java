@@ -5,5 +5,7 @@ import entity.TaskI;
 public interface CreateTaskDataAccessInterface {
     void save(TaskI taskI);
 
-    void addTask(TaskI taskI);
+    long addTask(String taskName);
+
+    boolean existByName(String identifier);
 }

@@ -1,6 +1,8 @@
 package use_case.create_task;
 
+
 public interface CreateTaskOutputBoundary {
-    void prepareSuccessView(CreateTaskOutputBoundary task);
+    void prepareSuccessView(CreateTaskOutputData task);
+    void prepareFailView(String error);
 
 }
