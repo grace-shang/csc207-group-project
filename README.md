@@ -29,8 +29,6 @@ This image includes the Todoist API in Postman after all the functions were uplo
 
 **API's We Did Use:**
 We used the Todoist API to create our Task Tracker. It aided with the creation of tasks as every task made runs through the API and creates the task which then gets sent back to the app. The app then displays the task that was just added by the user. The API helps create the task and we manage it! 
-<img width="719" alt="Screenshot 2023-11-30 at 4 20 46 PM" src="https://github.com/grace-shang/csc207-group-project/assets/128920671/a4787b9a-36a6-47dd-a5d0-65f3b56db6d1">
-
 
 
 **Software Specification**
