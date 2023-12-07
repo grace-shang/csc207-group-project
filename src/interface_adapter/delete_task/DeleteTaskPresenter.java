@@ -9,11 +9,20 @@ public class DeleteTaskPresenter implements DeleteTaskOutputBoundary {
     private final DeleteTaskViewModel deleteViewModel;
     private ViewManagerModel viewManagerModel;
 
+    /**
+     * Constructor for the DeleteTaskPresenter
+     * @param deleteViewModel the view model for the delete use case
+     * @param viewManagerModel the view manager model
+     */
     public DeleteTaskPresenter(DeleteTaskViewModel deleteViewModel, ViewManagerModel viewManagerModel) {
         this.deleteViewModel = deleteViewModel;
         this.viewManagerModel = viewManagerModel;
     }
 
+    /**
+     * Prepares the success view for the delete use case
+     * @param response the output data for the delete use case
+     */
     @Override
     public void prepareSuccessView(DeleteTaskOutputData response) {
 

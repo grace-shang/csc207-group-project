@@ -13,7 +13,7 @@ public class DisplayTaskOutputData {
     /**
      * Constructs the display task output data
      * @param tasks A list of the task names in the CSV file
-     * @param taskInfo A list containing lists of objects. The objects represent varying pieces of task information (e.g. completion)
+     * @param taskInfo A list containing booleans that represent the completion of each task
      * @param useCaseFailed A boolean determining whether the use case failed
      */
     public DisplayTaskOutputData(ArrayList<String> tasks, ArrayList<Boolean> taskInfo, boolean useCaseFailed) {
@@ -30,7 +30,7 @@ public class DisplayTaskOutputData {
 
     /**
      * Getter for task information
-     * @return the list of list of task information
+     * @return the list of booleans with completion status
      */
     public ArrayList<Boolean> getTaskInfo() {
         return taskInfo;

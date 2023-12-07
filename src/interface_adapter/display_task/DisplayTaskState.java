@@ -45,7 +45,7 @@ public class DisplayTaskState {
 
     /**
      * Setter for the task information
-     * @param taskInfo a list that contains lists of objects with task information
+     * @param taskInfo a list that contains the Booleans for each task's completion status
      */
     public void setTaskInfo(ArrayList<Boolean> taskInfo) {
         this.taskInfo = taskInfo;

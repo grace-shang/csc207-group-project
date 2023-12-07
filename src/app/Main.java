@@ -22,6 +22,10 @@ import java.awt.*;
 import java.io.IOException;
 
 public class Main {
+    /**
+     * The main method that runs the entire program (i.e. creates the Task View)
+     * @param args the main method parameter
+     */
     public static void main(String[] args) {
 
         JFrame application = new JFrame("Tasks");
