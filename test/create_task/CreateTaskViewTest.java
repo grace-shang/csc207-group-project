@@ -28,6 +28,20 @@ public class CreateTaskViewTest {
     static String message = "";
     static boolean popUpDiscovered = false;
 
+    public void addTwoTasks() {
+        TaskFactory tf = new AllTaskFactory();
+        FileTaskDataAccessObject ftdao;
+        Todo todo = new ToDoList();
+
+        try {
+            ftdao = new FileTaskDataAccessObject("./tasks.csv", tf, todo);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        ftdao.save(tf.create("task1", false, todo.addTask("projectName", "task1")));
+        ftdao.save(tf.create("task2", false, todo.addTask("projectName", "task2")));
+    }
+
     public void addTwoTasksWithGui(){
         SwingUtilities.invokeLater(() -> {
             JFrame app = new JFrame("Test Frame");
@@ -220,7 +234,7 @@ public class CreateTaskViewTest {
 
 
     @org.junit.Test
-    public void testLinesInCSVAfterCreate(){
+    public void testLinesInCSVAfterCreate(){addTwoTasks();
         addTwoTasksWithGui();
         Main.main(null);
 
