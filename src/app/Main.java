@@ -6,6 +6,7 @@ import data_access.FileTaskDataAccessObject;
 import entity.AllTaskFactory;
 import interface_adapter.complete_task.CompleteTaskViewModel;
 import interface_adapter.create_task.CreateTaskViewModel;
+import interface_adapter.delete_task.DeleteTaskState;
 import interface_adapter.delete_task.DeleteTaskViewModel;
 import interface_adapter.display_task.DisplayTaskViewModel;
 import use_case.create_task.CreateTaskDataAccessInterface;
@@ -48,7 +49,7 @@ public class Main {
             throw new RuntimeException(e);
         }
 
-        TaskView taskView = TaskUseCaseFactory.create(viewManagerModel, deleteTaskViewModel, createTaskViewModel, taskDataAccessObject, completeTaskViewModel, taskDataAccessObject, displayTaskViewModel, taskDataAccessObject);
+        TaskView taskView = TaskUseCaseFactory.create(viewManagerModel, deleteTaskViewModel, taskDataAccessObject,createTaskViewModel, taskDataAccessObject, completeTaskViewModel, taskDataAccessObject, displayTaskViewModel, taskDataAccessObject);
         views.add(taskView, taskView.viewName);
 
         viewManagerModel.setActiveView(taskView.viewName);
