@@ -19,9 +19,17 @@ public class InMemoryTaskDataAccessObject implements CompleteTaskDataAccessInter
     private final Map<String, TaskI> tasks = new HashMap<>();
     private Todo todo;
 
+    /**
+     * Constructor for InMemoryTaskDataAccessObject
+     * @param todo the API interface object
+     */
     public InMemoryTaskDataAccessObject(Todo todo){
         this.todo = todo;
     }
+
+    /**
+     * Default constructor for InMemoryTaskDataAccessObject
+     */
     public InMemoryTaskDataAccessObject(){}
 
     /**
@@ -33,7 +41,6 @@ public class InMemoryTaskDataAccessObject implements CompleteTaskDataAccessInter
 
     @Override
     public long addTask(String taskName){
-//        String projectName = taskI.getProjectName();
         return todo.addTask("projectName", taskName);
     }
 
@@ -80,6 +87,10 @@ public class InMemoryTaskDataAccessObject implements CompleteTaskDataAccessInter
         save(getTask(taskName));
     }
 
+    /**
+     *
+     * @return all the tasks
+     */
     @Override
     public Map<String, Boolean> getAllTasks() {
         Map<String, Boolean> retTask = new HashMap<>();

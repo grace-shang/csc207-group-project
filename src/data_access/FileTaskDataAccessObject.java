@@ -21,6 +21,13 @@ public class FileTaskDataAccessObject implements CreateTaskDataAccessInterface, 
     private TaskFactory taskFactory;
     private final Todo todo;
 
+    /**
+     * The constructor for the FileTaskDataAccessObject
+     * @param file the name of the CSV file
+     * @param taskFactory the Task Factory object
+     * @param todo the API interface
+     * @throws IOException
+     */
     public FileTaskDataAccessObject(String file, TaskFactory taskFactory, Todo todo) throws IOException{
         this.taskFactory = taskFactory;
         this.todo = todo;
@@ -64,7 +71,8 @@ public class FileTaskDataAccessObject implements CreateTaskDataAccessInterface, 
     }
 
     /**
-     * @return a map that maps the name of a task to its completion status (as a Boolean)
+     * Deletes all tasks
+     * @param tasks a map of all of the active tasks
      */
     @Override
     public void delete(Map<String, TaskI> tasks) {
@@ -76,11 +84,19 @@ public class FileTaskDataAccessObject implements CreateTaskDataAccessInterface, 
         tasks.clear();
     }
 
+    /**
+     *
+     * @return all the tasks to delete
+     */
     @Override
     public Map<String, TaskI> getAllTasksDelete() {
         return tasks;
     }
 
+    /**
+     *
+     * @return all the tasks
+     */
     @Override
     public Map<String, Boolean> getAllTasks() {
         Map<String, Boolean> retTask = new LinkedHashMap<>();
@@ -93,7 +109,7 @@ public class FileTaskDataAccessObject implements CreateTaskDataAccessInterface, 
     }
 
     /**
-     * writes the changed task to the csv file
+     * Writes to the CSV file
      */
     public void save() {
         BufferedWriter writer;

@@ -39,9 +39,21 @@ import java.io.IOException;
 
 public class TaskUseCaseFactory {
 
-    /** Prevent instantiation. */
     private TaskUseCaseFactory() {}
 
+    /**
+     * This method constructs the Task View
+     * @param viewManagerModel the view manager model
+     * @param deleteTaskViewModel the delete task view model
+     * @param deleteTaskDataAccessInterface the delete task data access interface
+     * @param createTaskViewModel the create task view model
+     * @param createTaskDataAccessInterface the create task data access interface
+     * @param completeTaskViewModel the complete task view model
+     * @param completeTaskDataAccessInterface the complete task data access interface
+     * @param displayTaskViewModel the display task view model
+     * @param displayTaskDataAccessInterface the display task data access interface
+     * @return the constructed Task View based on the parameters
+     */
     public static TaskView create(
             ViewManagerModel viewManagerModel, DeleteTaskViewModel deleteTaskViewModel, DeleteTaskDataAccessInterface deleteTaskDataAccessInterface,CreateTaskViewModel createTaskViewModel, CreateTaskDataAccessInterface createTaskDataAccessInterface,
             CompleteTaskViewModel completeTaskViewModel, CompleteTaskDataAccessInterface completeTaskDataAccessInterface, DisplayTaskViewModel displayTaskViewModel, DisplayTaskDataAccessInterface displayTaskDataAccessInterface) {

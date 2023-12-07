@@ -38,6 +38,12 @@ public class ToDoList implements Todo{
         }
     }
 
+    /**
+     * This method calls the API to delete the given task name with the given task ID
+     * @param projectName the name of the project
+     * @param taskName the name of the task
+     * @param taskID the ID of the task
+     */
     @Override
     public void deleteTask(String projectName, String taskName, long taskID) {
         JSONObject task = new JSONObject();
