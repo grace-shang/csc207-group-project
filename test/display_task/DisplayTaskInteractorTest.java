@@ -51,8 +51,8 @@ public class DisplayTaskInteractorTest {
                 assertNotNull(displayTasks.getAllTasks());
                 assertEquals("task1", displayTasks.getAllTasks().get(0));
                 assertEquals("task2", displayTasks.getAllTasks().get(1));
-                // assertEquals(false, displayTasks.getTaskInfo().get(0).get(0));
-                // assertEquals(false, displayTasks.getTaskInfo().get(1).get(0));
+                assertEquals(false, displayTasks.getTaskInfo().get(0));
+                assertEquals(false, displayTasks.getTaskInfo().get(1));
             }
 
         };
