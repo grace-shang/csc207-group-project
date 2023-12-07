@@ -5,12 +5,13 @@ import entity.TaskFactory;
 import entity.TaskI;
 import use_case.complete_task.CompleteTaskDataAccessInterface;
 import use_case.create_task.CreateTaskDataAccessInterface;
+import use_case.delete_task.DeleteTaskDataAccessInterface;
 import use_case.display_task.DisplayTaskDataAccessInterface;
 
 import java.io.*;
 import java.util.*;
 
-public class FileTaskDataAccessObject implements CreateTaskDataAccessInterface, CompleteTaskDataAccessInterface, DisplayTaskDataAccessInterface {
+public class FileTaskDataAccessObject implements CreateTaskDataAccessInterface, CompleteTaskDataAccessInterface, DisplayTaskDataAccessInterface, DeleteTaskDataAccessInterface {
     private final File csvFile;
 
     private final Map<String, Integer> headers = new LinkedHashMap<>();
@@ -65,6 +66,21 @@ public class FileTaskDataAccessObject implements CreateTaskDataAccessInterface, 
     /**
      * @return a map that maps the name of a task to its completion status (as a Boolean)
      */
+    @Override
+    public void delete(Map<String, TaskI> tasks) {
+
+        for (String task: tasks.keySet()) {
+            todo.deleteTask("projectName", task, getTask(task).getTaskId());
+        }
+
+        tasks.clear();
+    }
+
+    @Override
+    public Map<String, TaskI> getAllTasksDelete() {
+        return tasks;
+    }
+
     @Override
     public Map<String, Boolean> getAllTasks() {
         Map<String, Boolean> retTask = new LinkedHashMap<>();
