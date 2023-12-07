@@ -65,13 +65,11 @@ public class FileTaskDataAccessObject implements CreateTaskDataAccessInterface, 
     }
 
     @Override
-    public Map<String, ArrayList<Object>> getAllTasks() {
-        Map<String, ArrayList<Object>> retTask = new LinkedHashMap<>();
+    public Map<String, Boolean> getAllTasks() {
+        Map<String, Boolean> retTask = new LinkedHashMap<>();
 
         for (TaskI task: tasks.values()) {
-            ArrayList<Object> taskInfo = new ArrayList<>();
-            taskInfo.add(task.getComplete());
-            retTask.put(task.getName(), taskInfo);
+            retTask.put(task.getName(), task.getComplete());
         }
 
         return retTask;
