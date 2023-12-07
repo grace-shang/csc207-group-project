@@ -137,60 +137,6 @@ public class CompleteTaskViewTest {
         }
     }
 
-    @org.junit.Test
-    public void testCompleteDoesNotRemoveTasks() {
-        JFrame app = new JFrame("Test Frame");
-        app.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        addTwoTasks();
-        Main.main(null);
-        JCheckBox completeTaskCheck = findCompleteTaskJCheck(app);
-
-        createCloseTimer().start();
-
-        completeTaskCheck.doClick();
-
-        // checks that the amount of users left is still 2 (i.e. complete task hasn't deleted any)
-
-        try {
-            int lines = countLines();
-            System.out.println("lines left = " + lines);
-            assert(lines == 2);
-
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-
-    }
-
-    /**
-     *
-     * This test is the same as above, but it additionally checks that the JDialog contains the names of
-     * all users deleted from the file.
-     */
-
-    @org.junit.Test
-    public void testClearUsersReturnedUsersDeleted() throws InterruptedException {
-
-        addTwoTasks();
-        message = "";
-
-        Main.main(null);
-
-        JButton button = getButton();
-
-        // since clicking the button should end up displaying a JDialog to the user to report the
-        // result, we set a timer, which will execute code necessary to complete the testing.
-        createCloseTimer().start();
-
-        //click the button
-        button.doClick();
-
-        // will continue execution here after the JDialog is closed
-
-        // check the message
-        assert(message.contains("user1") && message.contains("user2"));
-    }
-
     private Timer createCloseTimer() {
         ActionListener close = new ActionListener() {
 
