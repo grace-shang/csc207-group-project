@@ -6,7 +6,7 @@ public class DisplayTaskState {
 
     private ArrayList<String> tasks = new ArrayList<>();
 
-    private ArrayList<ArrayList<Object>> taskInfo = new ArrayList<>();
+    private ArrayList<Boolean> taskInfo = new ArrayList<>();
 
     /**
      * Constructs the display task state
@@ -39,7 +39,7 @@ public class DisplayTaskState {
      * Getter for the task information
      * @return a list that contains lists of objects with task information
      */
-    public ArrayList<ArrayList<Object>> getTaskInfo() {
+    public ArrayList<Boolean> getTaskInfo() {
         return taskInfo;
     }
 
@@ -47,7 +47,7 @@ public class DisplayTaskState {
      * Setter for the task information
      * @param taskInfo a list that contains lists of objects with task information
      */
-    public void setTaskInfo(ArrayList<ArrayList<Object>> taskInfo) {
+    public void setTaskInfo(ArrayList<Boolean> taskInfo) {
         this.taskInfo = taskInfo;
     }
 

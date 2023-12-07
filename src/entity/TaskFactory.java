@@ -7,5 +7,5 @@ public interface TaskFactory {
      * @param taskId the task id needed to create the entity
      * @return
      */
-    Task create(String taskName, boolean completion, long taskId);
+    Task create(String taskName, Boolean completion, long taskId);
 }

@@ -3,67 +3,58 @@ package entity;
 public class Task implements TaskI{
 
     String taskName;
-    boolean complete;
+    Boolean complete;
 
     long taskId;
 
     /**
-     * default value of complete is false in this instance
-     * @param taskName the task name needed to create the task
-     * @param taskId the task id needed to create the task
+     * Constructs a task with a given complete variable
+     * @param taskName a string containing the name of the task
+     * @param isCompleted a boolean containing whether the task is complete (true) or not (false)
+     * @param taskId the ID of the task from the API
      */
-    // Default constructor. Default value of complete is false.
-    public Task(String taskName, long taskId) {
-        this.taskName = taskName;
-        this.complete = false;
-        this.taskId = taskId;
-
-    }
-
-    /**
-     * @param taskName the task name needed to create the task
-     * @param isCompleted Overloaded constructor with the optional parameter of isCompleted
-     * @param taskId the task id needed to create the task
-     */
-    // Overloaded constructor with the optional parameter of isCompleted.
-    public Task(String taskName, boolean isCompleted, long taskId) {
+    public Task(String taskName, Boolean isCompleted, long taskId) {
         this.taskName = taskName;
         this.complete = isCompleted;
         this.taskId = taskId;
     }
 
     /**
-     * @return the task name in the entity
+     * A getter for the task name
+     * @return a string containing the task name
      */
     public String getName() {return taskName;}
 
     /**
-     * @return whether the task is completed or not
+     * A getter for the completion of a task
+     * @return a boolean containing whether the task is complete or not
      */
-    public boolean getComplete() {return complete;}
+    public Boolean getComplete() {return complete;}
 
     /**
-     * @param name setter that sets the task name
+     * A setter for the task name
+     * @param name a string containing the new name of the task
      */
     public void setName(String name) {this.taskName = name;}
 
     /**
-     * @param complete setter that changes the completion to whatever the boolean value is
+     * A setter for the completion of a task
+     * @param complete a boolean containing the new completion of the task
      */
     public void setComplete(boolean complete) {this.complete = complete;}
 
     /**
-     * @param taskId sets the task id with the long given
+     * A setter for the task ID
+     * @param taskId the new task ID to be set
      */
-    @Override
     public void setTaskId(long taskId) {
         this.taskId = taskId;
     }
 
     /**
-     * @return the taskId of the entity
+     * A getter for the task ID
+     * @return a long containing the task ID
      */
-    @Override
     public long getTaskId() {
         return taskId;
     }

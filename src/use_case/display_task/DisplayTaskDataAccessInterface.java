@@ -5,6 +5,5 @@ import java.util.Map;
 
 public interface DisplayTaskDataAccessInterface {
 
-    Map<String, ArrayList<Object>> getAllTasks();
-
+    Map<String, Boolean> getAllTasks();
 }

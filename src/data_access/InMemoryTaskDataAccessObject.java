@@ -78,12 +78,10 @@ public class InMemoryTaskDataAccessObject implements CompleteTaskDataAccessInter
     }
 
     @Override
-    public Map<String, ArrayList<Object>> getAllTasks() {
-        Map<String, ArrayList<Object>> retTask = new HashMap<>();
+    public Map<String, Boolean> getAllTasks() {
+        Map<String, Boolean> retTask = new HashMap<>();
         for (String task: tasks.keySet()) {
-            ArrayList<Object> taskInfo = new ArrayList<>();
-            taskInfo.add(tasks.get(task));
-            retTask.put(task, taskInfo);
+            retTask.put(task, tasks.get(task).getComplete());
         }
         return retTask;
     }

@@ -24,7 +24,7 @@ public class DisplayTaskInteractor {
      * Executes the display tasks by creating the output data and sending it to the presenter
      */
     public void execute() {
-        DisplayTaskOutputData displayTaskOutputData = new DisplayTaskOutputData(new ArrayList<String>(displayDataAccessObject.getAllTasks().keySet()), new ArrayList<ArrayList<Object>>(displayDataAccessObject.getAllTasks().values()), false);
+        DisplayTaskOutputData displayTaskOutputData = new DisplayTaskOutputData(new ArrayList<String>(displayDataAccessObject.getAllTasks().keySet()), new ArrayList<Boolean>(displayDataAccessObject.getAllTasks().values()), false);
         taskPresenter.prepareSuccessView(displayTaskOutputData);
     }
 
