@@ -9,6 +9,9 @@ import interface_adapter.create_task.CreateTaskController;
 import interface_adapter.create_task.CreateTaskState;
 import interface_adapter.create_task.CreateTaskViewModel;
 
+import interface_adapter.delete_task.DeleteTaskController;
+import interface_adapter.delete_task.DeleteTaskState;
+import interface_adapter.delete_task.DeleteTaskViewModel;
 import interface_adapter.display_task.DisplayTaskController;
 import interface_adapter.display_task.DisplayTaskState;
 import interface_adapter.display_task.DisplayTaskViewModel;
@@ -36,11 +39,13 @@ public class TaskView extends JPanel implements ActionListener, PropertyChangeLi
 
     private final DisplayTaskViewModel displayTaskViewModel;
     private final DisplayTaskController displayTaskController;
+    private final DeleteTaskViewModel deleteTaskViewModel;
+    private final DeleteTaskController deleteTaskController;
 
     private final JTextField createInputField = new JTextField(30);
 
     private final JTextField createTaskProjectInputField = new JTextField(30);
-    private final JButton createTask;
+    private final JButton createTask, deleteTask;
     private final JPanel taskPanel = new JPanel();
 
     private ArrayList<JLabel> taskLabels = new ArrayList<>();
@@ -49,21 +54,23 @@ public class TaskView extends JPanel implements ActionListener, PropertyChangeLi
 
 
     public TaskView(CreateTaskController createTaskController, CreateTaskViewModel createTaskViewModel,
-                    CompleteTaskController completeTaskController, CompleteTaskViewModel completeTaskViewModel, DisplayTaskViewModel displayTaskViewModel, DisplayTaskController displayTaskController){
+                    CompleteTaskController completeTaskController, CompleteTaskViewModel completeTaskViewModel, DisplayTaskViewModel displayTaskViewModel, DisplayTaskController displayTaskController, DeleteTaskViewModel deleteTaskViewModel, DeleteTaskController deleteTaskController){
         this.createTaskController = createTaskController;
         this.createTaskViewModel = createTaskViewModel;
         this.completeTaskController = completeTaskController;
         this.completeTaskViewModel = completeTaskViewModel;
         this.displayTaskViewModel = displayTaskViewModel;
         this.displayTaskController = displayTaskController;
+        this.deleteTaskViewModel = deleteTaskViewModel;
+        this.deleteTaskController = deleteTaskController;
 
         createTaskViewModel.addPropertyChangeListener(this);
         completeTaskViewModel.addPropertyChangeListener(this);
         displayTaskViewModel.addPropertyChangeListener(this);
+        deleteTaskViewModel.addPropertyChangeListener(this);
 
         JLabel title = new JLabel(CreateTaskViewModel.TITLE_LABEL);
         title.setAlignmentX(Component.CENTER_ALIGNMENT);
-
 
         LabelTextPanel createInfo = new LabelTextPanel(
                 new JLabel(CreateTaskViewModel.CREATE_TASK_LABEL), createInputField);
@@ -75,7 +82,10 @@ public class TaskView extends JPanel implements ActionListener, PropertyChangeLi
         createTask = new JButton(CreateTaskViewModel.CREATE_BUTTON_LABEL);
         buttons.add(createTask);
 
-        frame = new JFrame("Task Tracker");
+        deleteTask = new JButton("Delete");
+        buttons.add(deleteTask);
+
+        frame = new JFrame("Planr");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setLayout(new BorderLayout());
 
@@ -86,6 +96,16 @@ public class TaskView extends JPanel implements ActionListener, PropertyChangeLi
         //Create scroller as needed vertically and horizontally
         JScrollPane scroller = new JScrollPane(taskPanel, ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
         scroller.setPreferredSize(new Dimension(600,600));
+
+        deleteTask.addActionListener(
+                new ActionListener() {
+                    public void actionPerformed(ActionEvent e) {
+                        if (e.getSource().equals(deleteTask)) {
+                            TaskView.this.deleteTaskController.execute();
+                        }
+                    }
+                }
+        );
 
         createTask.addActionListener(
                 // This creates an anonymous subclass of ActionListener and instantiates it.
@@ -171,6 +191,7 @@ public class TaskView extends JPanel implements ActionListener, PropertyChangeLi
                     }
                 }
         );
+
         TaskView.this.displayTaskController.execute(); //Display all the existing tasks in the CSV
 
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
@@ -225,12 +246,7 @@ public class TaskView extends JPanel implements ActionListener, PropertyChangeLi
                 Boolean completion = state.getTaskInfo().get(i);
 
                 CompleteTaskState completeTaskState = completeTaskViewModel.getState();
-//                // Need clarification here
-//                // System.out.println("TaskView completion: " + completeTaskController.getTaskCompletion(taskName));
-//
-//                boolean taskCompletion = (boolean) state.getTaskInfo().get(i).get(0);
                 JCheckBox check = new JCheckBox(taskName, completion);
-//
                 check.addItemListener(
                         new ItemListener() {
                             @Override
@@ -264,9 +280,7 @@ public class TaskView extends JPanel implements ActionListener, PropertyChangeLi
                 taskLabels.add(taskForLabel);
                 JPanel newTask = new JPanel();
                 newTask.setLayout(new FlowLayout(FlowLayout.LEFT));
-                // JLabel newTaskText = new JLabel(currentState.getTask());
                 newTask.add(new JCheckBox(state.getTask(), true));
-                // newTask.add(newTaskText);
                 createInputField.setText("");
                 state.setTask("");
 
@@ -274,6 +288,11 @@ public class TaskView extends JPanel implements ActionListener, PropertyChangeLi
                 taskPanel.revalidate();
                 taskPanel.repaint();
             }
+        }
+        else if (evt.getPropertyName().equals("delete")) {
+            taskPanel.removeAll();
+            taskPanel.revalidate();
+            taskPanel.repaint();
         }
     }
 
