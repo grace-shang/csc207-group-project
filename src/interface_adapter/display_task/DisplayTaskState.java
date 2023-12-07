@@ -37,7 +37,7 @@ public class DisplayTaskState {
 
     /**
      * Getter for the task information
-     * @return a list that contains lists of objects with task information
+     * @return a list that contains the Booleans for each task's completion status
      */
     public ArrayList<Boolean> getTaskInfo() {
         return taskInfo;

@@ -22,8 +22,8 @@ public class DisplayTaskViewTest {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        ftdao.save(tf.create("task1", false));
-        ftdao.save(tf.create("task2", false));
+        ftdao.save(tf.create("task1", false, 1));
+        ftdao.save(tf.create("task2", false, 2));
     }
 
 }

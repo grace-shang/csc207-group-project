@@ -7,7 +7,7 @@ import static org.junit.Assert.*;
 public class TaskTest {
 
     private final Task task = new Task("task1", true, -1);
-    private final Task task3 = new Task("task3", -3);
+    private final Task task3 = new Task("task3", false, -3);
 
     @Test
     public void getName() {
