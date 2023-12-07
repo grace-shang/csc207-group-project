@@ -1,8 +1,6 @@
 package view;
 
-import entity.TaskI;
 import interface_adapter.complete_task.CompleteTaskController;
-import interface_adapter.complete_task.CompleteTaskPresenter;
 import interface_adapter.complete_task.CompleteTaskState;
 import interface_adapter.complete_task.CompleteTaskViewModel;
 import interface_adapter.create_task.CreateTaskController;
@@ -23,9 +21,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Objects;
 
-
 public class TaskView extends JPanel implements ActionListener, PropertyChangeListener{
-
     public final String viewName = "Task Page";
 
     private final CreateTaskController createTaskController;
@@ -48,6 +44,14 @@ public class TaskView extends JPanel implements ActionListener, PropertyChangeLi
     private JFrame frame;
 
 
+    /**
+     * @param createTaskController the controller for create task
+     * @param createTaskViewModel the view model for create task
+     * @param completeTaskController the controller for complete task
+     * @param completeTaskViewModel the view model for complete task
+     * @param displayTaskViewModel the view model for display task
+     * @param displayTaskController the controller for display task
+     */
     public TaskView(CreateTaskController createTaskController, CreateTaskViewModel createTaskViewModel,
                     CompleteTaskController completeTaskController, CompleteTaskViewModel completeTaskViewModel, DisplayTaskViewModel displayTaskViewModel, DisplayTaskController displayTaskController){
         this.createTaskController = createTaskController;
@@ -162,19 +166,17 @@ public class TaskView extends JPanel implements ActionListener, PropertyChangeLi
 
                     @Override
                     public void keyPressed(KeyEvent e) {
-
                     }
 
                     @Override
                     public void keyReleased(KeyEvent e) {
-
                     }
                 }
         );
+
         TaskView.this.displayTaskController.execute(); //Display all the existing tasks in the CSV
 
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-
         this.add(title);
         this.add(createInfo);
         this.add(buttons);
@@ -184,6 +186,9 @@ public class TaskView extends JPanel implements ActionListener, PropertyChangeLi
 
     }
 
+    /**
+     * @return the create task button
+     */
     public JButton getCreateTaskButton() {
         for (Component component : this.getComponents()) {
             if (component instanceof JPanel) {
@@ -197,10 +202,30 @@ public class TaskView extends JPanel implements ActionListener, PropertyChangeLi
         throw new IllegalStateException("Create Task button not found");
     }
 
+    public JCheckBox getCompleteTaskJCheck() {
+        for (Component component : this.getComponents()) {
+            if (component instanceof JPanel) {
+                JPanel buttonsPanel = (JPanel) component;
+                if (buttonsPanel.getComponentCount() > 0 && buttonsPanel.getComponent(0) instanceof JCheckBox) {
+                    return (JCheckBox) buttonsPanel.getComponent(0);
+                }
+            }
+        }
+
+        throw new IllegalStateException("Complete Task button not found");
+    }
+
+    /**
+     * @return the input field that was created
+     */
     public JTextField getCreateTaskInputField(){
         return createInputField;
     }
 
+    /**
+     * @param index the index of which we want to return the task name
+     * @return the name of the task at index
+     */
     public String getTaskText(int index) {
         if (index >= 0 && index < taskLabels.size()) {
             return taskLabels.get(index).getText();
@@ -208,16 +233,22 @@ public class TaskView extends JPanel implements ActionListener, PropertyChangeLi
         throw new IndexOutOfBoundsException("Invalid task index");
     }
 
+    /**
+     * @param e the event to be processed
+     */
     @Override
     public void actionPerformed(ActionEvent e) {
 
     }
 
+    /**
+     * @param evt A PropertyChangeEvent object describing the event source
+     *            and the property that has changed.
+     */
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
         if (evt.getPropertyName().equals("display")) {
             DisplayTaskState state = (DisplayTaskState) evt.getNewValue();
-            System.out.println(state.getTaskInfo());
             for (int i = 0; i < state.getTasks().size(); i++) {
                 JPanel newTask = new JPanel();
                 newTask.setLayout(new FlowLayout(FlowLayout.LEFT));
@@ -225,12 +256,8 @@ public class TaskView extends JPanel implements ActionListener, PropertyChangeLi
                 Boolean completion = state.getTaskInfo().get(i);
 
                 CompleteTaskState completeTaskState = completeTaskViewModel.getState();
-//                // Need clarification here
-//                // System.out.println("TaskView completion: " + completeTaskController.getTaskCompletion(taskName));
-//
-//                boolean taskCompletion = (boolean) state.getTaskInfo().get(i).get(0);
                 JCheckBox check = new JCheckBox(taskName, completion);
-//
+
                 check.addItemListener(
                         new ItemListener() {
                             @Override
@@ -239,14 +266,13 @@ public class TaskView extends JPanel implements ActionListener, PropertyChangeLi
                                     completeTaskState.setTaskCompletion(taskName);
                                     try {
                                         completeTaskController.execute(completeTaskState.getTaskName());
-                                        System.out.println(state.getTaskInfo());
+                                        // JOptionPane.showMessageDialog(TaskView.this, "Task completed!");
                                     } catch (IOException exception) {
                                         throw new RuntimeException(exception);
                                     }
                                 }
                             }
                         }
-
                 );
 
                 newTask.add(check);
@@ -264,9 +290,7 @@ public class TaskView extends JPanel implements ActionListener, PropertyChangeLi
                 taskLabels.add(taskForLabel);
                 JPanel newTask = new JPanel();
                 newTask.setLayout(new FlowLayout(FlowLayout.LEFT));
-                // JLabel newTaskText = new JLabel(currentState.getTask());
                 newTask.add(new JCheckBox(state.getTask(), true));
-                // newTask.add(newTaskText);
                 createInputField.setText("");
                 state.setTask("");
 

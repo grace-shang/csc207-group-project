@@ -68,8 +68,6 @@ public class CreateTaskViewTest {
         }
     }
 
-
-
     private JButton findCreateTaskButton(JFrame frame) {
         for (Component component : frame.getContentPane().getComponents()) {
             if (component instanceof JPanel) {
