@@ -6,5 +6,4 @@ import java.io.IOException;
 
 public interface CompleteTaskInputBoundary {
     void execute(CompleteTaskInputData completeTaskInputData) throws IOException;
-    boolean getTaskCompletion(CompleteTaskInputData completeTaskInputData);
 }
