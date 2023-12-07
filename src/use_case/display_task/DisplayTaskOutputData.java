@@ -6,7 +6,7 @@ import java.util.Collection;
 public class DisplayTaskOutputData {
 
     private final ArrayList<String> tasks;
-    private final ArrayList<ArrayList<Object>> taskInfo;
+    private final ArrayList<Boolean> taskInfo;
 
     private boolean useCaseFailed;
 
@@ -16,7 +16,7 @@ public class DisplayTaskOutputData {
      * @param taskInfo A list containing lists of objects. The objects represent varying pieces of task information (e.g. completion)
      * @param useCaseFailed A boolean determining whether the use case failed
      */
-    public DisplayTaskOutputData(ArrayList<String> tasks, ArrayList<ArrayList<Object>> taskInfo, boolean useCaseFailed) {
+    public DisplayTaskOutputData(ArrayList<String> tasks, ArrayList<Boolean> taskInfo, boolean useCaseFailed) {
         this.tasks = tasks;
         this.taskInfo = taskInfo;
         this.useCaseFailed = useCaseFailed;
@@ -32,7 +32,7 @@ public class DisplayTaskOutputData {
      * Getter for task information
      * @return the list of list of task information
      */
-    public ArrayList<ArrayList<Object>> getTaskInfo() {
+    public ArrayList<Boolean> getTaskInfo() {
         return taskInfo;
     }
 

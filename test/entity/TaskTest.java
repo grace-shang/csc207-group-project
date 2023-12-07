@@ -6,8 +6,8 @@ import static org.junit.Assert.*;
 
 public class TaskTest {
 
-    private final Task task = new Task("task1", true);
-    private final Task task3 = new Task("task3");
+    private final Task task = new Task("task1", true, -1);
+    private final Task task3 = new Task("task3", -3);
 
     @Test
     public void getName() {
@@ -22,6 +22,12 @@ public class TaskTest {
     }
 
     @Test
+    public void getTaskId() {
+        assertEquals(-1, task.getTaskId());
+        assertEquals(-3, task3.getTaskId());
+    }
+
+    @Test
     public void setName() {
         task.setName("task2");
         assertEquals("task2", task.getName());
@@ -32,4 +38,11 @@ public class TaskTest {
         task.setComplete(false);
         assertFalse(task.getComplete());
     }
+
+    @Test
+    public void setTaskId() {
+        task.setTaskId(-2);
+        assertEquals(-2, task.getTaskId());
+    }
+
 }

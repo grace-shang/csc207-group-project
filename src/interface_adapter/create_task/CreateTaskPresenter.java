@@ -1,5 +1,6 @@
 package interface_adapter.create_task;
 
+import entity.TaskFactory;
 import interface_adapter.ViewManagerModel;
 import interface_adapter.create_task.CreateTaskState;
 import interface_adapter.create_task.CreateTaskViewModel;
@@ -14,6 +15,10 @@ public class CreateTaskPresenter implements CreateTaskOutputBoundary {
     private ViewManagerModel viewManagerModel;
 
 
+    /**
+     * @param createTaskViewModel initializes the create task view model
+     * @param viewManagerModel initializes the view manager model in preseneter
+     */
     public CreateTaskPresenter(CreateTaskViewModel createTaskViewModel,
                                ViewManagerModel viewManagerModel) {
         this.createTaskViewModel = createTaskViewModel;
@@ -21,6 +26,10 @@ public class CreateTaskPresenter implements CreateTaskOutputBoundary {
     }
 
 
+    /**
+     * @param response takes the output data and activates firepropertychange which will update the view model and change
+     *                 the main page of the program for a successful addition of a task.
+     */
     @Override
     public void prepareSuccessView(CreateTaskOutputData response) {
         CreateTaskState createTaskState = createTaskViewModel.getState();
@@ -32,6 +41,10 @@ public class CreateTaskPresenter implements CreateTaskOutputBoundary {
         viewManagerModel.firePropertyChanged();
     }
 
+    /**
+     * @param error sends back the error in the failed task view which can then also be used to update the view model to
+     *              tell the user about the error.
+     */
     @Override
     public void prepareFailView(String error){
         CreateTaskState createTaskState = createTaskViewModel.getState();
