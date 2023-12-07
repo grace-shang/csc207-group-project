@@ -27,20 +27,10 @@ public class CompleteTaskInteractor implements CompleteTaskInputBoundary{
     public void execute(CompleteTaskInputData completeTaskInputData) throws IOException {
         String completedTask = completeTaskInputData.getTaskName();
 
-        try {
-            completeDataAccessObject.complete(completedTask);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+        completeDataAccessObject.complete(completedTask);
 
         CompleteTaskOutputData completeTaskOutputData = new CompleteTaskOutputData(completedTask,false);
         completeTaskPresenter.prepareSuccessView(completeTaskOutputData);
     }
 
-    @Override
-    public boolean getTaskCompletion(CompleteTaskInputData completeTaskInputData) {
-        String completedTask = completeTaskInputData.getTaskName();
-        System.out.println("Interactor Completion: " + completeDataAccessObject.getTask(completedTask).getComplete());
-        return completeDataAccessObject.getTask(completedTask).getComplete();
-    }
 }

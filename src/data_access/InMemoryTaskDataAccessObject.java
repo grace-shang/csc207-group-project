@@ -26,7 +26,6 @@ public class InMemoryTaskDataAccessObject implements CompleteTaskDataAccessInter
      */
     public void save(TaskI task) {
         tasks.put(task.getName(), task);
-        save(task);
     }
 
     @Override
@@ -75,6 +74,7 @@ public class InMemoryTaskDataAccessObject implements CompleteTaskDataAccessInter
     @Override
     public void update(String taskName) {
         tasks.put(taskName, getTask(taskName));
+        save(getTask(taskName));
     }
 
     @Override
