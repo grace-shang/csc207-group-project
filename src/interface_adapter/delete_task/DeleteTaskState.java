@@ -4,7 +4,7 @@ import java.util.Set;
 
 public class DeleteTaskState {
 
-    private Set<String> tasks = null;
+    private Set<String> tasks;
 
     public DeleteTaskState(DeleteTaskState copy) {
         tasks = copy.tasks;
