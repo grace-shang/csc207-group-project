@@ -7,6 +7,8 @@ import interface_adapter.complete_task.CompleteTaskViewModel;
 import interface_adapter.create_task.CreateTaskController;
 import interface_adapter.create_task.CreateTaskPresenter;
 import interface_adapter.create_task.CreateTaskViewModel;
+import interface_adapter.delete_task.DeleteTaskController;
+import interface_adapter.delete_task.DeleteTaskPresenter;
 import interface_adapter.delete_task.DeleteTaskViewModel;
 import interface_adapter.display_task.DisplayTaskController;
 import interface_adapter.display_task.DisplayTaskPresenter;
@@ -23,6 +25,9 @@ import use_case.create_task.CreateTaskDataAccessInterface;
 //import use_case.delete_task.DeleteTaskOutputBoundary;
 //import use_case.delete_task.DeleteTaskDataAccessInterface;
 import entity.TaskFactory;
+import use_case.delete_task.DeleteTaskDataAccessInterface;
+import use_case.delete_task.DeleteTaskInteractor;
+import use_case.delete_task.DeleteTaskOutputBoundary;
 import use_case.display_task.DisplayTaskDataAccessInterface;
 import use_case.display_task.DisplayTaskInteractor;
 import use_case.display_task.DisplayTaskOutputBoundary;
@@ -38,15 +43,15 @@ public class TaskUseCaseFactory {
     private TaskUseCaseFactory() {}
 
     public static TaskView create(
-            ViewManagerModel viewManagerModel, DeleteTaskViewModel deleteTaskViewModel, CreateTaskViewModel createTaskViewModel, CreateTaskDataAccessInterface createTaskDataAccessInterface,
+            ViewManagerModel viewManagerModel, DeleteTaskViewModel deleteTaskViewModel, DeleteTaskDataAccessInterface deleteTaskDataAccessInterface,CreateTaskViewModel createTaskViewModel, CreateTaskDataAccessInterface createTaskDataAccessInterface,
             CompleteTaskViewModel completeTaskViewModel, CompleteTaskDataAccessInterface completeTaskDataAccessInterface, DisplayTaskViewModel displayTaskViewModel, DisplayTaskDataAccessInterface displayTaskDataAccessInterface) {
 
         try {
             CreateTaskController createTaskController = createTaskUseCase(viewManagerModel, createTaskViewModel, createTaskDataAccessInterface);
             CompleteTaskController completeTaskController =  createCompleteUseCase(viewManagerModel, completeTaskViewModel, completeTaskDataAccessInterface);
             DisplayTaskController displayTaskController = createDisplayUseCase(viewManagerModel, displayTaskViewModel, displayTaskDataAccessInterface);
-//            DeleteTaskController deleteTaskController =  createDeleteUseCase(viewManagerModel, clearViewModel, userDataAccessObjectClear);
-            return new TaskView(createTaskController, createTaskViewModel, completeTaskController, completeTaskViewModel, displayTaskViewModel, displayTaskController);
+            DeleteTaskController deleteTaskController =  createDeleteUseCase(viewManagerModel, deleteTaskViewModel, deleteTaskDataAccessInterface);
+            return new TaskView(createTaskController, createTaskViewModel, completeTaskController, completeTaskViewModel, displayTaskViewModel, displayTaskController, deleteTaskViewModel, deleteTaskController);
         } catch (IOException e) {
             JOptionPane.showMessageDialog(null, "Could not open task data file.");
         }
@@ -66,15 +71,14 @@ public class TaskUseCaseFactory {
         return new CreateTaskController(userCreateTaskInteractor);
     }
 
-    ///private static DeleteTaskController createDeleteUseCase(ViewManagerModel viewManagerModel, ClearViewModel clearViewModel, ClearUserDataAccessInterface userDataAccessObject) throws IOException {
-        // Notice how we pass this method's parameters to the Presenter.
-        ///ClearOutputBoundary clearOutputBoundary = new ClearPresenter(clearViewModel, viewManagerModel);
+    private static DeleteTaskController createDeleteUseCase(ViewManagerModel viewManagerModel, DeleteTaskViewModel deleteViewModel, DeleteTaskDataAccessInterface taskDataAccessObject) throws IOException {
+        DeleteTaskOutputBoundary deleteOutputBoundary = new DeleteTaskPresenter(deleteViewModel, viewManagerModel);
 
-        ///ClearInteractor userClearInteractor = new ClearInteractor(
-                ///userDataAccessObject, clearOutputBoundary);
+        DeleteTaskInteractor deleteClearInteractor = new DeleteTaskInteractor(
+                taskDataAccessObject, deleteOutputBoundary);
 
-        ///return new ClearController(userClearInteractor);
-    ///}
+        return new DeleteTaskController(deleteClearInteractor);
+    }
 
     private static CompleteTaskController createCompleteUseCase(ViewManagerModel viewManagerModel, CompleteTaskViewModel completeTaskViewModel,
                                                                 CompleteTaskDataAccessInterface completeTaskDataObject) throws IOException {
