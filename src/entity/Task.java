@@ -58,5 +58,4 @@ public class Task implements TaskI{
     public long getTaskId() {
         return taskId;
     }
-
 }

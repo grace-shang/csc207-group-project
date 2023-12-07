@@ -1,8 +1,6 @@
 package data_access;
 
-
 import api.Todo;
-import entity.Task;
 import entity.TaskFactory;
 import entity.TaskI;
 import use_case.complete_task.CompleteTaskDataAccessInterface;
@@ -65,6 +63,9 @@ public class FileTaskDataAccessObject implements CreateTaskDataAccessInterface, 
         this.save();
     }
 
+    /**
+     * @return a map that maps the name of a task to its completion status (as a Boolean)
+     */
     @Override
     public void delete(Map<String, TaskI> tasks) {
 
@@ -91,6 +92,9 @@ public class FileTaskDataAccessObject implements CreateTaskDataAccessInterface, 
         return retTask;
     }
 
+    /**
+     * writes the changed task to the csv file
+     */
     public void save() {
         BufferedWriter writer;
         try {
@@ -112,11 +116,19 @@ public class FileTaskDataAccessObject implements CreateTaskDataAccessInterface, 
         }
     }
 
+    /**
+     * @param taskName interface that calls the Data Access Interface to add the task
+     * @return
+     */
     @Override
     public long addTask(String taskName){
         return todo.addTask("projectName", taskName);
     }
 
+    /**
+     * @param identifier interface that calls the Data Access Interface to get the method to check whether the task exists in memory
+     * @return
+     */
     @Override
     public boolean existByName(String identifier) {
         return tasks.containsKey(identifier);

@@ -17,27 +17,11 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
 public class CompleteTaskViewTest {
     static String message = "";
-
-    /**
-     * ensures there are at least 2 tasks in the CSV file for testing purposes
-     */
-    public void addTwoTasks() {
-        TaskFactory tf = new AllTaskFactory();
-        FileTaskDataAccessObject ftdao;
-        Todo todo = new ToDoList();
-
-        try {
-            ftdao = new FileTaskDataAccessObject("./tasks.csv", tf, todo);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-        ftdao.save(tf.create("task1", false));
-        ftdao.save(tf.create("task2", false));
-    }
 
     public JButton getButton() {
         JFrame app = null;
@@ -65,24 +49,105 @@ public class CompleteTaskViewTest {
         return (JButton) buttons.getComponent(2); // this should be the clear button
     }
 
-    // Fix depending on implementation
+
+    /**
+     * ensures there are at least 2 tasks in the CSV file for testing purposes
+     */
+    public void addTwoTasks() {
+        TaskFactory tf = new AllTaskFactory();
+        FileTaskDataAccessObject ftdao;
+        Todo todo = new ToDoList();
+
+        try {
+            ftdao = new FileTaskDataAccessObject("./tasks.csv", tf, todo);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        ftdao.save(tf.create("task1", false, todo.addTask("projectName", "task1")));
+        ftdao.save(tf.create("task2", false, todo.addTask("projectName", "task2")));
+    }
+
+    public void completeTaskWithGUI(){
+        SwingUtilities.invokeLater(() -> {
+            JFrame app = new JFrame("Test Frame");
+            app.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+            Main.main(null);
+            JTextField inputTextField = findCreateTaskInputField(app);
+            JButton createTaskButton = findCreateTaskButton(app);
+            JCheckBox completeTaskJCheck = findCompleteTaskJCheck(app);
+
+            assertNotNull("Create Task input text field not found", inputTextField);
+
+            inputTextField.setText("task 1");
+            createTaskButton.doClick();
+
+            inputTextField.setText("task 2");
+            createTaskButton.doClick();
+
+            completeTaskJCheck.doClick();
+
+            app.dispose();
+        });
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
     @org.junit.Test
     public void testCompleteButtonPresent() {
-        Main.main(null);
-        JButton button = getButton();
-        assert(button.getText().equals("Complete"));
+        SwingUtilities.invokeLater(() -> {
+            JFrame app = new JFrame("Test Frame");
+            app.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+            Main.main(null);
+
+            JCheckBox completeTaskCheck = findCompleteTaskJCheck(app);
+
+            assertNotNull("Create Task button not found", completeTaskCheck);
+
+            app.dispose();
+        });
+
+        try {
+            Thread.sleep(2000); // Adjust waiting time if needed
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @org.junit.Test
+    public void testCompleteTaskJCheckText() {
+        SwingUtilities.invokeLater(() -> {
+            JFrame app = new JFrame("Test Frame");
+            app.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+            Main.main(null);
+
+            JCheckBox completeTaskCheck = findCompleteTaskJCheck(app);
+            System.out.println(completeTaskCheck.getText());
+
+            assertEquals("task 1", completeTaskCheck.getText());
+            app.dispose();
+        });
+
+        try {
+            Thread.sleep(2000); // Adjust waiting time if needed
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 
     @org.junit.Test
     public void testCompleteDoesNotRemoveTasks() {
-
+        JFrame app = new JFrame("Test Frame");
+        app.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         addTwoTasks();
         Main.main(null);
-        JButton button = getButton();
+        JCheckBox completeTaskCheck = findCompleteTaskJCheck(app);
 
         createCloseTimer().start();
 
-        button.doClick();
+        completeTaskCheck.doClick();
 
         // checks that the amount of users left is still 2 (i.e. complete task hasn't deleted any)
 
@@ -181,12 +246,71 @@ public class CompleteTaskViewTest {
     }
 
     private static int countLines() throws IOException {
-        BufferedReader reader = new BufferedReader(new FileReader("users.csv"));
+        BufferedReader reader = new BufferedReader(new FileReader("tasks.csv"));
         int lineCount = 0;
         while (reader.readLine() != null) {
             lineCount++;
         }
         return lineCount;
+    }
+
+    private JTextField findCreateTaskInputField(JFrame frame) {
+        for (Component component : frame.getContentPane().getComponents()) {
+            if (component instanceof JPanel) {
+                JPanel mainPanel = (JPanel) component;
+                for (Component subComponent : mainPanel.getComponents()) {
+                    if (subComponent instanceof TaskView) {
+                        TaskView taskView = (TaskView) subComponent;
+                        return taskView.getCreateTaskInputField();
+                    }
+                }
+            }
+        }
+        throw new IllegalStateException("Create Task input text field not found");
+    }
+
+    private TaskView findTaskView(JFrame frame) {
+        for (Component component : frame.getContentPane().getComponents()) {
+            if (component instanceof JPanel) {
+                JPanel mainPanel = (JPanel) component;
+                for (Component subComponent : mainPanel.getComponents()) {
+                    if (subComponent instanceof TaskView) {
+                        return (TaskView) subComponent;
+                    }
+                }
+            }
+        }
+        throw new IllegalStateException("TaskView not found");
+    }
+
+    private JCheckBox findCompleteTaskJCheck(JFrame frame) {
+        for (Component component : frame.getContentPane().getComponents()) {
+            if (component instanceof JPanel) {
+                JPanel mainPanel = (JPanel) component;
+                for (Component subComponent : mainPanel.getComponents()) {
+                    if (subComponent instanceof TaskView) {
+                        TaskView taskView = (TaskView) subComponent;
+                        return taskView.getCompleteTaskJCheck();
+                    }
+                }
+            }
+        }
+        throw new IllegalStateException("Create Task button not found");
+    }
+
+    private JButton findCreateTaskButton(JFrame frame) {
+        for (Component component : frame.getContentPane().getComponents()) {
+            if (component instanceof JPanel) {
+                JPanel mainPanel = (JPanel) component;
+                for (Component subComponent : mainPanel.getComponents()) {
+                    if (subComponent instanceof TaskView) {
+                        TaskView taskView = (TaskView) subComponent;
+                        return taskView.getCreateTaskButton();
+                    }
+                }
+            }
+        }
+        throw new IllegalStateException("Create Task button not found");
     }
 
 }

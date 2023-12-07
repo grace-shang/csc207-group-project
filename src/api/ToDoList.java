@@ -99,8 +99,6 @@ public class ToDoList implements Todo{
             // Extracts the taskID as a long
             long taskID = Long.parseLong(jsonResponse.getString("id"));
 
-            // Print the task ID
-            System.out.println("Task ID: " + taskID);
             return taskID;
 
         } catch (IOException e){
