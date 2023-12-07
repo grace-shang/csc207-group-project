@@ -10,7 +10,7 @@ public interface TaskI {
     /**
      * @return interface of get complete from task class
      */
-    boolean getComplete();
+    Boolean getComplete();
 
     /**
      * @param name interface of set name from task class

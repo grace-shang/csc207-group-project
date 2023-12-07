@@ -3,21 +3,9 @@ package entity;
 public class Task implements TaskI{
 
     String taskName;
-    boolean complete;
+    Boolean complete;
 
     long taskId;
-
-    /**
-     * Constrcuts a task with complete variable being always false
-     * @param taskName a string containing the name of the task
-     * @param taskId the ID of the task from the API
-     */
-    public Task(String taskName, long taskId) {
-        this.taskName = taskName;
-        this.complete = false;
-        this.taskId = taskId;
-
-    }
 
     /**
      * Constructs a task with a given complete variable
@@ -25,7 +13,7 @@ public class Task implements TaskI{
      * @param isCompleted a boolean containing whether the task is complete (true) or not (false)
      * @param taskId the ID of the task from the API
      */
-    public Task(String taskName, boolean isCompleted, long taskId) {
+    public Task(String taskName, Boolean isCompleted, long taskId) {
         this.taskName = taskName;
         this.complete = isCompleted;
         this.taskId = taskId;
@@ -41,7 +29,7 @@ public class Task implements TaskI{
      * A getter for the completion of a task
      * @return a boolean containing whether the task is complete or not
      */
-    public boolean getComplete() {return complete;}
+    public Boolean getComplete() {return complete;}
 
     /**
      * A setter for the task name
