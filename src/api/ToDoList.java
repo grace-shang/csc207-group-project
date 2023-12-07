@@ -38,6 +38,32 @@ public class ToDoList implements Todo{
         }
     }
 
+    @Override
+    public void deleteTask(String projectName, String taskName, long taskID) {
+        JSONObject task = new JSONObject();
+        try{
+            task.put("id", taskID);
+        } catch (JSONException e) {
+            throw new RuntimeException(e);
+        }
+
+        OkHttpClient client = new OkHttpClient().newBuilder().build();
+
+        Request request = new Request.Builder()
+                .url("https://api.todoist.com/rest/v2/tasks/" + taskID + "/delete")
+                .post(RequestBody.create(null, new byte[0]))
+                .header("X-Request-Id", java.util.UUID.randomUUID().toString())
+                .header("Authorization", "Bearer b1aa35c9378d5217bc2745afc04aa0fcae246844")
+                .build();
+
+        try {
+            Response response = client.newCall(request).execute();
+
+        } catch (IOException e){
+            e.printStackTrace();
+        }
+    }
+
     /**
      * @param projectName the name of the project
      * @param taskName the name of the task to be added
